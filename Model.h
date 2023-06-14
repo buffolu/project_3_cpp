@@ -10,7 +10,6 @@
 #ifndef PROJECT_3_MODEL_H
 #define PROJECT_3_MODEL_H
 
-template <class T>
 class Model {
     std::list<Sim_object> Sim_object_list;
     std::list<Strucute> Stracture_list;
