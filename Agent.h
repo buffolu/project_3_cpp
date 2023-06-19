@@ -10,7 +10,7 @@
 
 class Agent : public Sim_object {
 	
-	Point& destination;
+	Point destination;
 	double speed;
 
 	protected:
@@ -21,7 +21,7 @@ class Agent : public Sim_object {
 	};
 		
 	public:
-	void move_to(const Point& destination);
+	void move_to(Point destination);
 	void update();
 
 };
