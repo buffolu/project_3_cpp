@@ -21,8 +21,10 @@ class Agent : public Sim_object {
 	};
 		
 	public:
-	void move_to(Point destination);
-	void update();
+	void move_to_place(Point destination);
+	void move_to_direction(double theta);
+	void update() override;
+	void stop();
 
 };
 

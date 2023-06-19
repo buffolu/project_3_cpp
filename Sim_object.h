@@ -14,7 +14,7 @@ class Sim_object {
 	protected:
 	std::string getName() const noexcept;
 	std::string getLocation() const noexcept;
-	void update();
+	virtual void update();
 	std::string broadcast_current_state() const noexcept;
 
 };
