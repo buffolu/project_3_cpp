@@ -6,8 +6,14 @@
 #define PROJECT_3_STRUCUTE_H
 
 
-class Strucute {
+class Structure 
+{
+	void;
 
+	public:
+
+	void deposit(int amount);
+	void withdraw(int amount);
 };
 
 
