@@ -5,7 +5,7 @@
 
 class Farm : public Strucute
 {
-	std::string& owner_castle;
+	// std::string& owner_castle;
 
 	public:
 	void update() override;

@@ -8,12 +8,12 @@
 
 class Sim_object {
 	std::string name;
-	std::pair<double,double> location;
+	Point location;
 	std::string state;
 
 	protected:
 	std::string getName() const noexcept;
-	std::string getLocation() const noexcept;
+	Point getLocation() const noexcept;
 	virtual void update();
 	std::string broadcast_current_state() const noexcept;
 
