@@ -46,4 +46,18 @@ void Model::addAgent(std::string &name, int type,Point& position) {
     else{/**ERROR*/}
 }
 
+void Model::attack(string &thug, string &peasant) {
+
+}
+
+bool Model::check_if_starcture_exists(string &name) {
+   for(auto stract:Stracture_list){
+       if (auto locked = stract.lock()){
+       }
+   }
+}
+bool Model::check_if_agent_exists(string &name) {
+    return false;
+}
+
 

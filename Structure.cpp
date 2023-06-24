@@ -3,3 +3,11 @@
 //
 
 #include "Structure.h"
+
+void Structure::deposit(int amount) {
+
+}
+
+void Structure::withdraw(int amount) {
+
+}

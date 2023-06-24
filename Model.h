@@ -29,12 +29,18 @@ public:
     Model():time(0){};
     void update();
     void addAgent(std::string & name, int type,Point & position);
+    void attack(std::string& thug,std::string& peasant);
+
     //getters
     //setters
     void attach();
     void detach();
     void notify_Location();
 
+    bool check_if_agent_exists(string &name);
+    bool check_if_starcture_exists(string& name);
+
+    bool check_if_exists(string &name);
 };
 
 
