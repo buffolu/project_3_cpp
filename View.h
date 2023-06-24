@@ -5,17 +5,16 @@
 #ifndef PROJECT_3_VIEW_H
 #define PROJECT_3_VIEW_H
 
-#include "Geometry.h"
 #include "Sim_object.h"
 #include <set>
-#include <pair>
-
+#include <vector>
 class View {
 	int scale;	// number of kilometers in square side
 	int size_x;	// size of terminal window
 	int size_y;
 	Point origin;
 	std::set<Sim_object> objects;
+    std::vector<std::vector<pair<double,double>>> map;
 
 	public:
 	// getters setters

@@ -6,17 +6,22 @@
 #define PROJECT_3_SIM_OBJECT_H
 
 
+#include <iostream>
+#include "Geometry.h"
+
 class Sim_object {
 	std::string name;
 	Point location;
-	std::string state;
 
 	protected:
 	std::string getName() const noexcept;
 	Point getLocation() const noexcept;
-	virtual void update();
-	std::string broadcast_current_state() const noexcept;
 
+    void broadcast_current_state() const noexcept;
+
+public:
+    Sim_object(std::string & name_, Point& location_);
+    virtual void update()= 0;
 };
 
 

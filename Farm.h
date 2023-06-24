@@ -1,9 +1,9 @@
 #pragma once
 
 #include <string>
-#include "Strucute.h"
+#include "Structure.h"
 
-class Farm : public Strucute
+class Farm : public Structure
 {
 	// std::string& owner_castle;
 

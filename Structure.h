@@ -8,7 +8,6 @@
 
 class Structure 
 {
-	void;
 
 	public:
 

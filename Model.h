@@ -2,22 +2,33 @@
 // Created by igor on 14/06/2023.
 //
 #include <list>
-#include "Strucute.h"
-#include "Sim_object.h"
-#include "Agent.h"
 #include "View.h"
+#include "Structure.h"
+#include <memory>
+#include "Thug.h"
+#include "Knight.h"
+#include "Peasant.h"
 
 #ifndef PROJECT_3_MODEL_H
 #define PROJECT_3_MODEL_H
 
 class Model {
-    std::list<Sim_object> Sim_object_list;
-    std::list<Strucute> Stracture_list;
-    std::list<Agent> Agent_list;
-    std::list<View> View_list;
+    std::list<shared_ptr<Sim_object>> Sim_object_list;
+    std::list<weak_ptr<Sim_object>> Stracture_list;
+    std::list<weak_ptr<Sim_object>> Agent_list;
+    std::list<unique_ptr<View>> View_list;
+    int time;
+    enum type{
+        KNIGHT,
+        PEASANT,
+        THUG
+    };
+
+
 public:
+    Model():time(0){};
     void update();
-    void addAgent();
+    void addAgent(std::string & name, int type,Point & position);
     //getters
     //setters
     void attach();

@@ -3,3 +3,7 @@
 //
 
 #include "View.h"
+
+void View::update_location() {
+
+}
