@@ -97,6 +97,12 @@ build CMakeFiles/project_3.dir/Knight.cpp.o: CXX_COMPILER__project_3_Debug /cygd
   OBJECT_DIR = CMakeFiles/project_3.dir
   OBJECT_FILE_DIR = CMakeFiles/project_3.dir
 
+build CMakeFiles/project_3.dir/Controller.cpp.o: CXX_COMPILER__project_3_Debug /cygdrive/c/Users/igor/CLionProjects/project_3/Controller.cpp || cmake_object_order_depends_target_project_3
+  DEP_FILE = CMakeFiles/project_3.dir/Controller.cpp.o.d
+  FLAGS = -g -std=gnu++14
+  OBJECT_DIR = CMakeFiles/project_3.dir
+  OBJECT_FILE_DIR = CMakeFiles/project_3.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target project_3
@@ -105,7 +111,7 @@ build CMakeFiles/project_3.dir/Knight.cpp.o: CXX_COMPILER__project_3_Debug /cygd
 #############################################
 # Link the executable project_3.exe
 
-build project_3.exe: CXX_EXECUTABLE_LINKER__project_3_Debug CMakeFiles/project_3.dir/main.cpp.o CMakeFiles/project_3.dir/Model.cpp.o CMakeFiles/project_3.dir/Thug.cpp.o CMakeFiles/project_3.dir/Agent.cpp.o CMakeFiles/project_3.dir/Sim_object.cpp.o CMakeFiles/project_3.dir/Structure.cpp.o CMakeFiles/project_3.dir/Peasant.cpp.o CMakeFiles/project_3.dir/Knight.cpp.o
+build project_3.exe: CXX_EXECUTABLE_LINKER__project_3_Debug CMakeFiles/project_3.dir/main.cpp.o CMakeFiles/project_3.dir/Model.cpp.o CMakeFiles/project_3.dir/Thug.cpp.o CMakeFiles/project_3.dir/Agent.cpp.o CMakeFiles/project_3.dir/Sim_object.cpp.o CMakeFiles/project_3.dir/Structure.cpp.o CMakeFiles/project_3.dir/Peasant.cpp.o CMakeFiles/project_3.dir/Knight.cpp.o CMakeFiles/project_3.dir/Controller.cpp.o
   FLAGS = -g
   LINK_FLAGS = -Wl,--enable-auto-import
   OBJECT_DIR = CMakeFiles/project_3.dir

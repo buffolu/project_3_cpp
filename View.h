@@ -24,6 +24,14 @@ class View {
 	void update_location();
 
 	void draw();
+
+    void ddefault();
+
+    void zoom(int i);
+
+    void pan(double d, double d1);
+
+    void show();
 };
 
 

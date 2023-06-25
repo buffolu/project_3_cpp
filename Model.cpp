@@ -17,8 +17,8 @@ void Model::update() {
 }
 
 
-void Model::addAgent(std::string &name, int type,Point& position) {
-    if(type == THUG) {
+void Model::addAgent(std::string &name, std::string& type,Point& position) {
+    if(type == "thug") {
         std::shared_ptr<Sim_object> sharedAgent(new Thug(name,position));
         std::weak_ptr<Sim_object> weakAgent(sharedAgent);
 
@@ -26,7 +26,7 @@ void Model::addAgent(std::string &name, int type,Point& position) {
         Sim_object_list.push_back(sharedAgent);
         Agent_list.push_back(weakAgent);
     }
-    if (type == PEASANT){
+    else if (type == "peasant"){
         std::shared_ptr<Sim_object> sharedAgent(new Peasant(name,position));
         std::weak_ptr<Sim_object> weakAgent(sharedAgent);
 
@@ -35,7 +35,7 @@ void Model::addAgent(std::string &name, int type,Point& position) {
         Agent_list.push_back(weakAgent);
 
     }
-    if(type == KNIGHT){
+    else if(type == "knight"){
         std::shared_ptr<Sim_object> sharedAgent(new Knight(name,position));
         std::weak_ptr<Sim_object> weakAgent(sharedAgent);
 
@@ -43,7 +43,6 @@ void Model::addAgent(std::string &name, int type,Point& position) {
         Sim_object_list.push_back(sharedAgent);
         Agent_list.push_back(weakAgent);
     }
-    else{/**ERROR*/}
 }
 
 void Model::attack(string &thug, string &peasant) {
@@ -58,6 +57,26 @@ bool Model::check_if_starcture_exists(string &name) {
 }
 bool Model::check_if_agent_exists(string &name) {
     return false;
+}
+
+void Model::status() {
+
+}
+
+void Model::go() {
+
+}
+
+void Model::course(string basicString, int i, int i1) {
+
+}
+
+void Model::position(string basicString, Point point, int i) {
+
+}
+
+void Model::addAgent(string &name, string &type) {
+
 }
 
 
