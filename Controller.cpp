@@ -127,21 +127,24 @@ void Controller::GetInput(string &input) {
             }
             model.position(name,p,speed);
         }
+        if (words.front() == "destination"  && words.size() == 2){
+            model.destination(name,words.back());
 
-
-
-
-
-
-
-
-
-
+        }
+        if (words.front() == "stop" && words.size() == 1){
+            model.stop(name);
+        }
+        if (words.front() == "attack" && words.size() == 2){
+            std::string peasant = words.back();
+            model.attack(name,peasant);
+        }
+        else{
+            throw std::invalid_argument("invalid input");
+        }
 
     }
 
-
-    catch (const std::exception&e){}
+    catch (const std::exception&e){std::cout<<e.what();}
 }
 
 bool Controller::isStringOnlyLetters(const string &str) const noexcept {

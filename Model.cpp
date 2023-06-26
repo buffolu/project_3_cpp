@@ -75,6 +75,14 @@ void Model::position(string basicString, Point point, int i) {
 
 }
 
+void Model::destination(string basicString, basic_string<char> &basicString1) {
+
+}
+
+void Model::stop(string basicString) {
+
+}
+
 void Model::addAgent(string &name, string &type) {
 
 }

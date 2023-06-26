@@ -51,6 +51,10 @@ public:
     void course(string basicString, int i, int i1);
 
     void position(string basicString, Point point, int i);
+
+    void destination(string basicString, basic_string<char> &basicString1);
+
+    void stop(string basicString);
 };
 
 
