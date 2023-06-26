@@ -83,6 +83,18 @@ void Model::stop(string basicString) {
 
 }
 
+void Model::ddefault() {
+
+}
+
+void Model::setSize(int i) {
+
+}
+
+void Model::zoom(int i) {
+
+}
+
 void Model::addAgent(string &name, string &type) {
 
 }

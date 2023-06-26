@@ -4,7 +4,7 @@
 
 #include "Controller.h"
 
-void Controller::GetInput(string &input) {
+void Controller::GetInputUser(string &input) {
 
 
     //lines 11-17 : separate input to words using a vector
@@ -18,54 +18,57 @@ void Controller::GetInput(string &input) {
 
     try {
         //lines 22-54  inputs related to view
+        if (words.empty()) {throw std::invalid_argument("invalid input");}
 
-        if (words.front() == "default" && words.size() == 1) {
-            view.ddefault();
+        std::string command = words.front();
+        words.erase(words.begin());
+        if (command == "default" && words.empty()) {
+            model.ddefault();
 
         }
-        else if(words.front() == "size"  && words.size() == 2){
+        else if(command == "size"  && words.size() == 1){
             int s = std::stoi(words.back());
             if (s>6 && s<=30 ){
-                view.setSize(s);
+                model.setSize(s);
             }
             else{
                 throw std::invalid_argument("invalid input");
             }
         }
-        else if(words.front() == "zoom" && words.size()==2){
+        else if(command == "zoom" && words.size()==1){
             int num = std::stoi(words.back());
             if (num>0){
-                view.zoom(num);
+                model.zoom(num);
             }
 
             else{ throw std::invalid_argument("invalid input");}
 
         }
 
-        else if(words.front() == "pan" && words.size() == 3){
+        else if(command== "pan" && words.size() == 2){
             words.erase(words.begin());
             double x = stoi(words.front());
             double y = stoi(words.back());
             view.pan(x,y);
 
         }
-        else if(words.front() == "show"  && words.size() == 1){
+        else if(command == "show"  && words.empty()){
             view.show();
         }
 
 
         //line 59- related to model
-        else if(words.front() == "status " && words.size() == 1){
+        else if(command == "status " && words.empty()){
             model.status();
         }
-        else if(words.front() == "go"  && words.size() == 1){
+        else if(command == "go"  && words.empty()){
             model.go();
         }
-        else if(words.front() == "create" && words.size() >4 ){
-            words.erase(words.begin());
+        else if(command == "create" && words.size() == 3 || words.size() ==4 ){
             std::string name = words.front();
             words.erase(words.begin());
             std::string type = words.front(); //knight , thug or peasant
+            words.erase(words.begin());
             if(!(type == "peasant" || type == "thug" || type == "knight"    && isStringOnlyLetters(name))) {
                 throw std::invalid_argument("invalid input");
             }
@@ -93,11 +96,15 @@ void Controller::GetInput(string &input) {
 
         }
         //this commands will be given after the name.
-        std::string name = words.front();
+        std::string name = std::move(command);
         words.erase(words.begin());
-        if( words.front() == "course" && (words.size() ==2 || words.size() == 3))
+        if (words.empty()) {throw std::invalid_argument("invalid input");}
+
+        std::string command2 = words.front();
+        words.erase(words.begin());
+
+        if( command2 == "course" && (words.size() == 1 || words.size() == 2))
         {
-            words.erase(words.begin());
             std::string  word1 = words.front();
             int theta = std::stoi(word1);
             int speed = -1;
@@ -109,32 +116,30 @@ void Controller::GetInput(string &input) {
             model.course(name,theta,speed);
 
         }
-        if (words.front() == "position" && (words.size()==3 || words.size() == 4)){
-            words.erase(words.begin());
+        if (command2 == "position" && (words.size()==2 || words.size() == 3)){
             std::string word1 = words.front();   //should be in the form of (x,
             word1.substr(1);
             word1.pop_back();
             double x = std::stoi(word1);
-            words.erase(words.begin());
             std::string word2 = words.front();
-            word2.pop_back();
+            words.erase(words.begin());
             double y = std::stoi(word2);
             Point p(x,y);
             int speed;
-            if (words.size()>1){  //its a thug
+            if (!words.empty()){  //its a thug
                 std::string word3 = words.back();
                 speed = stoi(word3);
             }
             model.position(name,p,speed);
         }
-        if (words.front() == "destination"  && words.size() == 2){
+        if (words.front() == "destination"  && words.size() == 1){
             model.destination(name,words.back());
 
         }
-        if (words.front() == "stop" && words.size() == 1){
+        if (words.front() == "stop" && words.empty()){
             model.stop(name);
         }
-        if (words.front() == "attack" && words.size() == 2){
+        if (words.front() == "attack" && words.size() == 1){
             std::string peasant = words.back();
             model.attack(name,peasant);
         }

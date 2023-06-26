@@ -55,6 +55,12 @@ public:
     void destination(string basicString, basic_string<char> &basicString1);
 
     void stop(string basicString);
+
+    void ddefault();
+
+    void setSize(int i);
+
+    void zoom(int i);
 };
 
 

@@ -21,7 +21,8 @@ private:
 
 public:
     explicit Controller(Model model1):model(std::move(model1)){};
-    void GetInput(std::string& str);
+    void GetInputUser(std::string& str);
+    void readFile(std::fstream& file);
 
 
 
