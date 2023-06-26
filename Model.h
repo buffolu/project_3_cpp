@@ -44,18 +44,22 @@ public:
 
     bool check_if_exists(string &name);
 
+
+
+    //methods for model
     void status();
 
     void go();
 
-    void course(string basicString, int i, int i1);
+    void course(string& basicString, int i, int i1);
 
-    void position(string basicString, Point point, int i);
+    void position(string& basicString, Point point, int i);
 
-    void destination(string basicString, basic_string<char> &basicString1);
+    void destination(string &basicString, string& &basicString1);
 
-    void stop(string basicString);
+    void stop(string& basicString);
 
+    //methods for view
     void ddefault();
 
     void setSize(int i);

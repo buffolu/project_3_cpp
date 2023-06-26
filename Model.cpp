@@ -67,32 +67,32 @@ void Model::go() {
 
 }
 
-void Model::course(string basicString, int i, int i1) {
+void Model::course(string& basicString, int i, int i1) {
 
 }
 
-void Model::position(string basicString, Point point, int i) {
+void Model::position(string& basicString, Point point, int theta) {
 
 }
 
-void Model::destination(string basicString, basic_string<char> &basicString1) {
+void Model::destination(string& basicString, basic_string<char> &basicString1) {
 
 }
 
-void Model::stop(string basicString) {
+void Model::stop(string& basicString) {
 
 }
 
 void Model::ddefault() {
-
+    View_list.front()->ddefault();
 }
 
 void Model::setSize(int i) {
-
+    View_list.front()->setSize(i);
 }
 
 void Model::zoom(int i) {
-
+    View_list.front()->setSize(i);
 }
 
 void Model::addAgent(string &name, string &type) {
