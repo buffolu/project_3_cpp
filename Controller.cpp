@@ -69,7 +69,7 @@ void Controller::GetInputUser(string &input) {
             words.erase(words.begin());
             std::string type = words.front(); //knight , thug or peasant
             words.erase(words.begin());
-            if(!(type == "peasant" || type == "thug" || type == "knight"    && isStringOnlyLetters(name))) {
+            if(isStringOnlyLetters(name)) {
                 throw std::invalid_argument("invalid input");
             }
 
@@ -87,7 +87,7 @@ void Controller::GetInputUser(string &input) {
                 model.addAgent(name,type,p);
 
             }
-            else if(words.size() == 1 && type == "knight"){
+            else if(words.size() == 1){
                 model.addAgent(name,type,words.front());
             }
 

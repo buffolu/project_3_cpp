@@ -8,3 +8,7 @@
 Thug::Thug(string &name_, Point &position) : Agent(name_, position,30,5) {
 
 }
+
+void Thug::attack(shared_pt) {
+
+}

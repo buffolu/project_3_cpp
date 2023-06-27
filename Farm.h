@@ -1,7 +1,6 @@
 #pragma once
 
-#include <string>
-#include "Structure.h"
+#include "Model.h"
 
 class Farm : public Structure
 {

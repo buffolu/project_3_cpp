@@ -1,6 +1,11 @@
 //
 // Created by igor on 14/06/2023.
 //
+
+
+#ifndef PROJECT_3_MODEL_H
+#define PROJECT_3_MODEL_H
+
 #include <list>
 #include "View.h"
 #include "Structure.h"
@@ -8,15 +13,19 @@
 #include "Thug.h"
 #include "Knight.h"
 #include "Peasant.h"
+#include "Geometry.h"
+#include "Sim_object.h"
+#include "Agent.h"
 
-#ifndef PROJECT_3_MODEL_H
-#define PROJECT_3_MODEL_H
+
+
+
 
 class Model {
     std::list<shared_ptr<Sim_object>> Sim_object_list;
-    std::list<weak_ptr<Sim_object>> Stracture_list;
-    std::list<weak_ptr<Sim_object>> Agent_list;
-    std::list<unique_ptr<View>> View_list;
+    std::list<shared_ptr<Structure>> Stracture_list;
+    std::list<shared_ptr<Agent>> Agent_list;
+    std::list<shared_ptr<View>> View_list;
     int time;
     enum type{
         KNIGHT,
@@ -39,7 +48,6 @@ public:
     void detach();
     void notify_Location();
 
-    bool check_if_agent_exists(string &name);
     bool check_if_starcture_exists(string& name);
 
     bool check_if_exists(string &name);
@@ -65,6 +73,8 @@ public:
     void setSize(int i);
 
     void zoom(int i);
+
+    shared_ptr<Agent> findAgent(std::string& name,std::string& type);
 };
 
 

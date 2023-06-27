@@ -5,7 +5,7 @@
 #ifndef PROJECT_3_AGENT_H
 #define PROJECT_3_AGENT_H
 
-#include "Sim_object.h"
+#include "Model.h"
 
 class Agent : public Sim_object {
 
@@ -14,6 +14,7 @@ class Agent : public Sim_object {
 	double speed;
     int state;
     int health;
+    std::string type;
 
 	protected:
 	enum state {
@@ -30,6 +31,8 @@ class Agent : public Sim_object {
 	void move_to_direction(double theta);
 	void update() override;
 	void stop();
+    std::string getType();
+    std::string getName();
 
 };
 
