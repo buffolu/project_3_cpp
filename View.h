@@ -5,9 +5,7 @@
 #ifndef PROJECT_3_VIEW_H
 #define PROJECT_3_VIEW_H
 
-#include "Sim_object.h"
-#include <set>
-#include <vector>
+#include "Model.h"
 class View {
 	int scale;	// number of kilometers in square side
 	int size_x;	// size of terminal window

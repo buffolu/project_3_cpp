@@ -33,3 +33,11 @@ void Agent::move_to_direction(double theta) {
 void Agent::stop() {
     state = STOPPED;
 }
+
+std::string Agent::getType() {
+    return  type;
+}
+
+std::string Agent::getName() {
+    return std::string();
+}

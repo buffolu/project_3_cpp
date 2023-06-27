@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Agent.h"
-
+#include "Model.h"
 class Thug : public Agent 
 {
 
