@@ -17,35 +17,22 @@ void Model::update() {
 }
 
 
-void Model::addAgent(std::string &name, int type,Point& position) {
-    if(type == THUG) {
-        std::shared_ptr<Sim_object> sharedAgent(new Thug(name,position));
-        std::weak_ptr<Sim_object> weakAgent(sharedAgent);
-
-
-        Sim_object_list.push_back(sharedAgent);
-        Agent_list.push_back(weakAgent);
-    }
-    if (type == PEASANT){
-        std::shared_ptr<Sim_object> sharedAgent(new Peasant(name,position));
-        std::weak_ptr<Sim_object> weakAgent(sharedAgent);
-
-
-        Sim_object_list.push_back(sharedAgent);
-        Agent_list.push_back(weakAgent);
-
-    }
-    if(type == KNIGHT){
-        std::shared_ptr<Sim_object> sharedAgent(new Knight(name,position));
-        std::weak_ptr<Sim_object> weakAgent(sharedAgent);
-
-
-        Sim_object_list.push_back(sharedAgent);
-        Agent_list.push_back(weakAgent);
-    }
-    else{
-        throw std::invalid_argument("invalid input");
-    }
+void Model::addAgent(std::string &name, int type, Point& position) {
+	std::shared_ptr<Sim_object> sharedAgent;
+	if(type == THUG) {
+		sharedAgent = std::make_shared(new Thug(name,position));
+	}
+	else if (type == PEASANT){
+		sharedAgent = std::make_shared(new Peasant(name,position));
+	}
+	else if(type == KNIGHT){
+		sharedAgent = std::make_shared(new Knight(name,position));
+	}
+	else {
+		throw std::invalid_argument("invalid input");
+	}
+	Sim_object_list.push_back(sharedAgent);
+	Agent_list.push_back(sharedAgent);
 }
 
 //function not complete , need to send thug to attack peasant
@@ -72,7 +59,7 @@ void Model::attack(string &thug, string &peasant) {
     //sent thug to peasant
 }
 
-bool Model::check_if_starcture_exists(string &name) {
+bool Model::check_if_sturcture_exists(string &name) {
 	for(auto stract:Stracture_list){
 
 		if (auto locked = stract.lock()){

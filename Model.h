@@ -22,16 +22,18 @@
 
 
 class Model {
-    std::list<shared_ptr<Sim_object>> Sim_object_list;
-    std::list<shared_ptr<Structure>> Stracture_list;
-    std::list<shared_ptr<Agent>> Agent_list;
-    std::list<shared_ptr<View>> View_list;
-    int time;
-    enum type{
-        KNIGHT,
-        PEASANT,
-        THUG
-    };
+	// TODO: maybe change to map, since then we can just find the proper unit based on name
+	// TODO: or maybe change to vector instead of list
+	std::list<shared_ptr<Sim_object>> Sim_object_list;
+	std::list<shared_ptr<Structure>> Stracture_list;
+	std::list<shared_ptr<Agent>> Agent_list;
+	std::list<shared_ptr<View>> View_list;
+	int time;	// what tick we're on
+	enum type{
+		KNIGHT,
+		PEASANT,
+		THUG
+	};
 
 
 public:
@@ -46,7 +48,7 @@ public:
     void detach();
     void notify_Location();
 
-    bool check_if_starcture_exists(string& name);
+    bool check_if_sturcture_exists(string& name);
 
     bool check_if_exists(string &name);
 
