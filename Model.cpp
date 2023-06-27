@@ -73,11 +73,13 @@ void Model::attack(string &thug, string &peasant) {
 }
 
 bool Model::check_if_starcture_exists(string &name) {
+	for(auto stract:Stracture_list){
+
+		if (auto locked = stract.lock()){
+		}
+	}
 
 }
-
-<<<<<<< HEAD
-=======
 
 void Model::status() {
 
@@ -125,10 +127,4 @@ shared_ptr<Agent> Model::findAgent(std::string& name, std::string &type) {
 
     return nullptr;
 }
-
-
-
-
-
->>>>>>> cc863c2c2dd5a811acfc2ae5af6790dd31a3f23f
 

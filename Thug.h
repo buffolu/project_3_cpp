@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Model.h"
+#include "Agent.h"
+
 class Thug : public Agent 
 {
 
@@ -12,6 +13,3 @@ class Thug : public Agent
 public:
     Thug(std::string& name_,Point& position);
 };
-
-
-

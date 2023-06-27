@@ -5,8 +5,8 @@
 #ifndef PROJECT_3_SIM_OBJECT_H
 #define PROJECT_3_SIM_OBJECT_H
 
-
-#include "Model.h"
+#include <iostream>
+#include "Geometry.h"
 
 class Sim_object {
 	std::string name;
