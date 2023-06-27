@@ -7,19 +7,3 @@
 void View::update_location() {
 
 }
-
-void View::ddefault() {
-
-}
-
-void View::zoom(int i) {
-
-}
-
-void View::pan(double d, double d1) {
-
-}
-
-void View::show() {
-
-}

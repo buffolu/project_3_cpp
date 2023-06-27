@@ -28,9 +28,7 @@ class Model {
 public:
     Model():time(0){};
     void update();
-    void addAgent(std::string & name, std::string& type,Point & position);
-    void addAgent(std::string & name, std::string& type,std::string & location);
-
+    void addAgent(std::string & name, int type,Point & position);
     void attack(std::string& thug,std::string& peasant);
 
     //getters
@@ -43,14 +41,6 @@ public:
     bool check_if_starcture_exists(string& name);
 
     bool check_if_exists(string &name);
-
-    void status();
-
-    void go();
-
-    void course(string basicString, int i, int i1);
-
-    void position(string basicString, Point point, int i);
 };
 
 
