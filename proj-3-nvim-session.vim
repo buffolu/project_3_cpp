@@ -15,30 +15,35 @@ else
 endif
 badd +1 Agent.cpp
 badd +1 Agent.h
-badd +0 Castle.h
+badd +1 Castle.h
 badd +1 cmake-build-debug
 badd +1 CMakeLists.txt
-badd +0 Controller.cpp
+badd +1 Controller.cpp
 badd +1 Controller.h
-badd +0 Farm.h
-badd +0 Geometry.cpp
+badd +1 Farm.h
+badd +1 Geometry.cpp
 badd +1 Geometry.h
-badd +0 Knight.cpp
+badd +1 Knight.cpp
 badd +1 Knight.h
-badd +0 main.cpp
-badd +0 Model.cpp
+badd +1 main.cpp
+badd +1 Model.cpp
 badd +1 Model.h
-badd +0 Peasant.cpp
+badd +1 Peasant.cpp
 badd +1 Peasant.h
 badd +1 proj-3-nvim-session.vim
-badd +0 Sim_object.cpp
+badd +1 Sim_object.cpp
 badd +1 Sim_object.h
-badd +0 Structure.cpp
+badd +1 Structure.cpp
 badd +1 Structure.h
-badd +0 Thug.cpp
+badd +1 Thug.cpp
 badd +1 Thug.h
-badd +0 View.cpp
+badd +1 View.cpp
 badd +1 View.h
+badd +9 ~/Programming/Cpp/Tel-Hai/advanced-cpp-tel-hai/homework/HW2/src/utils.h
+badd +1 utils.h
+badd +14 ~/Programming/Cpp/Tel-Hai/advanced-cpp-tel-hai/homework/HW2/src/utils.cpp
+badd +1 utils.cpp
+badd +3 ~/Programming/Cpp/Tel-Hai/advanced-cpp-tel-hai/homework/HW2/src/boogielever.cpp
 argglobal
 %argdel
 $argadd Agent.cpp
@@ -68,6 +73,7 @@ $argadd Thug.h
 $argadd View.cpp
 $argadd View.h
 set stal=2
+tabnew +setlocal\ bufhidden=wipe
 tabnew +setlocal\ bufhidden=wipe
 tabnew +setlocal\ bufhidden=wipe
 tabnew +setlocal\ bufhidden=wipe
@@ -170,7 +176,7 @@ normal! zt
 keepjumps 1
 normal! 0
 tabnext
-edit Controller.h
+edit utils.h
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -191,11 +197,11 @@ exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
 exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
 argglobal
 6argu
-if bufexists(fnamemodify("Controller.h", ":p")) | buffer Controller.h | else | edit Controller.h | endif
+if bufexists(fnamemodify("utils.h", ":p")) | buffer utils.h | else | edit utils.h | endif
 if &buftype ==# 'terminal'
-  silent file Controller.h
+  silent file utils.h
 endif
-balt Controller.cpp
+balt utils.cpp
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -206,16 +212,20 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 37) / 75)
+let s:l = 10 - ((9 * winheight(0) + 37) / 75)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
-normal! 0
+keepjumps 10
+normal! 011|
 wincmd w
 argglobal
 6argu
-balt Controller.h
+if bufexists(fnamemodify("utils.cpp", ":p")) | buffer utils.cpp | else | edit utils.cpp | endif
+if &buftype ==# 'terminal'
+  silent file utils.cpp
+endif
+balt utils.h
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -226,12 +236,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 37) / 75)
+let s:l = 44 - ((43 * winheight(0) + 37) / 75)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
-normal! 0
+keepjumps 44
+normal! 02|
 wincmd w
 exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
 exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
@@ -403,14 +413,14 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 37) / 75)
+let s:l = 9 - ((8 * winheight(0) + 37) / 75)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
+keepjumps 9
 normal! 0
 tabnext
-edit Model.h
+edit Controller.h
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -430,6 +440,138 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
 exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
 argglobal
+6argu
+if bufexists(fnamemodify("Controller.h", ":p")) | buffer Controller.h | else | edit Controller.h | endif
+if &buftype ==# 'terminal'
+  silent file Controller.h
+endif
+balt Controller.cpp
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 20 - ((19 * winheight(0) + 37) / 75)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 20
+normal! 0
+wincmd w
+argglobal
+6argu
+balt Controller.h
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 163 - ((66 * winheight(0) + 37) / 75)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 163
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
+exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
+tabnext
+edit View.h
+let s:save_splitbelow = &splitbelow
+let s:save_splitright = &splitright
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+let &splitbelow = s:save_splitbelow
+let &splitright = s:save_splitright
+wincmd t
+let s:save_winminheight = &winminheight
+let s:save_winminwidth = &winminwidth
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
+exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
+argglobal
+25argu
+if bufexists(fnamemodify("View.h", ":p")) | buffer View.h | else | edit View.h | endif
+if &buftype ==# 'terminal'
+  silent file View.h
+endif
+balt View.cpp
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 24 - ((23 * winheight(0) + 37) / 75)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 24
+normal! 011|
+wincmd w
+argglobal
+25argu
+balt View.h
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 9 - ((8 * winheight(0) + 37) / 75)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 9
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
+exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
+tabnext
+edit Model.h
+let s:save_splitbelow = &splitbelow
+let s:save_splitright = &splitright
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+let &splitbelow = s:save_splitbelow
+let &splitright = s:save_splitright
+wincmd t
+let s:save_winminheight = &winminheight
+let s:save_winminwidth = &winminwidth
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+exe 'vert 1resize ' . ((&columns * 136 + 137) / 274)
+exe 'vert 2resize ' . ((&columns * 137 + 137) / 274)
+argglobal
 14argu
 if bufexists(fnamemodify("Model.h", ":p")) | buffer Model.h | else | edit Model.h | endif
 if &buftype ==# 'terminal'
@@ -446,16 +588,15 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 31 - ((18 * winheight(0) + 37) / 75)
+let s:l = 21 - ((0 * winheight(0) + 37) / 75)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 31
-normal! 024|
+keepjumps 21
+normal! 0
 wincmd w
 argglobal
 14argu
-balt Model.h
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -466,16 +607,15 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 31 - ((17 * winheight(0) + 37) / 75)
+let s:l = 24 - ((23 * winheight(0) + 37) / 75)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 31
-normal! 013|
+keepjumps 24
+normal! 0
 wincmd w
-2wincmd w
-exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
-exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
+exe 'vert 1resize ' . ((&columns * 136 + 137) / 274)
+exe 'vert 2resize ' . ((&columns * 137 + 137) / 274)
 tabnext
 edit Peasant.h
 let s:save_splitbelow = &splitbelow
@@ -740,73 +880,7 @@ normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
 exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
-tabnext
-edit View.h
-let s:save_splitbelow = &splitbelow
-let s:save_splitright = &splitright
-set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
-let &splitbelow = s:save_splitbelow
-let &splitright = s:save_splitright
-wincmd t
-let s:save_winminheight = &winminheight
-let s:save_winminwidth = &winminwidth
-set winminheight=0
-set winheight=1
-set winminwidth=0
-set winwidth=1
-exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
-exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
-argglobal
-25argu
-if bufexists(fnamemodify("View.h", ":p")) | buffer View.h | else | edit View.h | endif
-if &buftype ==# 'terminal'
-  silent file View.h
-endif
-balt View.cpp
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 27 - ((26 * winheight(0) + 37) / 75)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 27
-normal! 0
-wincmd w
-argglobal
-25argu
-balt View.h
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 37) / 75)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 1
-normal! 0
-wincmd w
-exe 'vert 1resize ' . ((&columns * 137 + 137) / 274)
-exe 'vert 2resize ' . ((&columns * 136 + 137) / 274)
-tabnext 8
+tabnext 14
 set stal=1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
