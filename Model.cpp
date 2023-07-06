@@ -4,6 +4,27 @@
 
 #include "Model.h"
 
+void Model::run(int argc, char** argv)
+{
+	// SETUP
+	if (argc != 3) {
+		m_view.Log("Usage: " + argv[0] + " <castles.dat> <farms.dat>");
+	}
+	std::ifstream if_castles(argv[1]);
+	std::ifstream if_farms(argv[2]);
+
+	std::string castle;
+	while (if_castles >> castle) {
+		// TODO: AddCastle(castle);
+	}
+	std::string farm;
+	while (if_farms >> farm) {
+		// TODO: AddFarm(farm);
+	}
+	
+	// TODO
+}
+
 void Model::update() {
     for (const auto& object:Sim_object_list){
         (*object).update();

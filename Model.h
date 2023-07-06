@@ -7,9 +7,10 @@
 #define PROJECT_3_MODEL_H
 
 #include <list>
+#include <memory>
+#include <fstream>
 #include "View.h"
 #include "Structure.h"
-#include <memory>
 #include "Thug.h"
 #include "Knight.h"
 #include "Peasant.h"
@@ -43,6 +44,7 @@ public:     // Singleton
 private:    
 	Model() : time(0) {};
 public:
+	void run(int argc, char** argv);
 	void update();
 	void addAgent(std::string & name, int type,Point & position);
 	void attack(std::string& thug,std::string& peasant);
