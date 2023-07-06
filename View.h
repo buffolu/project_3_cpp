@@ -19,9 +19,11 @@ class View {
 	std::pair<int, int> getSize();
 	void setSize(int size);
 
-	void update_location();
+	// void update_location();
 
-	void draw();
+	// void draw();
+
+	inline void Log(std::string& str) noexcept;
 };
 
 

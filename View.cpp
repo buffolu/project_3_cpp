@@ -4,6 +4,11 @@
 
 #include "View.h"
 
-void View::update_location() {
+// void View::update_location() {
+// 
+// }
 
+void View::Log(std::string& str)
+{
+	std::cout << str << std::endl;
 }

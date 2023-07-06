@@ -115,3 +115,10 @@ shared_ptr<Agent> Model::findAgent(std::string& name) {
 	return nullptr;
 }
 
+void Model::badInput()
+{
+	if (!m_controller.GetUserInput()) {
+		std::string badInputMessage = std::string("Bad input: \"") + str + "\"";
+		m_view.Log(badInputMessage);
+	}
+}

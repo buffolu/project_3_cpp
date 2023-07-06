@@ -6,22 +6,22 @@
 #define PROJECT_3_CONTROLLER_H
 #include <utility>
 #include <vector>
-#include <iostream>
+#include <istream>
 #include "Model.h"
 #include "View.h"
 
 class Controller {
 private:
-    std::vector<std::string> input_;
+	// possibly unnecessary for a controller to have knowledge of view
     View view;
-    Model model;
+    Model * model;
     bool isStringOnlyLetters(const std::string& str) const noexcept ;
 
 
 
 public:
-    explicit Controller(Model model1):model(std::move(model1)){};
-    void GetInputUser(std::string& str);
+    explicit Controller(Model& model1) : model(&model1) {};
+    bool GetUserInput(std::string& str);
     void readFile(std::fstream& file);
 
 

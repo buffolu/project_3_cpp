@@ -35,6 +35,9 @@ class Model {
 		THUG
 	};
 
+	Controller m_controller;
+	View m_view;
+
 
 public:
 	Model():time(0){};
@@ -75,6 +78,7 @@ public:
 	void zoom(int i);
 
 	shared_ptr<Agent> findAgent(std::string& name);
+
 };
 
 
