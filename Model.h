@@ -38,9 +38,11 @@ class Model {
 	Controller m_controller;
 	View m_view;
 
-
+public:     // Singleton
+	Model& Get();
+private:    
+	Model() : time(0) {};
 public:
-	Model():time(0){};
 	void update();
 	void addAgent(std::string & name, int type,Point & position);
 	void attack(std::string& thug,std::string& peasant);

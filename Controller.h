@@ -18,17 +18,10 @@ private:
     bool isStringOnlyLetters(const std::string& str) const noexcept ;
 
 
-
 public:
     explicit Controller(Model& model1) : model(&model1) {};
     bool GetUserInput(std::string& str);
     void readFile(std::fstream& file);
-
-
-
-
-
-
 };
 
 

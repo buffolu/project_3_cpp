@@ -122,3 +122,9 @@ void Model::badInput()
 		m_view.Log(badInputMessage);
 	}
 }
+
+Model& Model::Get()
+{
+	static Model instance;
+	return instance;
+}
