@@ -25,7 +25,7 @@ class Model {
 	// TODO: maybe change to map, since then we can just find the proper unit based on name
 	// TODO: or maybe change to vector instead of list
 	std::list<shared_ptr<Sim_object>> Sim_object_list;
-	std::list<shared_ptr<Structure>> Stracture_list;
+	std::list<shared_ptr<Structure>> Structure_list;
 	std::list<shared_ptr<Agent>> Agent_list;
 	std::list<shared_ptr<View>> View_list;
 	int time;	// what tick we're on
@@ -37,44 +37,44 @@ class Model {
 
 
 public:
-    Model():time(0){};
-    void update();
-    void addAgent(std::string & name, int type,Point & position);
-    void attack(std::string& thug,std::string& peasant);
+	Model():time(0){};
+	void update();
+	void addAgent(std::string & name, int type,Point & position);
+	void attack(std::string& thug,std::string& peasant);
 
-    //getters
-    //setters
-    void attach();
-    void detach();
-    void notify_Location();
+	//getters
+	//setters
+	void attach();
+	void detach();
+	void notify_Location();
 
-    bool check_if_sturcture_exists(string& name);
+	bool check_if_sturcture_exists(string& name);
 
-    bool check_if_exists(string &name);
+	bool check_if_exists(string &name);
 
 
 
-    //methods for model
-    void status();
+	//methods for model
+	void status();
 
-    void go();
+	void go();
 
-    void course(string& basicString, int i, int i1);
+	void course(string& basicString, int i, int i1);
 
-    void position(string& basicString, Point point, int i);
+	void position(string& basicString, Point point, int i);
 
-    void destination(string &basicString, string& &basicString1);
+	void destination(string &basicString, string& &basicString1);
 
-    void stop(string& basicString);
+	void stop(string& basicString);
 
-    //methods for view
-    void ddefault();
+	//methods for view
+	void ddefault();
 
-    void setSize(int i);
+	void setSize(int i);
 
-    void zoom(int i);
+	void zoom(int i);
 
-    shared_ptr<Agent> findAgent(std::string& name,std::string& type);
+	shared_ptr<Agent> findAgent(std::string& name);
 };
 
 

@@ -60,7 +60,7 @@ void Model::attack(string &thug, string &peasant) {
 }
 
 bool Model::check_if_sturcture_exists(string &name) {
-	for(auto stract:Stracture_list){
+	for(auto stract:Structure_list){
 
 		if (auto locked = stract.lock()){
 		}
@@ -104,14 +104,14 @@ void Model::zoom(int i) {
     View_list.front()->setSize(i);
 }
 
-shared_ptr<Agent> Model::findAgent(std::string& name, std::string &type) {
-    for(auto & it : Agent_list)
-    {
-        if (it->getName() == name && it->getType() == type){
-            return it;
-        }
-    }
+shared_ptr<Agent> Model::findAgent(std::string& name) {
+	for(auto & it : Agent_list)
+	{
+		if (it->getName() == name){
+			return it;
+		}
+	}
 
-    return nullptr;
+	return nullptr;
 }
 
