@@ -5,15 +5,14 @@
 #ifndef PROJECT_3_STRUCUTE_H
 #define PROJECT_3_STRUCUTE_H
 
+#include "Sim_object.h"
 
-class Structure 
-{
+class Structure : Sim_object {
+    int hay;
 
-	public:
-
-	void deposit(int amount);
-	void withdraw(int amount);
+public:
+    void deposit(int amount);
+    void withdraw(int amount);
 };
 
-
-#endif //PROJECT_3_STRUCUTE_H
+#endif // PROJECT_3_STRUCUTE_H

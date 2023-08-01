@@ -3,7 +3,5 @@
 //
 #include "Peasant.h"
 
-Peasant::Peasant(std::string &name, Point &position) : Agent(name, position,10,5) {
-
-}
-
+Peasant::Peasant(std::string &name, Point &position)
+    : Agent(name, position, 10, 5) {}

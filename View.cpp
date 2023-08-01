@@ -3,12 +3,10 @@
 //
 
 #include "View.h"
+#include <iostream>
 
 // void View::update_location() {
-// 
+//
 // }
 
-void View::Log(std::string& str)
-{
-	std::cout << str << std::endl;
-}
+void View::Log(std::string &str) noexcept { std::cout << str << std::endl; }

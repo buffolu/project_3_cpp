@@ -9,39 +9,34 @@
 
 class Agent : public Sim_object {
 
-	std::string name;
-	Point destination;
-	double speed;
-	int state;
-	int health;
-	std::string type;
+    std::string name;
+    Point destination;
+    double speed;
+    int state;
+    int health;
+    std::string type;
 
-	protected:
-	enum state {
-		STOPPED,
-		DEAD,
-		MOVING_TO_POSITION
-	};
-	public:
-	/**
-	 * Agent constructor
-	 *
-	 * @params
-	 * -------
-	 *  name_ : string to name the agent
-	 *  location : Point to where he spawns
-	 *  speed_ : how fast he will walk
-	 *  health : how much health he starts with
-	 */
-	Agent(std::string & name_,Point& location,int speed_,int health);
-	void move_to_place(Point& destination_);
-	void move_to_direction(double theta);
-	void update() override;
-	void stop();
-	std::string getType();
-	std::string getName();
+protected:
+    enum state { STOPPED, DEAD, MOVING_TO_POSITION };
 
+public:
+    /**
+     * Agent constructor
+     *
+     * @params
+     * -------
+     *  name_ : string to name the agent
+     *  location : Point to where he spawns
+     *  speed_ : how fast he will walk
+     *  health : how much health he starts with
+     */
+    Agent(std::string &name_, Point &location, int speed_, int health);
+    void move_to_place(Point &destination_);
+    void move_to_direction(double theta);
+    void update() override;
+    void stop();
+    std::string getType();
+    std::string getName();
 };
 
-
-#endif //PROJECT_3_AGENT_H
+#endif // PROJECT_3_AGENT_H

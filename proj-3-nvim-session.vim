@@ -3,7 +3,6 @@ let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~/Programming/Cpp/Tel-Hai/igor/project_3_cpp
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -39,11 +38,8 @@ badd +1 Thug.cpp
 badd +1 Thug.h
 badd +1 View.cpp
 badd +1 View.h
-badd +9 ~/Programming/Cpp/Tel-Hai/advanced-cpp-tel-hai/homework/HW2/src/utils.h
 badd +1 utils.h
-badd +14 ~/Programming/Cpp/Tel-Hai/advanced-cpp-tel-hai/homework/HW2/src/utils.cpp
 badd +1 utils.cpp
-badd +3 ~/Programming/Cpp/Tel-Hai/advanced-cpp-tel-hai/homework/HW2/src/boogielever.cpp
 argglobal
 %argdel
 $argadd Agent.cpp

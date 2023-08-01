@@ -2,10 +2,9 @@
 
 #include "Structure.h"
 
-class Farm : public Structure
-{
-	// std::string& owner_castle;
+class Farm : public Structure {
+    // std::string& owner_castle;
 
-	public:
-	void update() override;
-}
+public:
+    void update() override;
+};

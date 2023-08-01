@@ -3,7 +3,5 @@
 //
 #include "Knight.h"
 
-Knight::Knight(std::string &name, Point &position) : Agent(name, position,10,-1) {
-
-}
-
+Knight::Knight(std::string &name, Point &position)
+    : Agent(name, position, 10, -1) {}
