@@ -7,12 +7,12 @@
 
 #include "Sim_object.h"
 
-class Structure : Sim_object {
+class Structure : public Sim_object {
     int hay;
 
 public:
     void deposit(int amount);
-    void withdraw(int amount);
+    bool withdraw(int amount);
 };
 
 #endif // PROJECT_3_STRUCUTE_H
