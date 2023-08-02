@@ -14,8 +14,6 @@ class Knight : public Agent {
     list<string> visited;
     shared_ptr<Castle> home_castle;
 
-    enum knight_state { OnPatrol, OnCourse, ToPosition } knight_state;
-
     float course; // degrees
 
 public:

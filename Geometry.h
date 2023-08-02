@@ -13,6 +13,10 @@ typedef struct Point {
     Point();
     void print() const;
     bool operator==(const Point &rhs);
+    static double distance(const Point& a,const Point& b);
+    static double getAngle(const Point& a , const Point& b);
+
+    static Point advance(Point point, double speed, double angle);
 } Point;
 struct Polar_vector;
 typedef struct Cartesian_vector {
@@ -29,3 +33,4 @@ typedef struct Polar_vector {
     double r;
     double theta;
 } Polar_vector;
+

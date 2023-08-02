@@ -13,8 +13,10 @@ class Agent : public Sim_object {
     int health;
     int type;
 
+
 protected:
     enum state { DEFAULT, STOPPED, DEAD, MOVING_TO_POSITION } state;
+    enum workingState { OnDuty, OnCourse, ToPosition } workingState;
 
     Point destination;
     std::string name;
@@ -58,6 +60,8 @@ public:
 
     void setType(int type);
     void broadcast_current_state() const noexcept override;
+
+
 };
 
 #endif // PROJECT_3_AGENT_H

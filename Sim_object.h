@@ -10,7 +10,7 @@
 
 class Sim_object {
     std::string name;
-    Point location;
+    Point _location;
 
 protected:
     virtual void broadcast_current_state() const noexcept;
@@ -24,6 +24,7 @@ public:
     // setLocation
     Point getLocation() const noexcept;
 
+    void setLocation(const Point &location);
 };
 
 #endif // PROJECT_3_SIM_OBJECT_H

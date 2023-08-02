@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <memory>
 #include "Agent.h"
 #include "Farm.h"
 #include "Castle.h"
@@ -21,6 +22,14 @@ class Peasant : public Agent
     int getCarriedCrates() const;
 
     bool isWorking() const;
+
+    void setFarm(const shared_ptr<Farm> &farm);
+
+    void setCastle(const shared_ptr<Castle> &castle);
+
+    void setCarriedCrates(int carriedCrates);
+
+    void setIsWorking(bool isWorking);
 };
 
 int Peasant::getCarriedCrates() const {
@@ -29,4 +38,20 @@ int Peasant::getCarriedCrates() const {
 
 bool Peasant::isWorking() const {
     return is_working;
+}
+
+void Peasant::setFarm(const shared_ptr<Farm> &farm) {
+    _farm = farm;
+}
+
+void Peasant::setCastle(const shared_ptr<Castle> &castle) {
+    _castle = castle;
+}
+
+void Peasant::setCarriedCrates(int carriedCrates) {
+    carried_crates = carriedCrates;
+}
+
+void Peasant::setIsWorking(bool isWorking) {
+    is_working = isWorking;
 }
