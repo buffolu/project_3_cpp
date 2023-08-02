@@ -12,14 +12,15 @@ shared_ptr<Peasant> Peasant::getInstance(string &name, Point &position) {
 }
 
 void Peasant::start_working(shared_ptr<Farm> farm, shared_ptr<Castle> castle) {
-    _farm = farm;
-    _castle = castle;
+    m_farm = farm;
+    m_castle = castle;
     position(farm->getLocation());
     is_working = true;
 }
 
 void Peasant::update() {
-    Agent::update();
+    // Agent::update();
+
 }
 
 int Peasant::getCarriedCrates() const { return carried_crates; }

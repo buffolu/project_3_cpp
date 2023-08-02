@@ -6,8 +6,10 @@
 #include <string>
 
 class Peasant : public Agent {
-    std::shared_ptr<Farm> _farm;
-    std::shared_ptr<Castle> _castle;
+    const static int MAX_CRATES = 5;
+
+    std::shared_ptr<Farm> m_farm;
+    std::shared_ptr<Castle> m_castle;
     int carried_crates;
     bool is_working;
 
@@ -20,7 +22,9 @@ public:
                                          // village and go to his castle
     void update() override;
 
+    void setCarriedCrates(int cc);
     int getCarriedCrates() const;
 
+    void setWorking(bool work);
     bool isWorking() const;
 };
