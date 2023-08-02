@@ -28,56 +28,47 @@ void Model::update() {
     for (const auto &object : Sim_object_list) {
         (*object).update();
     }
-    for (auto &views : View_list) {
-        (*views).update_location();
-    }
     time++;
 }
 
-void Model::addAgent(std::string &name, int type, Point &position) {
-    std::shared_ptr<Sim_object> sharedAgent;
+void Model::addAgent(std::string &name, int type, Point &position,int speed) {
+    std::shared_ptr<Agent> sharedAgent;
     if (type == THUG) {
-        sharedAgent = std::make_shared(new Thug(name, position));
+        sharedAgent = Thug::getThug(name,position,speed);
     } else if (type == PEASANT) {
-        sharedAgent = std::make_shared(new Peasant(name, position));
+        sharedAgent = Peasant::getInstance(name,position);
     } else if (type == KNIGHT) {
-        sharedAgent = std::make_shared(new Knight(name, position));
+        sharedAgent = Knight::getInstance(name,position);
     } else {
         throw std::invalid_argument("invalid input");
     }
     Sim_object_list.push_back(sharedAgent);
     Agent_list.push_back(sharedAgent);
+
 }
 
 // function not complete , need to send thug to attack peasant
 void Model::attack(string &thug, string &peasant) {
     // find if thug exists
-    shared_ptr<Agent> thug_ = findAgent(thug, (string &)"thug");
-    if (!thug_) {
+    shared_ptr<Agent> thug_ = findAgent(thug, THUG);
+    shared_ptr<Thug> thug1 = dynamic_pointer_cast<Thug>(thug_);
+    if (!thug_ || !thug1) {
         // illegal argument - peasant does not exists
     }
 
     // find if peasant exists
-    shared_ptr<Agent> peasant_ = findAgent(peasant, (string &)"peasant");
+    shared_ptr<Agent> peasant_ = findAgent(peasant,PEASANT);
     if (!peasant_) {
         // illegal argument - peasant does not exists
     }
-
-    // find location of thug (maybe not needed?)
-    Point thug_loc = thug_->getLocation();
-    // find location of peasant
-    Point peasant_loc = peasant_->getLocation();
-
-    // optional: let thug have pointer to peasant to check his location every
-    // turn
-
-    // sent thug to peasant
+    thug1->attack(dynamic_pointer_cast<Peasant>(peasant_));
 }
 
-bool Model::check_if_sturcture_exists(string &name) {
-    for (auto stract : Structure_list) {
-
-        if (auto locked = stract.lock()) {
+shared_ptr<Structure> Model::check_if_sturcture_exists(string &name) {
+    for (auto &it :Stracture_list ) {
+        if(it->getName() == name)
+        {
+            return it;
         }
     }
 }
@@ -102,13 +93,12 @@ void Model::setSize(int i) { View_list.front()->setSize(i); }
 
 void Model::zoom(int i) { View_list.front()->setSize(i); }
 
-shared_ptr<Agent> Model::findAgent(std::string &name) {
+shared_ptr<Agent> Model::findAgent(std::string& name, int type) {
     for (auto &it : Agent_list) {
-        if (it->getName() == name) {
+        if (it->getName() == name && (type == it->getType()) || type == -1) {
             return it;
         }
     }
-
     return nullptr;
 }
 

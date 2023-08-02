@@ -20,6 +20,10 @@ void Agent::move_to_direction(double theta) {}
 
 void Agent::stop() { state = STOPPED; }
 
-std::string Agent::getType() { return type; }
+int Agent::getType() { return type; }
 
 std::string Agent::getName() { return std::string(); }
+
+int Agent::getState() const {
+    return state;
+}

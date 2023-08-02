@@ -9,16 +9,16 @@
 
 class Agent : public Sim_object {
 
-    std::string name;
     Point destination;
     double speed;
     int state;
     int health;
-    std::string type;
+    int type;
 
 protected:
     enum state { STOPPED, DEAD, MOVING_TO_POSITION };
 
+    std::string name;
 public:
     /**
      * Agent constructor
@@ -35,8 +35,10 @@ public:
     void move_to_direction(double theta);
     void update() override;
     void stop();
-    std::string getType();
+    int getType();
     std::string getName();
+
+    int getState() const;
 };
 
 #endif // PROJECT_3_AGENT_H
