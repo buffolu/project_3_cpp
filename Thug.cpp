@@ -35,25 +35,45 @@ void Thug::attack(shared_ptr<Peasant> peasant) {
 }
 
 void Thug::update() {
-    if(_peasant)  //there is a peasant that needs to be attacked
-    {
-        if(distance(_peasant->getLocation(),getLocation()) <= 1  && !check_for_knight())
+    if(state == MOVING_TO_POSITION){
+        if(workingState == OnDuty)  //there is a peasant that needs to be attacked
         {
-                if(getHealth() >= _peasant->getHealth()) //attack succsesfull
+            if (Point::distance(_peasant->getLocation(), getLocation()) <= 1 &&
+                !check_for_knight()) //peasant is close enough
+            {
+                if (getHealth() >= _peasant->getHealth()) //attack succsesfull
                 {
                     _peasant->setState(STOPPED);
-                    _peasant->setCrates(0);
-                    setHealth(getHealth()+1);
-                    setState(STOPPED);
+                    _peasant->setCarriedCrates(0);
+                    setHealth(getHealth() + 1);
+                } else {
+                    setHealth(getHealth() - 1);
                 }
-                else{
-                    setHealth(getHealth()-1);
-                }
-                _peasant->setHealth(_peasant->getHealth()-1);
-                _peasant = nullptr; // attack completed.
+                _peasant->setHealth(_peasant->getHealth() - 1);
+                _peasant.reset(); // attack completed.
+                setState(STOPPED);
+                return;
+            }
+            else{
+                double angle = Point::getAngle(getLocation(), _peasant->getLocation());
+                setLocation(Point::advance(getLocation(), getSpeed(), angle));
+            }
+
+        }
+        else {  // Thug either  on course or moving towards some position.
+            setLocation(Point::advance(getLocation(), getSpeed(), angle));
+            if(workingState == ToPosition && getLocation() == getDestination())
+            {
+                state = STOPPED;
+            }
         }
 
+
+
+
     }
+
+
 }
 
 // void Thug::attack(shared_pt) {
@@ -63,4 +83,8 @@ void Thug::update() {
 
 void Thug::broadcast_current_state() const noexcept {
     Agent::broadcast_current_state();
+}
+
+bool Thug::check_for_knight() {
+    return false;
 }

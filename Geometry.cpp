@@ -52,3 +52,30 @@ void Point::print() const {
 }
 
 bool Point::operator==(const Point &rhs) { return x == rhs.x && y == rhs.y; }
+
+double Point::distance(const Point &a, const Point &b) {
+    double x1 = a.x;
+    double y1 = a.y;
+
+    double x2 = b.x;
+    double y2 = b.y;
+
+    return sqrt(pow((x2-x1),2)  +  pow((y2-y1),2));
+}
+
+//return angle as degrees
+double Point::getAngle(const Point &a, const Point &b) {
+    return  atan2(a.y - b.y, a.x - b.x) *180 /M_PI;
+
+
+}
+
+Point Point::advance(Point point, double speed, double angle) {
+     double radians = to_radians(angle);
+     double delta_x = speed* cos(radians);
+     double delta_y = speed* sin(radians);
+
+     return Point (point.x + delta_x, point.y + delta_y);
+
+    }
+

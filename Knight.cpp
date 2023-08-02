@@ -25,12 +25,16 @@ std::shared_ptr<Knight> Knight::getInstance(const string &name, Point &p) {
 void Knight::update() {
     if(getState() != STOPPED && getState() != DEAD)
     {
-        if(OnPatrol && getLocation() == home_castle->getLocation()){ // contuine the patrol to a new structure
+        if(workingState == OnDuty && getLocation() == home_castle->getLocation()){ // contuine the patrol to a new structure
                 shared_ptr<Structure> structure = check_for_closest();// with visited and mystructres}
                 angle = getAngle(getLocation(),structure); // implemnt in geomerty
         }
-        position = advance(getLocation(),speed,angle); //implement in geometry
+        setLocation(Point::advance(getLocation(),getSpeed(),angle)); //implement in geometry
     }
+
+
+
+
 }
 
 void Knight::setDestination(const std::string& structure) {

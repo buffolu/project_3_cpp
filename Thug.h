@@ -24,4 +24,6 @@ public:
     static std::shared_ptr<Thug> getThug(string &basicString,Point &point, int speed);
 
     void broadcast_current_state() const noexcept override;
+
+    bool check_for_knight();
 };
