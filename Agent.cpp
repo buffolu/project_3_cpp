@@ -4,41 +4,59 @@
 
 #include "Agent.h"
 
+Agent::Agent(const std::string &name_, Point location_, int speed_, int health_)
+    : Sim_object(name_, location_), speed(speed_), health(health_),
+      state(STOPPED) {}
+
 void Agent::update() {
     if (state == MOVING_TO_POSITION) {
-        // move agent
+        // TODO: move agent
     }
 }
 
-Agent::Agent(const string &name_, Point location_, int speed_, int health_)
-    : Sim_object(name_, location_), speed(speed_), state(STOPPED),
-      health(health_) {}
+void Agent::stop() {
+    state = STOPPED;
+    destination = nullptr;
+    destination_coordinates = getLocation();
+    // course unchanged
+}
 
-void Agent::move_to_place(Point &destination_) { state = MOVING_TO_POSITION; }
+void Agent::setCourse(double theta) {
+    state = MOVING_ON_COURSE;
+    course = theta;
+    destination = nullptr;
+    // destination_coordinates unchanged
+}
 
-void Agent::move_to_direction(double theta) {}
+double Agent::getCourse() const { return course; }
 
-void Agent::stop() { state = STOPPED; }
+void Agent::setDestinationCoordinates(Point destination_) {
+    state = MOVING_TO_POSITION;
+    destination = nullptr;
+    destination_coordinates = destination_;
+    // course unchanged
+}
 
-int Agent::getType() { return type; }
+Point Agent::getDestinationCoordinates() const {
+    return destination_coordinates;
+}
 
-std::string Agent::getName() { return std::string(); }
+void Agent::setDestination(std::shared_ptr<Structure> destination) {
+    state = MOVING_TO_POSITION;
+    Agent::destination = destination;
+    destination_coordinates = destination->getLocation();
+    // course unchanged
+}
+
+std::shared_ptr<Structure> Agent::getDestination() const { return destination; }
+
+// void Agent::setState(enum state state) { Agent::state = state; }
 
 int Agent::getState() const { return state; }
 
-const Point &Agent::getDestination() const { return destination; }
-
-double Agent::getSpeed() const { return speed; }
-
-int Agent::getHealth() const { return health; }
-
-void Agent::setDestination(const Point &destination) {
-    Agent::destination = destination;
-}
-
 void Agent::setSpeed(double speed) { Agent::speed = speed; }
 
-void Agent::setState(int state) { Agent::state = state; }
+double Agent::getSpeed() const { return speed; }
 
 void Agent::setHealth(int health) {
     Agent::health = health;
@@ -46,13 +64,13 @@ void Agent::setHealth(int health) {
         state = DEAD;
 }
 
-void Agent::setType(int type) { Agent::type = type; }
+int Agent::getHealth() const { return health; }
 
 void Agent::broadcast_current_state() const noexcept {
     Sim_object::broadcast_current_state();
     if (state == MOVING_TO_POSITION) {
-        std::cout << " moving to: (" << destination.x << ", " << destination.y
-                  << "), at speed: " << speed;
+        std::cout << " heading to: (" << getDestinationCoordinates().x << ", "
+                  << getDestinationCoordinates().y << "), at speed: " << speed;
     } else if (state == DEAD) {
         std::cout << " dead";
     } else if (state == STOPPED) {
