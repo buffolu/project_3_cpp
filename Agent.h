@@ -9,18 +9,17 @@
 
 class Agent : public Sim_object {
 
-    Point destination;
     double speed;
-    int state;
     int health;
     int type;
 
-
 protected:
-    enum state { STOPPED, DEAD, MOVING_TO_POSITION };
+    enum state { DEFAULT, STOPPED, DEAD, MOVING_TO_POSITION } state;
 
+    Point destination;
     std::string name;
     int angle;
+
 public:
     /**
      * Agent constructor
@@ -48,6 +47,7 @@ public:
 
     int getState() const;
 
+    // getDestination
     void setDestination(const Point &destination);
 
     void setSpeed(double speed);
@@ -57,6 +57,7 @@ public:
     void setHealth(int health);
 
     void setType(int type);
+    void broadcast_current_state() const noexcept override;
 };
 
 #endif // PROJECT_3_AGENT_H

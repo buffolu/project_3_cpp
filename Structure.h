@@ -13,6 +13,8 @@ class Structure : public Sim_object {
 public:
     void deposit(int amount);
     bool withdraw(int amount);
+
+    void broadcast_current_state() const noexcept override;
 };
 
 #endif // PROJECT_3_STRUCUTE_H

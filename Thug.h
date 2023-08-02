@@ -11,7 +11,7 @@ class Thug : public Agent {
 
 private:
 
-    Thug(std::string &name_, Point &position,int speed);
+    Thug(const std::string &name_, Point &position,int speed);
     shared_ptr<Peasant> _peasant;
     bool _isAttacking;
     shared_ptr<list<shared_ptr<Agent>>> agents;
@@ -22,4 +22,6 @@ public:
     void attack(shared_ptr<Peasant> peasant); // check if there is a peasant nearby to attack
 
     static std::shared_ptr<Thug> getThug(string &basicString,Point &point, int speed);
+
+    void broadcast_current_state() const noexcept override;
 };

@@ -15,7 +15,7 @@ std::shared_ptr<Thug> Thug::getThug(string &name, Point &point, int speed) {
     return shared_ptr<Thug>(new Thug(name,point,speed));
 }
 
-Thug::Thug(string &name_, Point &position, int speed): Agent(name,position,speed,5){
+Thug::Thug(const std::string &name_, Point &position, int speed): Agent(name,position,speed,5){
 
 }
 
@@ -59,3 +59,8 @@ void Thug::update() {
 // void Thug::attack(shared_pt) {
 //
 // }
+
+
+void Thug::broadcast_current_state() const noexcept {
+    Agent::broadcast_current_state();
+}

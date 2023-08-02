@@ -33,9 +33,22 @@ void Knight::update() {
     }
 }
 
-void Knight::setDestination(const std::string& stracture) {
-    OnPatrol = true;
-    OnCourse = false;
-    ToPosition = false;
+void Knight::setDestination(const std::string& structure) {
+    knight_state = ToPosition;
+    state = DEFAULT;
+//    Agent::setDestination(structure);
     // home_castle = stracture;
+}
+
+void Knight::broadcast_current_state() const noexcept {
+    Agent::broadcast_current_state();
+    if (knight_state == OnPatrol) {
+        std::cout << " patrolling around ";
+        getDestination().print();
+    } else if (knight_state == OnCourse) {
+        std::cout << " on course to " << std::to_string(course);
+    } else if (knight_state == ToPosition) {
+        std::cout << " moving to: (" << destination.x << ", " << destination.y
+                  << "), at speed: " << getSpeed();
+    }
 }

@@ -14,15 +14,14 @@ class Knight : public Agent {
     list<string> visited;
     shared_ptr<Castle> home_castle;
 
-    Point destination;
+    enum knight_state { OnPatrol, OnCourse, ToPosition } knight_state;
 
-    bool OnCourse;
-    bool OnPatrol;
-    bool ToPosition;
+    float course; // degrees
 
 public:
     static std::shared_ptr<Knight> getInstance(const string &name, Point &p);
     void
     update() override; // check if there is a thug attacking a peasant nearby
     void setDestination(const std::string &structure);
+    void broadcast_current_state() const noexcept override;
 };

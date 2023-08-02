@@ -16,3 +16,8 @@ bool Structure::withdraw(int amount) {
     }
     return false;	// failed to withdraw
 }
+
+void Structure::broadcast_current_state() const noexcept {
+    Sim_object::broadcast_current_state();
+    std::cout << ", hay: " << hay;
+}

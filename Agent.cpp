@@ -24,33 +24,21 @@ int Agent::getType() { return type; }
 
 std::string Agent::getName() { return std::string(); }
 
-int Agent::getState() const {
-    return state;
-}
+int Agent::getState() const { return state; }
 
-const Point &Agent::getDestination() const {
-    return destination;
-}
+const Point &Agent::getDestination() const { return destination; }
 
-double Agent::getSpeed() const {
-    return speed;
-}
+double Agent::getSpeed() const { return speed; }
 
-int Agent::getHealth() const {
-    return health;
-}
+int Agent::getHealth() const { return health; }
 
 void Agent::setDestination(const Point &destination) {
     Agent::destination = destination;
 }
 
-void Agent::setSpeed(double speed) {
-    Agent::speed = speed;
-}
+void Agent::setSpeed(double speed) { Agent::speed = speed; }
 
-void Agent::setState(int state) {
-    Agent::state = state;
-}
+void Agent::setState(int state) { Agent::state = state; }
 
 void Agent::setHealth(int health) {
     Agent::health = health;
@@ -58,8 +46,16 @@ void Agent::setHealth(int health) {
         state = DEAD;
 }
 
-}
+void Agent::setType(int type) { Agent::type = type; }
 
-void Agent::setType(int type) {
-    Agent::type = type;
+void Agent::broadcast_current_state() const noexcept {
+    Sim_object::broadcast_current_state();
+    if (state == MOVING_TO_POSITION) {
+        std::cout << " moving to: (" << destination.x << ", " << destination.y
+                  << "), at speed: " << speed;
+    } else if (state == DEAD) {
+        std::cout << " dead";
+    } else if (state == STOPPED) {
+        std::cout << " stopped";
+    }
 }
