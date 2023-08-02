@@ -4,12 +4,18 @@
 
 #include "Sim_object.h"
 
-Sim_object::Sim_object(const string &name_, Point location_) {
+Sim_object::Sim_object(const string &name_, Point location_) : name(name_), location(location_) {
+}
+
+void Sim_object::setName(const std::string& name_) {
     name = name_;
-    location = location_;
 }
 
 std::string Sim_object::getName() const noexcept { return name; }
+
+void Sim_object::setLocation(Point location_) {
+    location = location_;
+}
 
 Point Sim_object::getLocation() const noexcept { return location; }
 
