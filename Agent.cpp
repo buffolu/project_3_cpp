@@ -27,3 +27,39 @@ std::string Agent::getName() { return std::string(); }
 int Agent::getState() const {
     return state;
 }
+
+const Point &Agent::getDestination() const {
+    return destination;
+}
+
+double Agent::getSpeed() const {
+    return speed;
+}
+
+int Agent::getHealth() const {
+    return health;
+}
+
+void Agent::setDestination(const Point &destination) {
+    Agent::destination = destination;
+}
+
+void Agent::setSpeed(double speed) {
+    Agent::speed = speed;
+}
+
+void Agent::setState(int state) {
+    Agent::state = state;
+}
+
+void Agent::setHealth(int health) {
+    Agent::health = health;
+    if (health == 0)
+        state = DEAD;
+}
+
+}
+
+void Agent::setType(int type) {
+    Agent::type = type;
+}
