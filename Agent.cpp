@@ -10,7 +10,7 @@ void Agent::update() {
     }
 }
 
-Agent::Agent(string &name_, Point &location_, int speed_, int health_)
+Agent::Agent(const string &name_, Point location_, int speed_, int health_)
     : Sim_object(name_, location_), speed(speed_), state(STOPPED),
       health(health_) {}
 

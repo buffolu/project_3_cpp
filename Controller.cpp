@@ -5,6 +5,7 @@
 #include "Controller.h"
 
 bool Controller::GetUserInput() {
+    std::string input;
     if (std::getline(std::cin, input)) {
         if (input == "") {
             model->badInput(input);
@@ -22,19 +23,19 @@ bool Controller::GetUserInput() {
         std::string command = words.front();
         words.erase(words.begin());
         if (command == "default" && words.empty()) {
-            model.ddefault();
+            model->ddefault();
 
         } else if (command == "size" && words.size() == 1) {
             int s = std::stoi(words.back());
             if (s > 6 && s <= 30) {
-                model.setSize(s);
+                model->setSize(s);
             } else {
                 throw std::invalid_argument("invalid input");
             }
         } else if (command == "zoom" && words.size() == 1) {
             int num = std::stoi(words.back());
             if (num > 0) {
-                model.zoom(num);
+                model->zoom(num);
             }
 
             else {

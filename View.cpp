@@ -9,4 +9,6 @@
 //
 // }
 
-void View::Log(std::string &str) noexcept { std::cout << str << std::endl; }
+void View::Log(const std::string &str) noexcept {
+    std::cout << str << std::endl;
+}

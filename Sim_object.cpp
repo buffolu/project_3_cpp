@@ -4,7 +4,7 @@
 
 #include "Sim_object.h"
 
-Sim_object::Sim_object(string &name_, Point &location_) {
+Sim_object::Sim_object(const string &name_, Point location_) {
     name = name_;
     location = location_;
 }

@@ -30,7 +30,7 @@ public:
      *  speed_ : how fast he will walk
      *  health : how much health he starts with
      */
-    Agent(std::string &name_, Point &location, int speed_, int health);
+    Agent(const std::string &name_, Point location, int speed_, int health);
     void move_to_place(Point &destination_);
     void move_to_direction(double theta);
     void update() override;

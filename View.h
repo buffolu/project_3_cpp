@@ -11,8 +11,6 @@ class View {
     int size_x; // size of terminal window
     int size_y;
     Point origin;
-    std::set<Sim_object> objects;
-    std::vector<std::vector<pair<double, double>>> map;
 
 public:
     // getters setters
@@ -23,7 +21,8 @@ public:
 
     // void draw();
 
-    inline void Log(std::string &str) noexcept;
+    // void draw_board(
+    inline void Log(const std::string &str) noexcept;
 };
 
 #endif // PROJECT_3_VIEW_H

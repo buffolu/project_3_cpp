@@ -6,6 +6,7 @@
 #define PROJECT_3_CONTROLLER_H
 #include "Model.h"
 #include "View.h"
+#include "utils.h"
 #include <istream>
 #include <utility>
 #include <vector>

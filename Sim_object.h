@@ -16,7 +16,7 @@ protected:
     void broadcast_current_state() const noexcept;
 
 public:
-    Sim_object(std::string &name_, Point &location_);
+    Sim_object(const std::string &name_, Point location_);
     virtual void update() = 0;
 
     std::string getName() const noexcept;
