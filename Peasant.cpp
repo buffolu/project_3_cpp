@@ -25,3 +25,7 @@ void Peasant::update() {
 int Peasant::getCarriedCrates() const { return carried_crates; }
 
 bool Peasant::isWorking() const { return is_working; }
+
+void Peasant::setCarriedCrates(int carriedCrates) {
+    carried_crates = carriedCrates;
+}

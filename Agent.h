@@ -16,7 +16,7 @@ class Agent : public Sim_object {
 
 public:
     // always set state destination, destination_coordinates, course together
-    enum state { DEFAULT, STOPPED, DEAD, MOVING_TO_POSITION, MOVING_ON_COURSE };
+    enum state { DEFAULT, STOPPED, DEAD, MOVING_TO_POSITION, MOVING_ON_COURSE,ON_DUTY };
 
 private:
     enum state state;
@@ -64,6 +64,9 @@ public:
     int getHealth() const;
 
     void broadcast_current_state() const noexcept override;
+
+
+    void setState(enum state state);
 };
 
 #endif // PROJECT_3_AGENT_H

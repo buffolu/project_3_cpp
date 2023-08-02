@@ -23,4 +23,6 @@ public:
     int getCarriedCrates() const;
 
     bool isWorking() const;
+
+    void setCarriedCrates(int carriedCrates);
 };

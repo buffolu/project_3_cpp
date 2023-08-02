@@ -2,8 +2,9 @@
 // Created by igor on 24/06/2023.
 //
 
+#include <algorithm>
 #include "Thug.h"
-
+#include "Knight.h"
 
 
 std::shared_ptr<Thug> Thug::getThug(string &name, Point &point, int speed) {
@@ -15,7 +16,7 @@ std::shared_ptr<Thug> Thug::getThug(string &name, Point &point, int speed) {
     return shared_ptr<Thug>(new Thug(name,point,speed));
 }
 
-Thug::Thug(const std::string &name_, Point &position, int speed): Agent(name,position,speed,5){
+Thug::Thug(const std::string &name_, Point &position, int speed): Agent(name_,position,speed,5){
 
 }
 
@@ -29,17 +30,14 @@ void Thug::attack(shared_ptr<Peasant> peasant) {
 
 
         _peasant = std::move(peasant);
-        _isAttacking = true;
     }
 
 }
 
 void Thug::update() {
-    if(state == MOVING_TO_POSITION){
-        if(workingState == OnDuty)  //there is a peasant that needs to be attacked
-        {
-            if (Point::distance(_peasant->getLocation(), getLocation()) <= 1 &&
-                !check_for_knight()) //peasant is close enough
+    if(getState() == ON_DUTY){ //there is a peasant that needs to be attacked
+            if (Point::distance(_peasant->getLocation(), getLocation()) <= 1 && //peasant is close enough
+                !check_for_knight()) //no knights around
             {
                 if (getHealth() >= _peasant->getHealth()) //attack succsesfull
                 {
@@ -51,29 +49,14 @@ void Thug::update() {
                 }
                 _peasant->setHealth(_peasant->getHealth() - 1);
                 _peasant.reset(); // attack completed.
-                setState(STOPPED);
+                setState( STOPPED);
                 return;
             }
             else{
-                double angle = Point::getAngle(getLocation(), _peasant->getLocation());
-                setLocation(Point::advance(getLocation(), getSpeed(), angle));
-            }
-
-        }
-        else {  // Thug either  on course or moving towards some position.
-            setLocation(Point::advance(getLocation(), getSpeed(), angle));
-            if(workingState == ToPosition && getLocation() == getDestination())
-            {
-                state = STOPPED;
+                double angle1 = Point::getAngle(getLocation(), _peasant->getLocation());
+                setLocation(Point::advance(getLocation(), getSpeed(), angle1));
             }
         }
-
-
-
-
-    }
-
-
 }
 
 // void Thug::attack(shared_pt) {
@@ -86,5 +69,10 @@ void Thug::broadcast_current_state() const noexcept {
 }
 
 bool Thug::check_for_knight() {
-    return false;
+   return std::any_of(agents->begin(),agents->end(),[this](shared_ptr<Agent>& agent)
+   {
+       return (dynamic_pointer_cast<Knight>(agent) &&
+                Point::distance(getLocation(),agent->getLocation()) <= 2.5)
+   ;})
+   ;
 }

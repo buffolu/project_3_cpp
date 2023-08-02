@@ -9,8 +9,12 @@ Agent::Agent(const std::string &name_, Point location_, int speed_, int health_)
       state(STOPPED) {}
 
 void Agent::update() {
-    if (state == MOVING_TO_POSITION) {
-        // TODO: move agent
+    if (state == MOVING_TO_POSITION || state == MOVING_ON_COURSE){
+        setLocation(Point::advance(getLocation(), getSpeed(), course));
+        if(state == MOVING_TO_POSITION && getLocation() == destination_coordinates) // the agent reached the destination
+        {
+            stop();
+        }
     }
 }
 
@@ -32,6 +36,7 @@ double Agent::getCourse() const { return course; }
 
 void Agent::setDestinationCoordinates(Point destination_) {
     state = MOVING_TO_POSITION;
+    course = Point ::getAngle(getLocation(),destination_);
     destination = nullptr;
     destination_coordinates = destination_;
     // course unchanged
@@ -42,7 +47,7 @@ Point Agent::getDestinationCoordinates() const {
 }
 
 void Agent::setDestination(std::shared_ptr<Structure> destination) {
-    state = MOVING_TO_POSITION;
+    state = ON_DUTY;
     Agent::destination = destination;
     destination_coordinates = destination->getLocation();
     // course unchanged
@@ -58,8 +63,9 @@ void Agent::setSpeed(double speed) { Agent::speed = speed; }
 
 double Agent::getSpeed() const { return speed; }
 
-void Agent::setHealth(int health) {
-    Agent::health = health;
+void Agent::setHealth(int health1) {
+    if(health != 20)
+        Agent::health = health1;
     if (health == 0)
         state = DEAD;
 }
@@ -76,4 +82,8 @@ void Agent::broadcast_current_state() const noexcept {
     } else if (state == STOPPED) {
         std::cout << " stopped";
     }
+}
+
+void Agent::setState(enum Agent::state _state) {
+    Agent::state = _state;
 }

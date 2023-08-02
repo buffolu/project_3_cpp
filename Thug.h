@@ -13,7 +13,6 @@ private:
 
     Thug(const std::string &name_, Point &position,int speed);
     shared_ptr<Peasant> _peasant;
-    bool _isAttacking;
     shared_ptr<list<shared_ptr<Agent>>> agents;
 
 public:
