@@ -29,8 +29,8 @@ void Model::run(int argc, char **argv) {
 }
 
 void Model::update() {
-    for (const auto &object : Sim_object_list) {
-        (*object).update();
+    for (const auto &object : Agent_list) {
+        object->update();
     }
     time++;
 }

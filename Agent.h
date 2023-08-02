@@ -15,10 +15,12 @@ class Agent : public Sim_object {
     int health;
     int type;
 
+
 protected:
     enum state { STOPPED, DEAD, MOVING_TO_POSITION };
 
     std::string name;
+    int angle;
 public:
     /**
      * Agent constructor
@@ -38,7 +40,23 @@ public:
     int getType();
     std::string getName();
 
+    const Point &getDestination() const;
+
+    double getSpeed() const;
+
+    int getHealth() const;
+
     int getState() const;
+
+    void setDestination(const Point &destination);
+
+    void setSpeed(double speed);
+
+    void setState(int state);
+
+    void setHealth(int health);
+
+    void setType(int type);
 };
 
 #endif // PROJECT_3_AGENT_H
