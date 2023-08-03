@@ -32,7 +32,7 @@ void Knight::update() {
 
 }
 
-void Knight::setOnPatrol(const shared_ptr<Structure>& structure_,const shared_ptr<list<shared_ptr<Structure>>>& structures) {
+void Knight::setOnPatrol(const shared_ptr<Structure>& structure_,const shared_ptr<vector<shared_ptr<Structure>>>& structures) {
     setState(ON_DUTY);
     home_castle = structure_;
     next_castle = home_castle;

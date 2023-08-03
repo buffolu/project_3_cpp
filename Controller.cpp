@@ -57,9 +57,9 @@ bool Controller::GetUserInput() {
 
         // line 59- related to model
         else if (command == "status " && words.empty()) {
-            model.status();
+            model->status();
         } else if (command == "go" && words.empty()) {
-            model.go();
+            model->go();
         } else if (command == "create" && words.size() == 3 ||
                    words.size() == 4) {
             std::string name = words.front();
@@ -86,8 +86,6 @@ bool Controller::GetUserInput() {
 
                 model->addAgent(name, type, p);
 
-            } else if (words.size() == 1) {
-                model->addAgent(name, type, words.front());
             }
         }
         // this commands will be given after the name.
@@ -111,7 +109,7 @@ bool Controller::GetUserInput() {
                     throw std::invalid_argument("invalid input");
                 }
             }
-            model.course(name, theta, speed);
+            model->course(name, theta, speed);
         }
         if (command2 == "position" &&
             (words.size() == 2 || words.size() == 3)) {
@@ -128,7 +126,7 @@ bool Controller::GetUserInput() {
                 std::string word3 = words.back();
                 speed = stoi(word3);
             }
-            model.position(name, p, speed);
+            model->position(name, p, speed);
         }
         if (words.front() == "destination" && words.size() == 1) {
             model.destination(name, words.back());
