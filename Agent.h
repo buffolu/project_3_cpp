@@ -16,16 +16,19 @@ class Agent : public Sim_object {
 
 public:
     // always set state destination, destination_coordinates, course together
-    enum state { DEFAULT, STOPPED, DEAD, MOVING_TO_POSITION, MOVING_ON_COURSE,ON_DUTY };
+    enum state {  STOPPED, DEAD, MOVING_TO_POSITION, MOVING_ON_COURSE,ON_DUTY };
+    /**
+     * moving_to_position = user called the "position x,y" command
+     * moving_on_course = user called the "course theta" command
+     * on_duty = user called one of the methods for specific agent to work(patrol,loading crates,attack, etc... )
+     */
+
 
 private:
     enum state state;
-    // can be null to say that agent is moving towards a different place
-    std::shared_ptr<Structure> destination;
 
-    // possibly unnecessary
-    Point destination_coordinates;
-    double course;
+    Point destination_coordinates; //used when the user call the position command
+    double angle;                  //used when the user call the course command
 
 public:
     /**
@@ -42,17 +45,14 @@ public:
 
     void update() override;
 
-    void stop();
+    virtual void stop();
 
-    void setCourse(double theta);
+    virtual void setCourse(double theta);
     double getCourse() const;
 
-    // possibly unnecessary
-    void setDestinationCoordinates(Point destination);
+    virtual void setDestinationCoordinates(Point destination);
     Point getDestinationCoordinates() const;
 
-    void setDestination(std::shared_ptr<Structure> destination);
-    std::shared_ptr<Structure> getDestination() const;
 
     void setSpeed(double speed);
     double getSpeed() const;
@@ -60,11 +60,14 @@ public:
     // void setState(enum state state);
     int getState() const;
 
+    double getAngle() const;
+
     void setHealth(int health);
     int getHealth() const;
 
     void broadcast_current_state() const noexcept override;
 
+    void setAngle(double angle);
 
     void setState(enum state state);
 };

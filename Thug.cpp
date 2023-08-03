@@ -39,7 +39,7 @@ void Thug::update() {
             if (Point::distance(_peasant->getLocation(), getLocation()) <= 1 && //peasant is close enough
                 !check_for_knight()) //no knights around
             {
-                if (getHealth() >= _peasant->getHealth()) //attack succsesfull
+                if (getHealth() >= _peasant->getHealth()) //attack successful
                 {
                     _peasant->setState(STOPPED);
                     _peasant->setCarriedCrates(0);
