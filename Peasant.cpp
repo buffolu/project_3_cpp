@@ -3,7 +3,7 @@
 //
 #include "Peasant.h"
 
-Peasant::Peasant(std::string &name, Point &position) : Agent(name, position,10,5),carried_crates(0),is_working(false) {
+Peasant::Peasant(std::string &name, Point &position) : Agent(name, position,10,5),carried_crates(0) {
 
 }
 

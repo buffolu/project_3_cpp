@@ -36,6 +36,7 @@ void Knight::setOnPatrol(const shared_ptr<Structure>& structure_,const shared_pt
     setState(ON_DUTY);
     home_castle = structure_;
     next_castle = home_castle;
+    visited.push_back(structure_->getName());
     setAngle(Point::getAngle(getLocation(),structure_->getLocation())); // angle of riding direction
     myStructures = structures;
 }

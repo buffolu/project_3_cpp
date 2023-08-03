@@ -14,6 +14,7 @@ class Knight : public Agent {
     shared_ptr<list<shared_ptr<Structure>>> myStructures;
     std::vector<string> visited;
     shared_ptr<Structure> home_castle;
+    shared_ptr<Structure> next_castle;
 
     bool going_home; // knight is going back to his original structure
 
