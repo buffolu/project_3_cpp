@@ -35,7 +35,26 @@ void Model::update() {
     time++;
 }
 
-void Model::addAgent(std::string &name, int type, Point &position, int speed) {
+void Model::addKnight(const std::string &name, const std::string &home) {
+    std::shared_ptr<Knight> knight = std::make_shared<Knight>(name, home);
+    Sim_object_list.push_back(knight);
+    Agent_list.push_back(knight);
+}
+
+void Model::addPeasant(const std::string& name, Point position) {
+    std::shared_ptr<Peasant> peasant = std::make_shared<Peasant>(name, position);
+    Sim_object_list.push_back(peasant);
+    Agent_list.push_back(peasant);
+}
+
+void Model::addThug(const std::string &name, Point position) {
+    std::shared_ptr<Peasant> thug = std::make_shared<Peasant>(name, position);
+    Sim_object_list.push_back(thug);
+    Agent_list.push_back(thug);
+}
+
+/*
+void Model::addAgent(const std::string &name, Point &position, int speed) {
     std::shared_ptr<Agent> sharedAgent;
     if (type == THUG) {
         sharedAgent = Thug::getThug(name, position, speed);
@@ -49,6 +68,7 @@ void Model::addAgent(std::string &name, int type, Point &position, int speed) {
     Sim_object_list.push_back(sharedAgent);
     Agent_list.push_back(sharedAgent);
 }
+*/
 
 // function not complete , need to send thug to attack peasant
 void Model::attack(string &thug, string &peasant) {

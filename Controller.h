@@ -10,17 +10,17 @@
 #include <istream>
 #include <utility>
 #include <vector>
+#include <memory>
 
 class Controller {
 private:
     // possibly unnecessary for a controller to have knowledge of view
     View view;
-    Model *model;
-    bool isStringOnlyLetters(const std::string &str) const noexcept;
+    std::shared_ptr<Model> model;
 
 public:
     explicit Controller(Model &model1) : model(&model1){};
-    bool GetUserInput(std::string &str);
+    bool GetUserInput();
     void readFile(std::fstream &file);
 };
 

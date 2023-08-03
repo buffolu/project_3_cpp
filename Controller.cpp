@@ -9,10 +9,11 @@ bool Controller::GetUserInput() {
     if (std::getline(std::cin, input)) {
         if (input == "") {
             model->badInput(input);
+            return 0;
         }
     }
 
-    std::vector<std::string> &&words = utils::separate(input);
+    std::vector<std::string> &&words = utils::split(input, ' ');
 
     try {
         // lines 22-54  inputs related to view
@@ -65,7 +66,7 @@ bool Controller::GetUserInput() {
             words.erase(words.begin());
             std::string type = words.front(); // knight , thug or peasant
             words.erase(words.begin());
-            if (isStringOnlyLetters(name)) {
+            if (utils::isStringOnlyLetters(name)) {
                 throw std::invalid_argument("invalid input");
             }
 
@@ -83,10 +84,10 @@ bool Controller::GetUserInput() {
                 double y = std::stoi(word2);
                 Point p(x, y);
 
-                model.addAgent(name, type, p);
+                model->addAgent(name, type, p);
 
             } else if (words.size() == 1) {
-                model.addAgent(name, type, words.front());
+                model->addAgent(name, type, words.front());
             }
         }
         // this commands will be given after the name.
@@ -147,14 +148,4 @@ bool Controller::GetUserInput() {
     catch (const std::exception &e) {
         std::cout << e.what();
     }
-}
-
-bool Controller::isStringOnlyLetters(const string &str) const noexcept {
-
-    for (char ch : str) {
-        if (!std::isalpha(ch)) {
-            return false;
-        }
-    }
-    return true;
 }

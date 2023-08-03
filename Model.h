@@ -30,7 +30,10 @@ class Model {
 
 public:
     void update();
-    void addAgent(std::string &name, int type, Point &position, int speed);
+
+    void addKnight(const std::string &name, const std::string &home);
+    void addPeasant(const std::string& name, Point position);
+    void addThug(const std::string &name, Point position);
 
     void attack(std::string &thug, std::string &peasant);
 

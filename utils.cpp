@@ -12,3 +12,12 @@ std::vector<std::string> utils::split(const std::string &str, char delim) {
     }
     return res;
 }
+
+bool utils::isStringOnlyLetters(const std::string &str) noexcept {
+    for (char ch : str) {
+        if (!std::isalpha(ch)) {
+            return false;
+        }
+    }
+    return true;
+}
