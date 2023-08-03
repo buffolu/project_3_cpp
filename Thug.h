@@ -18,11 +18,12 @@ private:
 public:
     void update() override;
 
-    void attack(shared_ptr<Peasant> peasant); // check if there is a peasant nearby to attack
+    void attack(shared_ptr<Peasant> peasant,shared_ptr<list<shared_ptr<Agent>>> agents_); // check if there is a peasant nearby to attack
 
     static std::shared_ptr<Thug> getThug(string &basicString,Point &point, int speed);
 
     void broadcast_current_state() const noexcept override;
 
     bool check_for_knight();
+    void stop() override;
 };

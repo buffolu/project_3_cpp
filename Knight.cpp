@@ -17,12 +17,8 @@ std::shared_ptr<Knight> Knight::getInstance(const string &name, Point &p) {
 
 
 
-/**
- * TODO: new functions to implement
- *
- *
- */
 void Knight::update() {
+    Agent::update();
     if(getState() == ON_DUTY)
     {
         if(getLocation() == next_castle->getLocation()){ // continue the patrol to a new structure
@@ -94,6 +90,7 @@ void Knight::stop() {
     Agent::stop();
     home_castle.reset();
     next_castle.reset();
+    myStructures.reset();
     going_home = false;
     visited.clear();
 }

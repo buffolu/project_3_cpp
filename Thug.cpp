@@ -3,12 +3,13 @@
 //
 
 #include <algorithm>
+#include <utility>
 #include "Thug.h"
 #include "Knight.h"
 
 
 std::shared_ptr<Thug> Thug::getThug(string &name, Point &point, int speed) {
-    if(speed > 30 || name.length() > 16 || out_of_scope(point))
+    if(speed > 30 || name.length() > 16 )
     {
         throw exception(); // throw suitable exception
     }
@@ -20,7 +21,7 @@ Thug::Thug(const std::string &name_, Point &position, int speed): Agent(name_,po
 
 }
 
-void Thug::attack(shared_ptr<Peasant> peasant) {
+void Thug::attack(shared_ptr<Peasant> peasant,shared_ptr<list<shared_ptr<Agent>>> agents_) {
     if(getState() == DEAD || peasant->getState() == DEAD) {} //thug or peasant are dead
         /*
          * TODO: EITHER DO NOTHING OR THROW EXCPETION
@@ -28,13 +29,15 @@ void Thug::attack(shared_ptr<Peasant> peasant) {
          */
     else{
 
-
+        setState(ON_DUTY);
+        agents = std::move(agents_);
         _peasant = std::move(peasant);
     }
 
 }
 
 void Thug::update() {
+    Agent::update();
     if(getState() == ON_DUTY){ //there is a peasant that needs to be attacked
             if (Point::distance(_peasant->getLocation(), getLocation()) <= 1 && //peasant is close enough
                 !check_for_knight()) //no knights around
@@ -49,7 +52,7 @@ void Thug::update() {
                 }
                 _peasant->setHealth(_peasant->getHealth() - 1);
                 _peasant.reset(); // attack completed.
-                setState( STOPPED);
+                stop();
                 return;
             }
             else{
@@ -59,9 +62,6 @@ void Thug::update() {
         }
 }
 
-// void Thug::attack(shared_pt) {
-//
-// }
 
 
 void Thug::broadcast_current_state() const noexcept {
@@ -75,4 +75,10 @@ bool Thug::check_for_knight() {
                 Point::distance(getLocation(),agent->getLocation()) <= 2.5)
    ;})
    ;
+}
+
+void Thug::stop() {
+    Agent::stop();
+    agents.reset();
+    _peasant.reset();
 }
