@@ -2,19 +2,10 @@
 // Created by igor on 24/06/2023.
 //
 #include "Knight.h"
+#include <float.h>
 
 Knight::Knight(const std::string &name, Point position)
-    : Agent(name, position, 10, -1) {
-    setState(STOPPED);
-}
-
-std::shared_ptr<Knight> Knight::getInstance(const string &name, Point &p) {
-    // what is isValid
-    if(name.length()<16 ){
-        return shared_ptr<Knight>(new Knight(name,p));
-    }
-}
-
+    : Agent(name, position, 10, -1) {}
 
 
 void Knight::update() {
@@ -60,8 +51,7 @@ void Knight::broadcast_current_state() const noexcept {
 shared_ptr<Structure> Knight::check_for_closest() {
         if (visited.size() == myStructures->size()) return nullptr;
 
-
-        double min = 1000000000000;  //infinity
+        double min = DBL_MAX;
         double tmp;
         shared_ptr<Structure> structure;
         for (const auto &obj: *myStructures) {
@@ -72,12 +62,10 @@ shared_ptr<Structure> Knight::check_for_closest() {
                 if (tmp < min) {
                     min = tmp;
                     structure = obj;
-                } else if (tmp == min)   //choose by alphabetic order
+                } else if (tmp == min && obj->getName().front() < structure->getName().front())   //choose by alphabetic order
                 {
-                    if (obj->getName().front() < structure->getName().front()) {
-                        min = tmp;
-                        structure = obj;
-                    }
+                    min = tmp;
+                    structure = obj;
                 }
             }
         }
@@ -88,8 +76,6 @@ shared_ptr<Structure> Knight::check_for_closest() {
 
 void Knight::stop() {
     Agent::stop();
-    home_castle.reset();
-    next_castle.reset();
     myStructures.reset();
     going_home = false;
     visited.clear();
