@@ -7,4 +7,6 @@ class Farm : public Structure {
 
 public:
     void update() override;
+    int takeCrates();
 };
+

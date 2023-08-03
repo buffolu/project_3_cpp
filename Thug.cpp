@@ -42,19 +42,24 @@ void Thug::update() {
             if (Point::distance(_peasant->getLocation(), getLocation()) <= 1 && //peasant is close enough
                 !check_for_knight()) //no knights around
             {
+                //initiate attack !
                 if (getHealth() >= _peasant->getHealth()) //attack successful
                 {
                     _peasant->setState(STOPPED);
                     _peasant->setCarriedCrates(0);
                     setHealth(getHealth() + 1);
-                } else {
-                    setHealth(getHealth() - 1);
                 }
+                else {
+                    setHealth(getHealth() - 1);     //attack unsuccessful
+                }
+                //attack completed !
                 _peasant->setHealth(_peasant->getHealth() - 1);
-                _peasant.reset(); // attack completed.
+                _peasant.reset();
                 stop();
                 return;
             }
+
+            //one of the conditions is not satisfied
             else{
                 double angle1 = Point::getAngle(getLocation(), _peasant->getLocation());
                 setLocation(Point::advance(getLocation(), getSpeed(), angle1));
@@ -81,4 +86,14 @@ void Thug::stop() {
     Agent::stop();
     agents.reset();
     _peasant.reset();
+}
+
+void Thug::setCourse(double theta) {
+    stop();
+    Agent::setCourse(theta);
+}
+
+void Thug::setDestinationCoordinates(Point destination) {
+    stop();
+    Agent::setDestinationCoordinates(destination);
 }

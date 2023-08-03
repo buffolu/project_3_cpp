@@ -7,4 +7,5 @@ class Castle : public Structure {
 
 public:
     void update() override;
+    void giveCrates(int crates);
 };

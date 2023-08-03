@@ -26,4 +26,9 @@ public:
 
     bool check_for_knight();
     void stop() override;
+
+    void setDestinationCoordinates(Point destination) override;
+    void setCourse(double theta) override;
+
+
 };
