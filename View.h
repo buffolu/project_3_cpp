@@ -17,8 +17,9 @@ class View {
     Point _origin;
     void insert(double x , double y,const shared_ptr<objType>& obj);
 public:
-
+    View();
     // getters setters
+    void setPan(double x,double y);
     int getSize();
     void setSize(int size);
     void setScale(double scale);
@@ -42,16 +43,30 @@ void View<objType>::show(shared_ptr<list<shared_ptr<objType>>> objects) {
         double x = obj->getLocation().x;
         double y = obj->getLocation().y;
 
-        insert(x,y,*obj);
+         insert(x,y,*obj);
     }
 
-
-
-
+    for(const auto& row: _matrix)
+    {
+        for(const auto& sqaure: row)
+        {
+            std::cout<<sqaure<<" ";
+        }
+        std::cout<<"\n";
+    }
 }
 
 template<typename objType>
 void View<objType>::setSize(int size) {
+    if(size<6 || size > 30) throw exception();
+
+
+    _matrix.resize(size);
+    for_each(_matrix.begin(),_matrix.end(),[size](std::vector<objType>& object)
+    {
+        object.resize(size);
+    });
+
     _size = size;
 }
 
@@ -68,12 +83,24 @@ void View<objType>::insert(double x, double y,const shared_ptr<objType>& obj ) {
     double y_range = _pan.y = range;
 
 
-    if (x > x_range || y > y_range || x < _pan.x || y < _pan.y) return;
+    if (x > x_range || y > y_range || x < _pan.x || y < _pan.y) return; //out of range depending on this scale,pan and size.
 
     int x_cordinate = x / _scale * 10;
     int y_cordinate = y / _scale * 10;
 
     _matrix.at(x_cordinate).at(y_cordinate) = obj->getName().at(0);
 }
+
+template<typename objType>
+void View<objType>::setPan(double x, double y) {
+    _pan.x = x; _pan.y = y;}
+
+template<typename objType>
+View<objType>::View() {
+    _size  = 25;
+    _pan = {0,0};
+    _scale = 2;
+}
+
 
 #endif // PROJECT_3_VIEW_H
