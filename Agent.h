@@ -48,10 +48,10 @@ public:
 
     virtual void stop();
 
-    void setCourse(double theta);
+    virtual void setCourse(double theta);
     double getCourse() const;
 
-    void setDestinationCoordinates(Point destination);
+    virtual void setDestinationCoordinates(Point destination);
     Point getDestinationCoordinates() const;
 
     void setSpeed(double speed);

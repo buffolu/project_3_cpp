@@ -36,14 +36,12 @@ void Knight::update() {
     }
 }
 
-void Knight::setOnPatrol(
-    const shared_ptr<Structure> &structure_,
-    const shared_ptr<list<shared_ptr<Structure>>> &structures) {
+void Knight::setOnPatrol(const shared_ptr<Structure>& structure_,const shared_ptr<vector<shared_ptr<Structure>>>& structures) {
     setState(ON_DUTY);
     home_castle = structure_;
     destination_structure = home_castle;
-    setAngle(Point::getAngle(
-        getLocation(), structure_->getLocation())); // angle of riding direction
+    visited.push_back(structure_->getName());
+    setAngle(Point::getAngle(getLocation(),structure_->getLocation())); // angle of riding direction
     myStructures = structures;
 }
 

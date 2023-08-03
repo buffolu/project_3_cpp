@@ -4,25 +4,33 @@
 
 #ifndef PROJECT_3_VIEW_H
 #define PROJECT_3_VIEW_H
+#include <memory>
+#include <vector>
+#include <cmath>
+#include "Geometry.h"
+#include "Sim_object.h"
+#include "algorithm"
 
-#include "Model.h"
 class View {
-    int scale;  // number of kilometers in square side
-    int size_x; // size of terminal window
-    int size_y;
-    Point origin;
-
+    double _scale;  // number of kilometers in square side
+    int _size;
+    Point _pan;
+    vector<vector<char>> _matrix;
+    Point _origin;
+    void insert(double x , double y,const shared_ptr<Sim_object>& obj);
 public:
+    View();
     // getters setters
-    std::pair<int, int> getSize();
+    void setPan(double x,double y);
+    void makeDefault();
+    int getSize();
     void setSize(int size);
+    void setScale(double scale);
+    void show(std::shared_ptr<vector<shared_ptr<Sim_object>>> objects);
 
-    // void update_location();
 
-    // void draw();
-
-    // void draw_board(
     inline void Log(const std::string &str) noexcept;
 };
+
 
 #endif // PROJECT_3_VIEW_H

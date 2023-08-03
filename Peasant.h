@@ -14,7 +14,7 @@ class Peasant : public Agent {
     bool loading;
 
 public:
-    Peasant(std::string &name, Point &position);
+    Peasant(const std::string &name, Point &position);
     static shared_ptr<Peasant> getInstance(std::string &name, Point &position);
     void start_working(
         const std::shared_ptr<Farm>& farm,

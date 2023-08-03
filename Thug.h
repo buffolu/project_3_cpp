@@ -5,22 +5,22 @@
 #include "Peasant.h"
 #include "Geometry.h"
 #include <utility>
-#include <list>
+#include <vector>
 
 class Thug : public Agent {
 
 private:
 
-    Thug(const std::string &name_, Point &position,int speed);
     shared_ptr<Peasant> _peasant;
-    shared_ptr<list<shared_ptr<Agent>>> agents;
+    shared_ptr<vector<shared_ptr<Agent>>> agents;
 
 public:
+    Thug(const std::string &name_, Point &position);
+
     void update() override;
 
-    void attack(shared_ptr<Peasant> peasant,shared_ptr<list<shared_ptr<Agent>>> agents_); // check if there is a peasant nearby to attack
+    void attack(shared_ptr<Peasant> peasant,shared_ptr<vector<shared_ptr<Agent>>> agents_); // check if there is a peasant nearby to attack
 
-    static std::shared_ptr<Thug> getThug(string &basicString,Point &point, int speed);
 
     void broadcast_current_state() const noexcept override;
 

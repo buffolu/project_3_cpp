@@ -13,29 +13,27 @@
 #include "Sim_object.h"
 #include "Structure.h"
 #include "Thug.h"
-#include "View.h"
-#include "Controller.h"
 #include <vector>
 #include <memory>
 #include <string>
 
 class Model {
-    std::vector<std::shared_ptr<Sim_object>> Sim_object_list;
-    std::vector<std::shared_ptr<Structure>> Structure_list;
-    std::vector<std::shared_ptr<Agent>> Agent_list;
-    std::unique_ptr<View> m_view;
-    std::unique_ptr<Controller> m_controller;
+    shared_ptr<  std::vector<std::shared_ptr<Sim_object>> > Sim_object_list;
+    shared_ptr<  std::vector<std::shared_ptr<Structure>> > Structure_list;
+    shared_ptr<  std::vector<std::shared_ptr<Agent>> > Agent_list;
     int time;
     enum type { KNIGHT, PEASANT, THUG };
 
 public:
-    void update();
 
-    void addKnight(const std::string &name, const std::string &home);
-    void addPeasant(const std::string& name, Point position);
-    void addThug(const std::string &name, Point position);
 
-    void attack(std::string &thug, std::string &peasant);
+    void status(); //broadCast statue of every object
+    void go();    //update every object in one time step
+
+    //add agents
+    void addAgent(const string &name, int type, Point &position, const string &home);
+
+
 
     // getters
     // setters
@@ -43,43 +41,43 @@ public:
     void detach();
     void notify_Location();
 
-    bool check_if_starcture_exists(string &name);
 
-    bool check_if_exists(string &name);
 
     // methods for model
-    void status();
 
-    void go();
     void run(int argc, char **argv);
 
-    void course(string &basicString, int i, double i1);
 
+    //ralevent to diffrent kind of agents
+    void course(string &basicString, double theta, int i);
     void position(string &basicString, Point point, int i);
-
-    void destination(string &basicString, string &basicString1);
-
     void stop(string &basicString);
 
-    // methods for view
-    void ddefault();
 
-    void setSize(int i);
+    //each method is relavant to only one kind of agent
+    void attack(std::string &thug, std::string &peasant);
+    void start_working(string &peasant_name, string &farm_name, string &castle);
+    void destination(string &knight_name, string &basicString1);
 
-    void zoom(int i);
 
-    void start_working(string &peseant_name, string &farm_name, string &castle);
 
-    shared_ptr<Agent> findAgent(std::string &name, int type);
-
-    shared_ptr<Structure> findStrcture(string &basicString);
 
     void badInput(const std::string&);
     
 private: // Singleton
     Model() : time(0){};
+    void addKnight(const std::string &name, const std::string &home);
+    void addPeasant(const std::string& name, Point position);
+    void addThug(const std::string &name, Point position);
+
+
+    //finders
+    shared_ptr<Agent> findAgent(const std::string &name, int type);
+    shared_ptr<Structure> findStructure(const string &basicString,int type);
 public:
     static Model& Get();
+
+
 };
 
 #endif // PROJECT_3_MODEL_H

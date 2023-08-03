@@ -8,20 +8,13 @@
 #include "Knight.h"
 
 
-std::shared_ptr<Thug> Thug::getThug(string &name, Point &point, int speed) {
-    if(speed > 30 || name.length() > 16 )
-    {
-        throw exception(); // throw suitable exception
-    }
 
-    return shared_ptr<Thug>(new Thug(name,point,speed));
-}
 
-Thug::Thug(const std::string &name_, Point &position, int speed): Agent(name_,position,speed,5){
+Thug::Thug(const std::string &name_, Point &position): Agent(name_,position,0,5){
 
 }
 
-void Thug::attack(shared_ptr<Peasant> peasant,shared_ptr<list<shared_ptr<Agent>>> agents_) {
+void Thug::attack(shared_ptr<Peasant> peasant,shared_ptr<vector<shared_ptr<Agent>>> agents_) {
     if(getState() == DEAD || peasant->getState() == DEAD) {} //thug or peasant are dead
         /*
          * TODO: EITHER DO NOTHING OR THROW EXCPETION
@@ -97,3 +90,4 @@ void Thug::setDestinationCoordinates(Point destination) {
     stop();
     Agent::setDestinationCoordinates(destination);
 }
+

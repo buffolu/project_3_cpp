@@ -28,49 +28,135 @@ void Model::run(int argc, char **argv) {
     // TODO
 }
 
-void Model::update() {
-    for (const auto &object : Agent_list) {
+void Model::go() {
+    for (const auto &object : *Agent_list) {
         object->update();
     }
     time++;
 }
 
 void Model::addKnight(const std::string &name, const std::string &home) {
-    std::shared_ptr<Knight> knight = std::make_shared<Knight>(name, home);
-    Sim_object_list.push_back(knight);
-    Agent_list.push_back(knight);
+   auto it = findStrcture(home,CASTLE);
+   if(!it) {
+       throw exception();
+   }
+    double x = it->getLocation().x;
+    double  y = it->getLocation().y;
+
+
+    std::shared_ptr<Knight> knight = std::make_shared<Knight>(name,Point(x,y));
+    Sim_object_list->push_back(knight);
+    Agent_list->push_back(knight);
 }
 
 void Model::addPeasant(const std::string& name, Point position) {
     std::shared_ptr<Peasant> peasant = std::make_shared<Peasant>(name, position);
-    Sim_object_list.push_back(peasant);
-    Agent_list.push_back(peasant);
+    Sim_object_list->push_back(peasant);
+    Agent_list->push_back(peasant);
 }
 
 void Model::addThug(const std::string &name, Point position) {
-    std::shared_ptr<Peasant> thug = std::make_shared<Peasant>(name, position);
-    Sim_object_list.push_back(thug);
-    Agent_list.push_back(thug);
+    std::shared_ptr<Thug> thug = std::make_shared<Thug>(name, position);
+    Sim_object_list->push_back(thug);
+    Agent_list->push_back(thug);
 }
 
-/*
-void Model::addAgent(const std::string &name, Point &position, int speed) {
-    std::shared_ptr<Agent> sharedAgent;
+void Model::addAgent(const std::string &name,int type, Point &position,const std::string& home) {
+    if(findAgent(name,-1)) {throw exception();} //agent already exists.
+
     if (type == THUG) {
-        sharedAgent = Thug::getThug(name, position, speed);
+        addThug(name,position);
     } else if (type == PEASANT) {
-        sharedAgent = Peasant::getInstance(name, position);
+        addPeasant(name,position);
     } else if (type == KNIGHT) {
-        sharedAgent = Knight::getInstance(name, position);
-    } else {
+        addKnight(name,home);}
+     else{
         throw std::invalid_argument("invalid input");
     }
-    Sim_object_list.push_back(sharedAgent);
-    Agent_list.push_back(sharedAgent);
-}
-*/
 
-// function not complete , need to send thug to attack peasant
+}
+
+
+
+shared_ptr<Structure> Model::findStructure(const string &name,int type)
+ {
+    auto it = find_if(Structure_list->begin(),Structure_list->end(),[&name,type] (shared_ptr<Structure>& structure) {return
+    name== structure->getName() && (structure->getType == type || type == -1);
+    });
+    if(it != Structure_list->end())
+    {
+        return *it;
+    }
+    return nullptr;
+}
+
+void Model::status() {
+    for(const auto& obj: *Sim_object_list)
+    {
+        obj->broadcast_current_state();
+    }
+}
+
+
+void Model::course(string &basicString, double theta, int i) {
+
+    auto agent = findAgent(basicString,-1);
+    if(agent && agent.getType() != PEASANT) {
+        agent->setCourse(theta);
+    }
+    else
+    {
+        /*
+         * TODO: THROW EXCPETION OR IGNORE
+         */
+    }
+
+}
+
+void Model::position(string &basicString, Point point, int i) {
+    auto agent = findAgent(basicString,-1);
+    if(agent && agent.getType() != PEASANT) {
+        agent->setDestinationCoordinates(point);
+    }
+    else
+    {
+        /*
+         * TODO: THROW EXCPETION OR IGNORE
+         */
+    }
+}
+
+
+
+void Model::stop(string &basicString) {
+    auto agent = findAgent(basicString,-1);
+    if(agent) {
+        agent->stop();
+    }
+    else
+    {
+        /*
+         * TODO: THROW EXCPETION OR IGNORE
+         */
+    }
+}
+void Model::destination(string &basicString, string& castle) {
+    auto agent = findAgent(basicString, KNIGHT);
+    auto castle_ = findStructure(castle,-1);
+    if (castle_ && castle_ && !agent) //castle or agent does not exist
+    {
+
+        shared_ptr<Knight> knight = dynamic_pointer_cast<Knight>(agent);
+        knight->setOnPatrol(castle_,Structure_list);
+    }
+    else
+    {
+        /*
+          * TODO: THROW EXCPETION OR IGNORE
+          */
+    }
+}
+
 void Model::attack(string &thug, string &peasant) {
     // find if thug exists
     shared_ptr<Agent> thug_ = findAgent(thug, THUG);
@@ -84,41 +170,13 @@ void Model::attack(string &thug, string &peasant) {
     if (!peasant_) {
         // illegal argument - peasant does not exists
     }
-    thug1->attack(dynamic_pointer_cast<Peasant>(peasant_));
+    thug1->attack(dynamic_pointer_cast<Peasant>(peasant_),Agent_list);
 }
 
-/* unnecessary, use container method Structure_list->find_if();
-shared_ptr<Structure> Model::check_if_sturcture_exists(string &name) {
-    for (auto &it : Structure_list) {
-        if (it->getName() == name) {
-            return it;
-        }
-    }
-}
-*/
 
-void Model::status() {}
 
-void Model::go() {}
-
-void Model::course(const string &basicString, int i, int i1) {}
-
-void Model::position(string &basicString, Point point, int theta) {}
-
-void Model::destination(string &basicString, basic_string<char> &basicString1) {
-
-}
-
-void Model::stop(string &basicString) {}
-
-// void Model::ddefault() { m_view->ddefault(); }
-
-void Model::setSize(int i) { m_view->setSize(i); }
-
-void Model::zoom(int i) { m_view->setSize(i); }
-
-shared_ptr<Agent> Model::findAgent(std::string &name, int type) {
-    for (auto &it : Agent_list) {
+shared_ptr<Agent> Model::findAgent(const std::string &name, int type) {
+    for (auto &it : *Agent_list) {
         if (it->getName() == name && (type == it->getType()) || type == -1) {
             return it;
         }
@@ -135,3 +193,28 @@ Model &Model::Get() {
     static Model instance;
     return instance;
 }
+
+void Model::start_working(string &peasant_name, string &farm_name, string &castle_name) {
+    auto agent = findAgent(peasant_name,PEASANT);
+    auto structure1 = findStrcture(farm_name,FARM);
+    auto structure2  = findStrcture(castle_name,CASTLE);
+    if(agent && structure1 && structure2)
+    {
+        shared_ptr<Peasant> peasant = dynamic_pointer_cast<Peasant>(agent);
+        shared_ptr<Farm>    farm  = dynamic_pointer_cast<Farm>(structure1);
+        shared_ptr<Castle>  castle  = dynamic_pointer_cast<Castle>(structure1);
+
+        peasant->start_working(farm,castle);
+
+    }
+    else{
+        /*
+      * TODO: THROW EXCPETION OR IGNORE
+      */
+    }
+
+}
+
+
+
+
