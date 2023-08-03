@@ -15,7 +15,7 @@
 class Controller {
 private:
     // possibly unnecessary for a controller to have knowledge of view
-    View view;
+    shared_ptr<View> view;
     std::shared_ptr<Model> model;
 
 public:

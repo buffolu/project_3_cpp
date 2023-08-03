@@ -49,8 +49,8 @@ public:
 
 
     //ralevent to diffrent kind of agents
-    void course(string &basicString, double theta);
-    void position(string &basicString, Point point);
+    void course(string &basicString, double theta, int i);
+    void position(string &basicString, Point point, int i);
     void stop(string &basicString);
 
 

@@ -85,8 +85,8 @@ bool Controller::GetUserInput() {
                 Point p(x, y);
 
                 model->addAgent(name, type, p);
-
             }
+
         }
         // this commands will be given after the name.
         std::string name = std::move(command);
@@ -126,17 +126,17 @@ bool Controller::GetUserInput() {
                 std::string word3 = words.back();
                 speed = stoi(word3);
             }
-            model->position(name, p, speed);
+            model->position(name, p,  speed);
         }
         if (words.front() == "destination" && words.size() == 1) {
-            model.destination(name, words.back());
+            model->destination(name, words.back());
         }
         if (words.front() == "stop" && words.empty()) {
-            model.stop(name);
+            model->stop(name);
         }
         if (words.front() == "attack" && words.size() == 1) {
             std::string peasant = words.back();
-            model.attack(name, peasant);
+            model->attack(name, peasant);
         } else {
             throw std::invalid_argument("invalid input");
         }

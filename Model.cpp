@@ -98,7 +98,7 @@ void Model::status() {
 }
 
 
-void Model::course(string &basicString,double theta) {
+void Model::course(string &basicString, double theta, int i) {
 
     auto agent = findAgent(basicString,-1);
     if(agent && agent.getType() != PEASANT) {
@@ -113,7 +113,7 @@ void Model::course(string &basicString,double theta) {
 
 }
 
-void Model::position(string &basicString, Point point) {
+void Model::position(string &basicString, Point point, int i) {
     auto agent = findAgent(basicString,-1);
     if(agent && agent.getType() != PEASANT) {
         agent->setDestinationCoordinates(point);
