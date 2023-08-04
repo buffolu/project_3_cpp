@@ -4,29 +4,7 @@
 
 #include "Model.h"
 
-void Model::run(int argc, char **argv) {
-    // SETUP
-    if (argc != 3) {
-        m_view->Log(std::string("Usage: ") + argv[0] +
-                    " <castles.dat> <farms.dat>");
-    }
-    std::ifstream if_castles(argv[1]);
-    std::ifstream if_farms(argv[2]);
 
-    std::string castle;
-    while (std::getline(if_castles, castle)) {
-        addCastle(castle);
-    }
-    if_castles.close();
-    std::string farm;
-    while (std::getline(if_farms, farm)) {
-        addFarm(farm);
-    }
-    if_farms.close();
-
-
-
-}
 
 void Model::go() {
     for (const auto &object : *Agent_list) {
@@ -45,6 +23,8 @@ void Model::addKnight(const std::string &name, const std::string &home) {
 
     std::shared_ptr<Knight> knight =
         std::make_shared<Knight>(name, Point(x, y));
+
+
     Sim_object_list->push_back(knight);
     Agent_list->push_back(knight);
 }

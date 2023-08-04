@@ -3,7 +3,9 @@
 #include "Agent.h"
 #include "Castle.h"
 #include "Farm.h"
-#include <string>
+#include "Geometry.h"
+#include <memory>
+#include <iostream>
 
 class Peasant : public Agent {
     const static int MAX_CRATES = 5;

@@ -4,12 +4,13 @@
 
 #ifndef PROJECT_3_VIEW_H
 #define PROJECT_3_VIEW_H
-#include "Model.h"
-#include <algorithm>
-#include <cmath>
-#include <memory>
+
+#include "Sim_object.h"
+#include "Geometry.h"
 #include <vector>
 #include <iostream>
+#include <memory>
+#include <algorithm>
 
 
 class View {

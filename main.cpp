@@ -1,7 +1,9 @@
-#include "Controller.h"
+
 #include <memory>
+#include "View.h"
 #include "Model.h"
-#include <iostream>
+#include "Controller.h"
+
 
 int main(int argc, char **argv) {
     // std::cout << "Hello, World!" << std::endl;//testhere___

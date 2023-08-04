@@ -1,12 +1,13 @@
 #pragma once
 
+
 #include "Agent.h"
 #include "Knight.h"
 #include "Peasant.h"
 #include <memory>
-#include <utility>
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
 class Thug : public Agent {
 

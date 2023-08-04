@@ -4,19 +4,21 @@
 
 #ifndef PROJECT_3_MODEL_H
 #define PROJECT_3_MODEL_H
-
-#include "Farm.h"
-#include "Knight.h"
-#include "Peasant.h"
+#include "Sim_object.h"
 #include "Structure.h"
+#include "Farm.h"
+#include "Castle.h"
+#include "Agent.h"
 #include "Thug.h"
+#include "Peasant.h"
+#include "Knight.h"
 #include "View.h"
+
 #include "utils.h"
 
 #include <memory>
-#include <string>
 #include <vector>
-#include <fstream>
+#include <algorithm>
 
 
 class Model {
@@ -79,11 +81,12 @@ public:
     void setPanView(double x, double y);
     void show();
     void log(std::string str);
+    Model(const Model &) = delete;
+    Model &operator=(const Model &) = delete;
 
 private: // Singleton
     Model() : time(0){};
-    Model(const Model &) = delete;
-    Model &operator=(const Model &) = delete;
+
 
 
 public:

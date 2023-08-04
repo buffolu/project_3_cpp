@@ -4,8 +4,16 @@
 
 #ifndef PROJECT_3_CONTROLLER_H
 #define PROJECT_3_CONTROLLER_H
+
+#include "utils.h"
+#include "Geometry.h"
 #include "Model.h"
 
+
+#include <algorithm>
+#include <iostream>
+#include <fstream>
+#include <vector>
 
 class Controller {
 public:

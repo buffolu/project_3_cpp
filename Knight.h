@@ -1,17 +1,14 @@
 #pragma once
 
 // for getInstance of the Knight
-#include <algorithm>
-#include <memory>
-#include "Geometry.h"
-//
 #include "Agent.h"
-#include "Castle.h"
-#include <vector>
 #include "Structure.h"
+#include "Geometry.h"
 #include <memory>
-#include <cfloat>
+#include <vector>
 #include <iostream>
+#include <algorithm>
+#include <cfloat>
 
 class Knight : public Agent {
 
