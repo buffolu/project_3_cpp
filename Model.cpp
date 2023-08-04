@@ -4,7 +4,6 @@
 
 #include "Model.h"
 
-
 std::unique_ptr<Model> Model::model = nullptr;
 
 void Model::go() {
@@ -24,7 +23,6 @@ void Model::addKnight(const std::string &name, const std::string &home) {
 
     std::shared_ptr<Knight> knight =
         std::make_shared<Knight>(name, Point(x, y));
-
 
     Sim_object_list->push_back(knight);
     Agent_list->push_back(knight);
@@ -90,7 +88,8 @@ void Model::destination(const std::string &basicString,
     auto castle_ = findStructure(castle);
     if (castle_ && castle_ && !agent) // castle or agent does not exist
     {
-        std::shared_ptr<Knight> knight = std::dynamic_pointer_cast<Knight>(agent);
+        std::shared_ptr<Knight> knight =
+            std::dynamic_pointer_cast<Knight>(agent);
         knight->setOnPatrol(castle_, Structure_list);
     } else {
         m_view->Log("No structure named " + basicString);
@@ -126,8 +125,6 @@ void Model::badInput(const std::string &str) {
     m_view->Log(badInputMessage);
 }
 
-
-
 void Model::start_working(const std::string &peasant_name,
                           const std::string &farm_name,
                           const std::string &castle_name) {
@@ -135,8 +132,10 @@ void Model::start_working(const std::string &peasant_name,
     auto structure1 = findStructure(farm_name);
     auto structure2 = findStructure(castle_name);
     if (agent && structure1 && structure2) {
-        std::shared_ptr<Peasant> peasant = std::dynamic_pointer_cast<Peasant>(agent);
-        std::shared_ptr<Farm> farm = std::dynamic_pointer_cast<Farm>(structure1);
+        std::shared_ptr<Peasant> peasant =
+            std::dynamic_pointer_cast<Peasant>(agent);
+        std::shared_ptr<Farm> farm =
+            std::dynamic_pointer_cast<Farm>(structure1);
         std::shared_ptr<Castle> castle =
             std::dynamic_pointer_cast<Castle>(structure1);
 
@@ -173,57 +172,52 @@ void Model::detach(std::unique_ptr<View> someView) {
     }
 }
 
-
 void Model::addFarm(const std::string &line) {
     std::vector<std::string> &&separated = utils::split(line, ',');
     std::string &name = separated[0];
-    std::string &point = separated[1];
-    std::string &hay = separated[2];
-    std::string &prod = separated[3];
+    std::string &xstr = separated[1];
+    std::string &ystr = separated[2];
+    std::string &hay = separated[3];
+    std::string &prod = separated[4];
 
-    point = point.substr(2);                     // to cut off " ("
-    point = point.substr(0, point.length() - 1); // to cut off ")"
-    std::vector<std::string> &&point_coords = utils::split(point, ',');
+    xstr = xstr.substr(2);                     // to cut off " ("
+    ystr = ystr.substr(0, ystr.length() - 1); // to cut off ")"
 
-    double x = std::stod(point_coords[0]);
-    double y = std::stod(point_coords[1]);
+    double x = std::stod(xstr);
+    double y = std::stod(ystr);
 
     int nhay = std::stoi(hay);
 
     int production = std::stoi(prod);
 
     Structure_list->push_back(
-        std::make_shared<Farm>(name, Point(x,y), nhay, production));
+        std::make_shared<Farm>(name, Point(x, y), nhay, production));
 }
+
 void Model::addCastle(const std::string &line) {
     std::vector<std::string> &&separated = utils::split(line, ',');
     std::string &name = separated[0];
-    std::string &point = separated[1];
-    std::string &hay = separated[2];
+    std::string &xstr = separated[1];
+    std::string &ystr = separated[2];
+    std::string &hay = separated[3];
 
-    point = point.substr(2);                     // to cut off " ("
-    point = point.substr(0, point.length() - 1); // to cut off ")"
-    std::vector<std::string> &&point_coords = utils::split(point, ',');
+    xstr = xstr.substr(2);                     // to cut off " ("
+    ystr = ystr.substr(0, ystr.length() - 1); // to cut off ")"
 
-    double x = std::stod(point_coords[0]);
-    double y = std::stod(point_coords[1]);
+    double x = std::stod(xstr);
+    double y = std::stod(ystr);
 
     int nhay = std::stoi(hay);
 
     Structure_list->push_back(
-        std::make_shared<Castle>(name, Point(x,y), nhay));
+        std::make_shared<Castle>(name, Point(x, y), nhay));
 }
 
-void Model::log(std::string str) {
-    m_view->Log(str);
-
-}
+void Model::log(std::string str) { m_view->Log(str); }
 
 Model &Model::Get() {
-    if(!model)
-    {
+    if (!model) {
         model = std::unique_ptr<Model>(new Model());
     }
     return *model;
-
 }

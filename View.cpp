@@ -66,6 +66,9 @@ void View::setPan(double x, double y) {
 }
 
 View::View() { makeDefault(); }
-void View::addObjects(std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>> objects) {
+void View::addObjects(
+    std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>> objects) {
     _objects = objects;
 }
+
+void View::Log(const std::string &str) { std::cout << str << std::endl; }

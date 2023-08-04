@@ -6,12 +6,8 @@
 void Controller::run(int argc, char **argv) {
     // SETUP
     if (argc != 3) {
-        std::cout<<"bad input";
-        /**
-         * TODO:IMPLEMNT LOG IN VIEW
-         */
         Model::Get().log(std::string("Usage: ") + argv[0] +
-                    " <castles.dat> <farms.dat>");
+                         " <castles.dat> <farms.dat>");
         exit(1);
     }
     std::ifstream if_castles(argv[1]);
@@ -27,14 +23,10 @@ void Controller::run(int argc, char **argv) {
         Model::Get().addFarm(farm);
     }
     if_farms.close();
-    while(1)
-    {
+    while (1) {
         GetUserInput();
     }
 }
-
-
-
 
 bool Controller::GetUserInput() {
     std::string input;
@@ -109,7 +101,7 @@ bool Controller::GetUserInput() {
             {
                 std::string word1 =
                     words.front(); // should be in the form of (x,
-                word1.substr(1);
+                word1 = word1.substr(1);
                 word1.pop_back();
                 double x = std::stoi(word1);
                 std::string word2 = words.back();
@@ -117,23 +109,21 @@ bool Controller::GetUserInput() {
                 double y = std::stoi(word2);
                 Point p(x, y);
 
-
                 if (typeStr == "peasant") {
                     // add peasant
                     Model::Get().addPeasant(name, p);
                 } else if (typeStr == "thug") {
                     // add thug
                     Model::Get().addThug(name, p);
-                } else { throw std::invalid_argument("a point is given to thug or peasant");
+                } else {
+                    throw std::invalid_argument(
+                        "a point is given to thug or peasant");
                 }
-            }
-            else if(words.size() == 1)
-            {
+            } else if (words.size() == 1) {
                 std::string structure = words.front();
                 if (typeStr == "knight") {
                     Model::Get().addKnight(name, structure);
-                }
-                else { // how does a not knight get here ??
+                } else { // how does a not knight get here ??
                 }
             }
         }
@@ -163,7 +153,7 @@ bool Controller::GetUserInput() {
         if (command2 == "position" &&
             (words.size() == 2 || words.size() == 3)) {
             std::string word1 = words.front(); // should be in the form of (x,
-            word1.substr(1);
+            word1 = word1.substr(1);
             word1.pop_back();
             double x = std::stoi(word1);
             std::string word2 = words.front();
@@ -198,6 +188,4 @@ bool Controller::GetUserInput() {
     return false;
 }
 
-Controller::Controller() {
-
-}
+Controller::Controller() {}

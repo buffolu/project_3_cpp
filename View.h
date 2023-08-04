@@ -34,7 +34,7 @@ public:
     void addObjects(
         std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>> objects);
 
-    inline void Log(const std::string &str) noexcept{};
+    void Log(const std::string &str);
 
     View();
 };
