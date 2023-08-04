@@ -5,11 +5,12 @@
 #ifndef PROJECT_3_VIEW_H
 #define PROJECT_3_VIEW_H
 #include "Geometry.h"
-#include "Sim_object.h"
-#include "algorithm"
+#include <algorithm>
 #include <cmath>
 #include <memory>
 #include <vector>
+#include <iostream>
+
 
 class View {
     std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>> _objects;

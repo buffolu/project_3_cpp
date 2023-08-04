@@ -6,7 +6,7 @@
 #include <utility>
 
 Farm::Farm(const std::string &name, Point p, int hay, int produceRate)
-    : Structure(std::move(name), p, hay, FARM), _produceRate(produceRate) {}
+    : Structure(name, p, hay), _produceRate(produceRate) {}
 
 void Farm::update() { addToHay(_produceRate); }
 

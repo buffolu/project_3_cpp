@@ -7,6 +7,7 @@
 
 #include "Sim_object.h"
 #include "Structure.h"
+#include <iostream>
 #include <memory>
 
 class Agent : public Sim_object {

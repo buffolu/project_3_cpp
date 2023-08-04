@@ -3,9 +3,33 @@
 //
 
 #include "Controller.h"
-#include <algorithm>
-#include <cctype>
-#include <string>
+void Controller::run(int argc, char **argv) {
+    // SETUP
+    if (argc != 3) {
+        Model::Get().log(std::string("Usage: ") + argv[0] +
+                    " <castles.dat> <farms.dat>");
+    }
+    std::ifstream if_castles(argv[1]);
+    std::ifstream if_farms(argv[2]);
+
+    std::string castle;
+    while (std::getline(if_castles, castle)) {
+        Model::Get().addCastle(castle);
+    }
+    if_castles.close();
+    std::string farm;
+    while (std::getline(if_farms, farm)) {
+        Model::Get().addFarm(farm);
+    }
+    if_farms.close();
+    while(1)
+    {
+        GetUserInput();
+    }
+}
+
+
+
 
 bool Controller::GetUserInput() {
     std::string input;
@@ -167,4 +191,8 @@ bool Controller::GetUserInput() {
         std::cout << e.what();
     }
     return false;
+}
+
+Controller::Controller() {
+
 }

@@ -71,7 +71,7 @@ void Thug::broadcast_current_state() const noexcept {
 bool Thug::check_for_knight() {
    return std::any_of(agents->begin(),agents->end(),[this](std::shared_ptr<Agent> agent)
    {
-       return (dynamic_pointer_cast<Knight>(agent) &&
+       return (std::dynamic_pointer_cast<Knight>(agent) &&
                 Point::distance(getLocation(),agent->getLocation()) <= 2.5)
    ;})
    ;

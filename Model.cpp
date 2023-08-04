@@ -3,7 +3,6 @@
 //
 
 #include "Model.h"
-#include <fstream>
 
 void Model::run(int argc, char **argv) {
     // SETUP
@@ -25,10 +24,8 @@ void Model::run(int argc, char **argv) {
     }
     if_farms.close();
 
-    // TODO
-    while (!exitflag) {
-        m_controller->GetUserInput();
-    }
+
+
 }
 
 void Model::go() {
@@ -112,7 +109,7 @@ void Model::destination(const std::string &basicString,
     auto castle_ = findStructure(castle);
     if (castle_ && castle_ && !agent) // castle or agent does not exist
     {
-        std::shared_ptr<Knight> knight = dynamic_pointer_cast<Knight>(agent);
+        std::shared_ptr<Knight> knight = std::dynamic_pointer_cast<Knight>(agent);
         knight->setOnPatrol(castle_, Structure_list);
     } else {
         m_view->Log("No structure named " + basicString);
@@ -122,7 +119,7 @@ void Model::destination(const std::string &basicString,
 void Model::attack(const std::string &thug, const std::string &peasant) {
     // find if thug exists
     std::shared_ptr<Agent> thug_ = findAgent(thug);
-    std::shared_ptr<Thug> thug1 = dynamic_pointer_cast<Thug>(thug_);
+    std::shared_ptr<Thug> thug1 = std::dynamic_pointer_cast<Thug>(thug_);
     if (!thug_ || !thug1) {
         // illegal argument - peasant does not exists
     }
@@ -132,7 +129,7 @@ void Model::attack(const std::string &thug, const std::string &peasant) {
     if (!peasant_) {
         // illegal argument - peasant does not exists
     }
-    thug1->attack(dynamic_pointer_cast<Peasant>(peasant_), Agent_list);
+    thug1->attack(std::dynamic_pointer_cast<Peasant>(peasant_), Agent_list);
 }
 
 std::shared_ptr<Agent> Model::findAgent(const std::string &a_name) {
@@ -160,10 +157,10 @@ void Model::start_working(const std::string &peasant_name,
     auto structure1 = findStructure(farm_name);
     auto structure2 = findStructure(castle_name);
     if (agent && structure1 && structure2) {
-        std::shared_ptr<Peasant> peasant = dynamic_pointer_cast<Peasant>(agent);
-        std::shared_ptr<Farm> farm = dynamic_pointer_cast<Farm>(structure1);
+        std::shared_ptr<Peasant> peasant = std::dynamic_pointer_cast<Peasant>(agent);
+        std::shared_ptr<Farm> farm = std::dynamic_pointer_cast<Farm>(structure1);
         std::shared_ptr<Castle> castle =
-            dynamic_pointer_cast<Castle>(structure1);
+            std::dynamic_pointer_cast<Castle>(structure1);
 
         peasant->start_working(farm, castle);
 
@@ -198,17 +195,7 @@ void Model::detach(std::unique_ptr<View> someView) {
     }
 }
 
-void Model::attach(std::unique_ptr<Controller> someController) {
-    if (!m_view) {
-        m_controller = std::move(someController);
-    }
-}
 
-void Model::detach(std::unique_ptr<Controller> someController) {
-    if (someController == m_controller) {
-        m_controller.reset();
-    }
-}
 void Model::addFarm(const std::string &line) {
     std::vector<std::string> &&separated = utils::split(line, ',');
     std::string &name = separated[0];
@@ -228,7 +215,7 @@ void Model::addFarm(const std::string &line) {
     int production = std::stoi(prod);
 
     Structure_list->push_back(
-        std::make_shared<Farm>(new Farm(name, {x, y}, nhay, production)));
+        std::make_shared<Farm>(name, Point(x,y), nhay, production));
 }
 void Model::addCastle(const std::string &line) {
     std::vector<std::string> &&separated = utils::split(line, ',');
@@ -246,5 +233,10 @@ void Model::addCastle(const std::string &line) {
     int nhay = std::stoi(hay);
 
     Structure_list->push_back(
-        std::make_shared<Castle>(new Castle(name, {x, y}, nhay)));
+        std::make_shared<Castle>(name, Point(x,y), nhay));
+}
+
+void Model::log(std::string str) {
+    m_view->Log(str);
+
 }

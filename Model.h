@@ -6,18 +6,20 @@
 #define PROJECT_3_MODEL_H
 
 #include "Agent.h"
-#include "Controller.h"
 #include "Farm.h"
 #include "Geometry.h"
 #include "Knight.h"
 #include "Peasant.h"
-#include "Sim_object.h"
 #include "Structure.h"
 #include "Thug.h"
 #include "View.h"
+#include "utils.h"
+
 #include <memory>
 #include <string>
 #include <vector>
+#include <fstream>
+
 
 class Model {
     std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>> Sim_object_list;
@@ -26,7 +28,6 @@ class Model {
     int time;
 
     std::unique_ptr<View> m_view;
-    std::unique_ptr<Controller> m_controller;
 
     bool exitflag = false;
 
@@ -50,8 +51,7 @@ public:
     void attach(std::unique_ptr<View> someView);
     void detach(std::unique_ptr<View> someView);
 
-    void attach(std::unique_ptr<Controller> someController);
-    void detach(std::unique_ptr<Controller> someController);
+
 
     // methods for model
     void run(int argc, char **argv);
@@ -80,11 +80,13 @@ public:
     void setZoomView(double zoom);
     void setPanView(double x, double y);
     void show();
+    void log(std::string str);
 
 private: // Singleton
     Model() : time(0){};
     Model(const Model &) = delete;
     Model &operator=(const Model &) = delete;
+
 
 public:
     static Model &Get();
