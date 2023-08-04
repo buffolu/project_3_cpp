@@ -10,11 +10,13 @@
 
 
 
-Thug::Thug(const std::string &name_, Point &position): Agent(name_,position,0,5,THUG){
+Thug::Thug(const std::string &name_, Point &position): Agent(name_,position,0,5){
 
 }
 
-void Thug::attack(shared_ptr<Peasant> peasant,shared_ptr<vector<shared_ptr<Agent>>> agents_) {
+// TODO: implement this completely again
+// this needs to take a peasant and attack it if it is close enough, and no knights are nearby
+void Thug::attack(std::shared_ptr<Peasant> peasant,std::shared_ptr<std::vector<std::shared_ptr<Agent>>> agents_) {
     if(getState() == DEAD || peasant->getState() == DEAD) {} //thug or peasant are dead
         /*
          * TODO: EITHER DO NOTHING OR THROW EXCPETION
@@ -67,7 +69,7 @@ void Thug::broadcast_current_state() const noexcept {
 }
 
 bool Thug::check_for_knight() {
-   return std::any_of(agents->begin(),agents->end(),[this](shared_ptr<Agent>& agent)
+   return std::any_of(agents->begin(),agents->end(),[this](std::shared_ptr<Agent> agent)
    {
        return (dynamic_pointer_cast<Knight>(agent) &&
                 Point::distance(getLocation(),agent->getLocation()) <= 2.5)

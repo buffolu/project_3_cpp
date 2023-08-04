@@ -5,15 +5,12 @@
 
 #include <memory>
 
-Peasant::Peasant(const std::string &name, Point &position) : Agent(name, position,10,5,PEASANT),carried_crates(0),loading(true) {
+// TODO: why is loading true on creation
+Peasant::Peasant(const std::string &name, Point &position) : Agent(name, position,10,5),carried_crates(0),loading(true) {
 
 }
 
-shared_ptr<Peasant> Peasant::getInstance(string &name, Point &position) {
-    return std::make_shared<Peasant>(name,position);
-}
-
-void Peasant::start_working(const shared_ptr<Farm>& farm,const shared_ptr<Castle>& castle) {
+void Peasant::start_working(std::shared_ptr<Farm> farm, std::shared_ptr<Castle> castle) {
     m_farm = farm;
     m_castle = castle;
     setState(ON_DUTY);

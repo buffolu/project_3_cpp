@@ -11,10 +11,10 @@
 
 class Knight : public Agent {
 
-    shared_ptr<vector<shared_ptr<Structure>>> myStructures;
-    std::vector<string> visited;
-    shared_ptr<Structure> home_castle;
-    shared_ptr<Structure> destination_structure;
+    std::shared_ptr<std::vector<std::shared_ptr<Structure>>> myStructures;
+    std::vector<std::string> visited;
+    std::shared_ptr<Structure> home_castle;
+    std::shared_ptr<Structure> destination_structure;
 
     bool going_home; // knight is going back to his original structure
 
@@ -22,11 +22,11 @@ public:
     Knight(const std::string &basicString, Point point);
     // check if there is a thug attacking a peasant nearby
     void update() override;
-    void setOnPatrol(const shared_ptr<Structure> &structure,
-                     const shared_ptr<vector<shared_ptr<Structure>>> &structures);
+    void setOnPatrol(std::shared_ptr<Structure> structure,
+                     std::shared_ptr<std::vector<std::shared_ptr<Structure>>> structures);
     void broadcast_current_state() const noexcept override;
     void stop() override;
-    shared_ptr<Structure> check_for_closest();
+    std::shared_ptr<Structure> check_for_closest();
 
     void setDestinationCoordinates(Point destination) override;
 

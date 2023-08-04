@@ -1,7 +1,5 @@
 #pragma once
-#include <iomanip>
-#include <iostream>
-using namespace std;
+
 // angle units conversion functions
 double to_radians(double theta_d);
 double to_degrees(double theta_r);

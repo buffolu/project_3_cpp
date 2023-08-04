@@ -11,9 +11,7 @@ class Structure : public Sim_object {
     int _hay;
 
 public:
-    Structure(string name,Point location,int hay,int type);
-    void deposit(int amount);
-    bool withdraw(int amount);
+    Structure(const std::string &name,Point location,int hay);
 
     void broadcast_current_state() const noexcept override;
     void addToHay(int amount);

@@ -4,9 +4,10 @@
 
 #include "Sim_object.h"
 
-#include <utility>
+// #include <utility>
+#include <iostream>
 
-Sim_object::Sim_object(string name_, Point location_,int type) : name(std::move(name_)), location(location_),type(type) {
+Sim_object::Sim_object(const std::string& name_, Point location_) : name(std::move(name_)), location(location_) {
 }
 
 void Sim_object::setName(const std::string& name_) {
@@ -25,8 +26,3 @@ void Sim_object::broadcast_current_state() const noexcept {
     std::cout << "name: " << name << " at position: (" << location.x << ", "
               << location.y << "),";
 }
-int Sim_object::getType() const {
-    return type;
-}
-
-

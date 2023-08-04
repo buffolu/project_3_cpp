@@ -26,7 +26,6 @@ void Model::run(int argc, char **argv) {
     if_farms.close();
 
     // TODO
-    // while();
 }
 
 void Model::go() {

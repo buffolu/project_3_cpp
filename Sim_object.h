@@ -6,15 +6,13 @@
 #define PROJECT_3_SIM_OBJECT_H
 
 #include "Geometry.h"
-// #include <iostream>
+#include <string>
 
 class Sim_object {
     std::string name;
     Point location;
-    int type;
 public:
-    enum type_info {PEASANT,KNIGHT,THUG,FARM,CASTLE};
-    Sim_object(std::string name_, Point location_,int type);
+    Sim_object(const std::string &name_, Point location_);
     virtual void update() = 0;
 
     void setName(const std::string& name);

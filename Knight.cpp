@@ -1,11 +1,13 @@
 //
 // Created by igor on 24/06/2023.
 //
+
 #include "Knight.h"
 #include <float.h>
+#include <iostream>
 
 Knight::Knight(const std::string &name, Point position)
-    : Agent(name, position, 10, -1,KNIGHT) {}
+    : Agent(name, position, 10, -1) {}
 
 void Knight::update() {
     Agent::update();
@@ -36,12 +38,15 @@ void Knight::update() {
     }
 }
 
-void Knight::setOnPatrol(const shared_ptr<Structure>& structure_,const shared_ptr<vector<shared_ptr<Structure>>>& structures) {
+void Knight::setOnPatrol(
+    std::shared_ptr<Structure> structure_,
+    std::shared_ptr<std::vector<std::shared_ptr<Structure>>> structures) {
     setState(ON_DUTY);
     home_castle = structure_;
     destination_structure = home_castle;
     visited.push_back(structure_->getName());
-    setAngle(Point::getAngle(getLocation(),structure_->getLocation())); // angle of riding direction
+    setAngle(Point::getAngle(
+        getLocation(), structure_->getLocation())); // angle of riding direction
     myStructures = structures;
 }
 
@@ -51,13 +56,13 @@ void Knight::broadcast_current_state() const noexcept {
         std::cout << " patrolling around " << destination_structure->getName();
     }
 }
-shared_ptr<Structure> Knight::check_for_closest() {
+std::shared_ptr<Structure> Knight::check_for_closest() {
     if (visited.size() == myStructures->size())
         return nullptr;
 
     double min = DBL_MAX;
     double tmp;
-    shared_ptr<Structure> structure;
+    std::shared_ptr<Structure> structure;
     for (const auto &obj : *myStructures) {
         auto it = find(visited.begin(), visited.end(), obj->getName());
         if (it == visited.end()) // this line means that this structure is not
