@@ -18,12 +18,12 @@ class View {
     double _scale; // number of kilometers in square side
     int _size;
     Point _pan;
-    std::vector<std::vector<char>> _matrix;
+    std::vector<std::vector<std::array<char,2>>> _matrix;
     Point _origin;
 
 public:
     // getters setters
-    void insert(double x, double y, std::shared_ptr<Sim_object> obj);
+    void insert(double x, double y, const std::string & name);
 
     void setPan(double x, double y);
     void makeDefault();

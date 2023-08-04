@@ -51,11 +51,6 @@ bool Controller::GetUserInput() {
                    [](char c) { return std::tolower(c); });
     std::vector<std::string> &&words = utils::split(input, ' ');
 
-    // lines 22-54  inputs related to view
-    if (words.empty()) {
-        throw std::invalid_argument("invalid input");
-    }
-
     std::string command = words[0];
     if (command == "exit") {
         exitflag = true;

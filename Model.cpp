@@ -52,6 +52,7 @@ std::shared_ptr<Structure> Model::findStructure(const std::string &name) {
 void Model::status() {
     for (const auto &obj : *Sim_object_list) {
         obj->broadcast_current_state();
+        std::cout<<std::endl;
     }
 }
 
@@ -213,8 +214,10 @@ void Model::addFarm(const std::string &line) {
 
     int production = std::stoi(prod);
 
-    Structure_list->push_back(
-        std::make_shared<Farm>(name, Point(x, y), nhay, production));
+    std::shared_ptr<Farm> farm = std::make_shared<Farm>(name, Point(x, y), nhay, production);
+    Structure_list->push_back(farm);
+    Sim_object_list->push_back(farm);
+
 }
 
 void Model::addCastle(const std::string &line) {
@@ -232,8 +235,9 @@ void Model::addCastle(const std::string &line) {
 
     int nhay = std::stoi(hay);
 
-    Structure_list->push_back(
-        std::make_shared<Castle>(name, Point(x, y), nhay));
+    std::shared_ptr<Castle> castle = std::make_shared<Castle>(name, Point(x, y), nhay);
+    Structure_list->push_back(castle);
+    Sim_object_list->push_back(castle);
 }
 
 void Model::log(std::string str) { m_view->Log(str); }

@@ -15,22 +15,35 @@ void View::makeDefault() {
 void View::show() {
 
     // firstly , update matrix.
-    for (auto i : _matrix) {
-        std::fill(i.begin(), i.end(), '.');
+    for ( auto& i : _matrix) {
+        std::for_each(i.begin(),i.end(),[](std::array<char,2>& ar){ar[0] = '.'; ar[1] =' ';});
     }
     for (const auto &obj : *_objects) {
         double x = obj->getLocation().x;
         double y = obj->getLocation().y;
 
-        insert(x, y, obj);
+        insert(x, y, obj->getName());
     }
     // PRINT
-    for (const auto &row : _matrix) {
-        for (const auto &sqaure : row) {
-            std::cout << sqaure << " ";
+    int scale = (_size * _scale)-_scale;
+    int jump = 2;
+    if(scale<25)
+    {
+        jump = 0;
+    }
+    if(scale>25 && scale<50)
+    {
+        jump = 1;
+    }
+
+    std::for_each(_matrix.rbegin(),_matrix.rend(),[&jump,&scale](std::vector<std::array<char,2> >& row) {
+        int runner = 0;
+        for (const auto &sqaure: row) {
+            if(jump == 0)
+            std::cout << sqaure.front()<<sqaure.back();
         }
         std::cout << "\n";
-    }
+    });
 }
 
 void View::setSize(int size) {
@@ -39,26 +52,31 @@ void View::setSize(int size) {
 
     _matrix.resize(size);
     for_each(_matrix.begin(), _matrix.end(),
-             [size](std::vector<char> &object) { object.resize(size); });
+             [size](std::vector<std::array<char,2>> &object) { object.resize(size); });
 
     _size = size;
 }
 
 int View::getSize() { return _size; }
 
-void View::insert(double x, double y, std::shared_ptr<Sim_object> obj) {
-    double range = _size * _scale * 10;
+void View::insert(double x, double y, const std::string& name) {
+    double range = _size * _scale ;
 
     double x_range = _pan.x + range;
-    double y_range = _pan.y = range;
+    double y_range = _pan.y + range;
 
     if (x > x_range || y > y_range || x < _pan.x || y < _pan.y)
         return; // out of range depending on this scale,pan and size.
 
-    int x_cordinate = x / _scale * 10;
-    int y_cordinate = y / _scale * 10;
+    int x_cordinate =  x / (_scale-_pan.x );
+    int y_cordinate = y / (_scale-_pan.y );
 
-    _matrix.at(x_cordinate).at(y_cordinate) = obj->getName().at(0);
+\
+
+
+    _matrix.at(y_cordinate).at(x_cordinate).front() = name[0];
+    _matrix.at(y_cordinate).at(x_cordinate).back() = name[1];
+
 }
 
 void View::setPan(double x, double y) {
