@@ -85,7 +85,13 @@ public:
     Model &operator=(const Model &) = delete;
 
 private: // Singleton
-    Model() : time(0){};
+    Model() : time(0)
+    {
+        Sim_object_list = std::make_shared<std::vector<std::shared_ptr<Sim_object>>>();
+        Structure_list  = std::make_shared<std::vector<std::shared_ptr<Structure>>>();
+        Agent_list  = std::make_shared<std::vector<std::shared_ptr<Agent>>>();
+        m_view = std::make_unique<View>();
+    };
 
 
 
