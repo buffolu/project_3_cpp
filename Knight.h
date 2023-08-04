@@ -3,11 +3,15 @@
 // for getInstance of the Knight
 #include <algorithm>
 #include <memory>
-#include <vector>
+#include "Geometry.h"
 //
 #include "Agent.h"
 #include "Castle.h"
 #include <vector>
+#include "Structure.h"
+#include <memory>
+#include <cfloat>
+#include <iostream>
 
 class Knight : public Agent {
 

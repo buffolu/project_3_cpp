@@ -3,8 +3,7 @@
 //
 
 #include "Knight.h"
-#include <float.h>
-#include <iostream>
+
 
 Knight::Knight(const std::string &name, Point position)
     : Agent(name, position, 10, -1) {}

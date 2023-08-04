@@ -6,8 +6,8 @@
 #define PROJECT_3_STRUCUTE_H
 
 #include "Sim_object.h"
+#include "Geometry.h"
 #include <iostream>
-
 class Structure : public Sim_object {
     int _hay;
 

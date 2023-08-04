@@ -2,7 +2,6 @@
 
 #include "Agent.h"
 #include "Knight.h"
-
 #include "Peasant.h"
 #include <memory>
 #include <utility>

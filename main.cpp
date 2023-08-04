@@ -1,5 +1,6 @@
 #include "Controller.h"
 #include <memory>
+#include "Model.h"
 #include <iostream>
 
 int main(int argc, char **argv) {

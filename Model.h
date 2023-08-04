@@ -5,7 +5,6 @@
 #ifndef PROJECT_3_MODEL_H
 #define PROJECT_3_MODEL_H
 
-#include "Agent.h"
 #include "Farm.h"
 #include "Knight.h"
 #include "Peasant.h"

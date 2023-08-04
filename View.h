@@ -4,8 +4,7 @@
 
 #ifndef PROJECT_3_VIEW_H
 #define PROJECT_3_VIEW_H
-#include "Sim_object.h"
-
+#include "Model.h"
 #include <algorithm>
 #include <cmath>
 #include <memory>
@@ -34,7 +33,7 @@ public:
     void addObjects(
         std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>> objects);
 
-    inline void Log(const std::string &str) noexcept;
+    inline void Log(const std::string &str) noexcept{};
 
     View();
 };

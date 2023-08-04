@@ -5,16 +5,7 @@
 #ifndef PROJECT_3_CONTROLLER_H
 #define PROJECT_3_CONTROLLER_H
 #include "Model.h"
-#include "View.h"
-#include "utils.h"
-#include <istream>
-#include <memory>
-#include <utility>
-#include <vector>
-#include <algorithm>
-#include <cctype>
-#include <string>
-#include <iostream>
+
 
 class Controller {
 public:

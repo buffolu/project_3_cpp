@@ -7,7 +7,7 @@
 
 #include "Geometry.h"
 #include <string>
-
+#include <iostream>
 class Sim_object {
     std::string name;
     Point location;
