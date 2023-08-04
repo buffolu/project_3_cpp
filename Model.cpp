@@ -8,8 +8,8 @@
 void Model::run(int argc, char **argv) {
     // SETUP
     if (argc != 3) {
-        View::Get().Log(std::string("Usage: ") + argv[0] +
-                        " <castles.dat> <farms.dat>");
+        m_view->Log(std::string("Usage: ") + argv[0] +
+                    " <castles.dat> <farms.dat>");
     }
     std::ifstream if_castles(argv[1]);
     std::ifstream if_farms(argv[2]);
@@ -83,7 +83,7 @@ void Model::course(string &basicString, double theta, int i) {
     if (agent) {
         agent->setCourse(theta);
     } else {
-        View::Get().Log("No agent named " + basicString);
+        m_view->Log("No agent named " + basicString);
     }
 }
 
@@ -92,7 +92,7 @@ void Model::position(string &basicString, Point point, int i) {
     if (agent) {
         agent->setDestinationCoordinates(point);
     } else {
-        View::Get().Log("No agent named " + basicString);
+        m_view->Log("No agent named " + basicString);
     }
 }
 
@@ -101,7 +101,7 @@ void Model::stop(string &basicString) {
     if (agent) {
         agent->stop();
     } else {
-        View::Get().Log("No agent named " + basicString);
+        m_view->Log("No agent named " + basicString);
     }
 }
 void Model::destination(string &basicString, string &castle) {
@@ -112,7 +112,7 @@ void Model::destination(string &basicString, string &castle) {
         shared_ptr<Knight> knight = dynamic_pointer_cast<Knight>(agent);
         knight->setOnPatrol(castle_, Structure_list);
     } else {
-        View::Get().Log("No structure named " + basicString);
+        m_view->Log("No structure named " + basicString);
     }
 }
 
@@ -142,7 +142,7 @@ shared_ptr<Agent> Model::findAgent(const std::string &a_name) {
 
 void Model::badInput(const std::string &str) {
     std::string badInputMessage = std::string("Bad input: \"") + str + "\"";
-    View::Get().Log(badInputMessage);
+    m_view->Log(badInputMessage);
 }
 
 Model &Model::Get() {
@@ -163,7 +163,7 @@ void Model::start_working(string &peasant_name, string &farm_name,
         peasant->start_working(farm, castle);
 
     } else {
-        View::Get().Log("Invalid name");
+        m_view->Log("Invalid name");
     }
 }
 const shared_ptr<std::vector<std::shared_ptr<Sim_object>>> &
@@ -171,15 +171,15 @@ Model::getSimObjectList() const {
     return Sim_object_list;
 }
 
-void Model::makeDefault() { View::Get().makeDefault(); }
+void Model::makeDefault() { m_view->makeDefault(); }
 
-void Model::setSizeView(int _size) { View::Get().setSize(_size); }
+void Model::setSizeView(int _size) { m_view->setSize(_size); }
 
-void Model::setZoomView(double zoom) { View::Get().setScale(zoom); }
+void Model::setZoomView(double zoom) { m_view->setScale(zoom); }
 
-void Model::setPanView(double x, double y) { View::Get().setPan(x, y); }
+void Model::setPanView(double x, double y) { m_view->setPan(x, y); }
 
-void Model::show() { View::Get().show(); }
+void Model::show() { m_view->show(); }
 
 void Model::attach(std::unique_ptr<View> someView) {
     if (!m_view) {
