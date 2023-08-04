@@ -3,7 +3,6 @@
 //
 #include "Farm.h"
 
-
 Farm::Farm(const std::string &name, Point p, int hay, int produceRate)
     : Structure(name, p, hay), _produceRate(produceRate) {}
 

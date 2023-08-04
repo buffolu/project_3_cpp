@@ -180,7 +180,7 @@ void Model::addFarm(const std::string &line) {
     std::string &hay = separated[3];
     std::string &prod = separated[4];
 
-    xstr = xstr.substr(2);                     // to cut off " ("
+    xstr = xstr.substr(2);                    // to cut off " ("
     ystr = ystr.substr(0, ystr.length() - 1); // to cut off ")"
 
     double x = std::stod(xstr);
@@ -201,7 +201,7 @@ void Model::addCastle(const std::string &line) {
     std::string &ystr = separated[2];
     std::string &hay = separated[3];
 
-    xstr = xstr.substr(2);                     // to cut off " ("
+    xstr = xstr.substr(2);                    // to cut off " ("
     ystr = ystr.substr(0, ystr.length() - 1); // to cut off ")"
 
     double x = std::stod(xstr);
@@ -221,3 +221,12 @@ Model &Model::Get() {
     }
     return *model;
 }
+
+Model::Model() : time(0) {
+    Sim_object_list =
+        std::make_shared<std::vector<std::shared_ptr<Sim_object>>>();
+    Structure_list =
+        std::make_shared<std::vector<std::shared_ptr<Structure>>>();
+    Agent_list = std::make_shared<std::vector<std::shared_ptr<Agent>>>();
+    m_view = std::make_unique<View>();
+};

@@ -7,6 +7,6 @@ class Castle : public Structure {
 
 public:
     Castle(const std::string &name, Point position, int hay);
-    void update() override{};
+    void update() override;
     void giveCrates(int crates);
 };

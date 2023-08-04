@@ -9,3 +9,5 @@ void Castle::giveCrates(int crates) { addToHay(crates); }
 
 Castle::Castle(const std::string &name, Point position, int hay)
     : Structure(std::move(name), position, hay) {}
+
+void Castle::update() {}
