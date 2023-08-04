@@ -9,7 +9,7 @@ void Model::run(int argc, char **argv) {
     // SETUP
     if (argc != 3) {
         View::Get().Log(std::string("Usage: ") + argv[0] +
-                   " <castles.dat> <farms.dat>");
+                        " <castles.dat> <farms.dat>");
     }
     std::ifstream if_castles(argv[1]);
     std::ifstream if_farms(argv[2]);
@@ -64,21 +64,42 @@ void Model::addThug(const std::string &name, Point position) {
 }
 
 /* to be removed
+<<<<<<< HEAD
 void Model::addAgent(const std::string &name, int type, Point &position,
                      const std::string &home) {
     if (findAgent(name, -1)) {
         throw exception();
     } // agent already exists.
+=======
+void Model::addAgent(const std::string &name,int type, Point &position) {
+    if(findAgent(name,-1)) {throw exception();} //agent already exists.
+>>>>>>> de0d576e21e26b18cff7fb5af566fa7651d6cbad
 
     if (type == THUG) {
         addThug(name, position);
     } else if (type == PEASANT) {
+<<<<<<< HEAD
         addPeasant(name, position);
     } else if (type == KNIGHT) {
         addKnight(name, home);
     } else {
+=======
+        addPeasant(name,position);
+    }
+     else{
+>>>>>>> de0d576e21e26b18cff7fb5af566fa7651d6cbad
         throw std::invalid_argument("invalid input");
     }
+}
+<<<<<<< HEAD
+=======
+void Model::addAgent(const string &name, int type, string &structure) {
+    if(type ==KNIGHT)
+    {
+        addKnight(name,structure);
+
+    }
+    throw std::invalid_argument("invalid input");
 }
 */
 
@@ -87,10 +108,7 @@ shared_ptr<Structure> Model::findStructure(const string &name) {
                       [&name](shared_ptr<Structure> &structure) {
                           return name == structure->getName();
                       });
-    if (it != Structure_list->end()) {
-        return *it;
-    }
-    return nullptr;
+    return *it;
 }
 
 void Model::status() {
@@ -189,4 +207,39 @@ void Model::start_working(string &peasant_name, string &farm_name,
          * TODO: THROW EXCPETION OR IGNORE
          */
     }
+}
+const shared_ptr<std::vector<std::shared_ptr<Sim_object>>> &
+Model::getSimObjectList() const {
+    return Sim_object_list;
+}
+
+void Model::makeDefault() {
+    View::Get().makeDefault();
+}
+
+void Model::setSizeView(int _size) {
+    View::Get().setSize(_size);
+}
+
+void Model::setZoomView(double zoom) {
+    View::Get().setScale(zoom);
+}
+
+void Model::setPanView(double x, double y) {
+    View::Get().setPan(x, y);
+}
+
+void Model::show() { View::Get().show(); }
+
+void Model::attach(shared_ptr<View> someView) {
+    someView->addObjects(Sim_object_list);
+    views.push_back(someView);
+    if (views.size() == 1)
+        current_view = views.front();
+}
+
+void Model::detach(shared_ptr<View> someView) {
+    auto it = remove_if(
+        views.begin(), views.end(),
+        [someView](shared_ptr<View> &view) { return someView == view; });
 }

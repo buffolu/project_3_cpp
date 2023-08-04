@@ -24,19 +24,19 @@ bool Controller::GetUserInput() {
         std::string command = words.front();
         words.erase(words.begin());
         if (command == "default" && words.empty()) {
-            model->ddefault();
+            model->makeDefault();
 
         } else if (command == "size" && words.size() == 1) {
             int s = std::stoi(words.back());
             if (s > 6 && s <= 30) {
-                model->setSize(s);
+               model->setSizeView(s);
             } else {
                 throw std::invalid_argument("invalid input");
             }
         } else if (command == "zoom" && words.size() == 1) {
-            int num = std::stoi(words.back());
+            double num = std::stoi(words.back());
             if (num > 0) {
-                model->zoom(num);
+                model->setZoomView(num);
             }
 
             else {
@@ -49,10 +49,9 @@ bool Controller::GetUserInput() {
             words.erase(words.begin());
             double x = stoi(words.front());
             double y = stoi(words.back());
-            view.pan(x, y);
-
+                model->setPanView(x,y);
         } else if (command == "show" && words.empty()) {
-            view.show();
+            model->show();
         }
 
         // line 59- related to model
@@ -64,7 +63,8 @@ bool Controller::GetUserInput() {
                    words.size() == 4) {
             std::string name = words.front();
             words.erase(words.begin());
-            std::string type = words.front(); // knight , thug or peasant
+            std::string typeStr = words.front(); // knight , thug or peasant
+            int type = stoi(typeStr);
             words.erase(words.begin());
             if (utils::isStringOnlyLetters(name)) {
                 throw std::invalid_argument("invalid input");
@@ -85,6 +85,11 @@ bool Controller::GetUserInput() {
                 Point p(x, y);
 
                 model->addAgent(name, type, p);
+            }
+            else if(words.size() == 1)
+            {
+                std::string structure = words.front();
+                model->addAgent(name,type,structure);
             }
 
         }

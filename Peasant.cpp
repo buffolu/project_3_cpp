@@ -3,12 +3,14 @@
 //
 #include "Peasant.h"
 
-Peasant::Peasant(const std::string &name, Point &position) : Agent(name, position,10,5),carried_crates(0) {
+#include <memory>
+
+Peasant::Peasant(const std::string &name, Point &position) : Agent(name, position,10,5,PEASANT),carried_crates(0),loading(true) {
 
 }
 
 shared_ptr<Peasant> Peasant::getInstance(string &name, Point &position) {
-    return shared_ptr<Peasant>(new Peasant(name,position));
+    return std::make_shared<Peasant>(name,position);
 }
 
 void Peasant::start_working(const shared_ptr<Farm>& farm,const shared_ptr<Castle>& castle) {

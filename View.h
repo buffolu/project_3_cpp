@@ -12,6 +12,7 @@
 #include "algorithm"
 
 class View {
+    shared_ptr<vector<shared_ptr<Sim_object>>> _objects;
     double _scale;  // number of kilometers in square side
     int _size;
     Point _pan;
@@ -25,8 +26,8 @@ public:
     int getSize();
     void setSize(int size);
     void setScale(double scale);
-    void show(std::shared_ptr<vector<shared_ptr<Sim_object>>> objects);
-
+    void show();
+    void addObjects(    shared_ptr<vector<shared_ptr<Sim_object>>> objects);
 
     inline void Log(const std::string &str) noexcept;
 

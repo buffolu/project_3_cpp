@@ -4,8 +4,8 @@
 
 #include "Agent.h"
 
-Agent::Agent(const std::string &name_, Point location_, int speed_, int health_)
-    : Sim_object(name_, location_), speed(speed_), health(health_),
+Agent::Agent(const std::string &name_, Point location_, int speed_, int health_,int type)
+    : Sim_object(name_, location_,type), speed(speed_), health(health_),
       state(STOPPED) {}
 
 void Agent::update() {

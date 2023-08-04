@@ -3,10 +3,10 @@
 #include "Structure.h"
 
 class Farm : public Structure {
-    // std::string& owner_castle;
-
+    int _produceRate;
 public:
+    Farm(string name,Point p,int hay,int produceRate);
     void update() override;
-    int takeCrates();
+    int takeCrates(int amount = 5);
 };
 

@@ -8,21 +8,20 @@
 #include "View.h"
 #include "utils.h"
 #include <istream>
+#include <memory>
 #include <utility>
 #include <vector>
-#include <memory>
 
 class Controller {
-private:
-
 public:
     bool GetUserInput();
     void readFile(std::fstream &file);
 
 private: // Singleton
     Controller() {}
-    Controller(const Controller& other) = delete;
-    Controller &operator=(const Controller& other) = delete;
+    Controller(const Controller &other) = delete;
+    Controller &operator=(const Controller &other) = delete;
+
 public:
     static Controller &Get();
 };

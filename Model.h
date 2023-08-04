@@ -38,11 +38,13 @@ public:
     void addFarm(std::string);
     void addCastle(std::string);
 
+    const shared_ptr<std::vector<std::shared_ptr<Sim_object>>> &getSimObjectList() const;
+
+
     // getters
     // setters
-    void attach();
-    void detach();
-    void notify_Location();
+    void attach(shared_ptr<View> someView);
+    void detach(shared_ptr<View> someView);
 
     // methods for model
     void run(int argc, char **argv);
@@ -63,6 +65,17 @@ public:
 
     void badInput(const std::string &);
 
+
+
+
+    //view methods
+    void makeDefault();
+    void setSizeView(int _size);
+    void setZoomView(double zoom);
+    void setPanView(double x , double y);
+    void show();
+
+    
 private: // Singleton
     Model() : time(0){};
     Model(const Model&) = delete;
