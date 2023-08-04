@@ -17,11 +17,16 @@
 class Controller {
     bool exitflag = false;
 
+    bool zoom(const std::vector<std::string> &words);
+    bool size(const std::vector<std::string> &words);
+    bool pan(const std::vector<std::string> &words);
+    bool create(const std::vector<std::string> &words);
+    bool course(const std::vector<std::string> &words);
+    bool position(const std::vector<std::string> &words);
+
 public:
-    bool GetUserInput();
-    // might delete
-    // void readFile(std::fstream &file);
     Controller();
+    bool GetUserInput();
     void run(int argc, char **argv);
 };
 

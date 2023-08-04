@@ -54,8 +54,10 @@ public:
     void run(int argc, char **argv);
 
     // ralevent to diffrent kind of agents
-    void course(const std::string &basicString, double theta, int i);
-    void position(const std::string &basicString, Point point, int i);
+    void course(const std::string &basicString, double theta, int speed);
+    void course(const std::string &basicString, double theta);
+    void position(const std::string &basicString, Point point, int speed);
+    void position(const std::string &basicString, Point point);
     void stop(const std::string &basicString);
 
     // each method is relavant to only one kind of agent

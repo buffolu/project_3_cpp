@@ -58,6 +58,18 @@ void Model::status() {
 void Model::course(const std::string &basicString, double theta, int i) {
 
     auto agent = findAgent(basicString);
+    std::shared_ptr<Thug> thug = std::dynamic_pointer_cast<Thug>(agent);
+    if (thug) {
+        thug->setCourse(theta);
+        thug->setSpeed(i);
+    } else {
+        m_view->Log("No thug named " + basicString);
+    }
+}
+
+void Model::course(const std::string &basicString, double theta) {
+
+    auto agent = findAgent(basicString);
     if (agent) {
         agent->setCourse(theta);
     } else {
@@ -65,7 +77,18 @@ void Model::course(const std::string &basicString, double theta, int i) {
     }
 }
 
-void Model::position(const std::string &basicString, Point point, int i) {
+void Model::position(const std::string &basicString, Point point, int speed) {
+    // TODO: must be thug
+    auto agent = findAgent(basicString);
+    if (agent) {
+        agent->setDestinationCoordinates(point);
+    } else {
+        m_view->Log("No agent named " + basicString);
+    }
+}
+
+void Model::position(const std::string &basicString, Point point) {
+    // TODO: must be peasant or knight
     auto agent = findAgent(basicString);
     if (agent) {
         agent->setDestinationCoordinates(point);
