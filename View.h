@@ -4,7 +4,8 @@
 
 #ifndef PROJECT_3_VIEW_H
 #define PROJECT_3_VIEW_H
-#include "Geometry.h"
+#include "Sim_object.h"
+
 #include <algorithm>
 #include <cmath>
 #include <memory>
@@ -19,10 +20,11 @@ class View {
     Point _pan;
     std::vector<std::vector<char>> _matrix;
     Point _origin;
-    void insert(double x, double y, std::shared_ptr<Sim_object> obj);
 
 public:
     // getters setters
+    void insert(double x, double y, std::shared_ptr<Sim_object> obj);
+
     void setPan(double x, double y);
     void makeDefault();
     int getSize();

@@ -1,11 +1,13 @@
 #pragma once
 
 #include "Agent.h"
-#include "Geometry.h"
+#include "Knight.h"
+
 #include "Peasant.h"
 #include <memory>
 #include <utility>
 #include <vector>
+#include <algorithm>
 
 class Thug : public Agent {
 

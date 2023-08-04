@@ -7,7 +7,6 @@
 
 #include "Agent.h"
 #include "Farm.h"
-#include "Geometry.h"
 #include "Knight.h"
 #include "Peasant.h"
 #include "Structure.h"

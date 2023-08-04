@@ -2,10 +2,8 @@
 // Created by igor on 24/06/2023.
 //
 
-#include <algorithm>
-#include <utility>
+
 #include "Thug.h"
-#include "Knight.h"
 
 
 

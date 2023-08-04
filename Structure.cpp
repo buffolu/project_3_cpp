@@ -3,7 +3,6 @@
 //
 
 #include "Structure.h"
-#include <iostream>
 
 void Structure::broadcast_current_state() const noexcept {
     Sim_object::broadcast_current_state();
