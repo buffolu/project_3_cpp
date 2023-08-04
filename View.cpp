@@ -15,7 +15,7 @@ void View::makeDefault() {
 void View::show() {
 
     // firstly , update matrix.
-    for (auto i : _matrix) {
+    for ( auto& i : _matrix) {
         std::fill(i.begin(), i.end(), '.');
     }
     for (const auto &obj : *_objects) {
@@ -55,8 +55,11 @@ void View::insert(double x, double y, std::shared_ptr<Sim_object> obj) {
     if (x > x_range || y > y_range || x < _pan.x || y < _pan.y)
         return; // out of range depending on this scale,pan and size.
 
-    int x_cordinate = x / _scale * 10;
-    int y_cordinate = y / _scale * 10;
+    double x_cordinate =  x / (_scale * 10.0) ;
+    double y_cordinate = y / (_scale * 10.0) ;
+
+
+
 
     _matrix.at(x_cordinate).at(y_cordinate) = obj->getName().at(0);
 }
