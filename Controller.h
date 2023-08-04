@@ -15,15 +15,10 @@
 class Controller {
 public:
     bool GetUserInput();
-    void readFile(std::fstream &file);
+    // might delete
+    // void readFile(std::fstream &file);
 
-private: // Singleton
-    Controller() {}
-    Controller(const Controller &other) = delete;
-    Controller &operator=(const Controller &other) = delete;
-
-public:
-    static Controller &Get();
+    Controller();
 };
 
 #endif // PROJECT_3_CONTROLLER_H

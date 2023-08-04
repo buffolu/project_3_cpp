@@ -4,64 +4,55 @@
 
 #include "View.h"
 
-void View::setScale(double scale) {
-    _scale = scale;
-}
+void View::setScale(double scale) { _scale = scale; }
 void View::makeDefault() {
-    _size  = 25;
-    _pan = {0,0};
+    _size = 25;
+    _pan = {0, 0};
     _scale = 2;
 }
 
-
 void View::show() {
 
-
-    //firstly , update matrix.
-    for(auto i : _matrix) { std::fill(i.begin(), i.end(),'.');}
-    for(const auto& obj : *_objects)
-    {
+    // firstly , update matrix.
+    for (auto i : _matrix) {
+        std::fill(i.begin(), i.end(), '.');
+    }
+    for (const auto &obj : *_objects) {
         double x = obj->getLocation().x;
         double y = obj->getLocation().y;
 
-        insert(x,y,obj);
+        insert(x, y, obj);
     }
-    //PRINT
-    for(const auto& row: _matrix)
-    {
-        for(const auto& sqaure: row)
-        {
-            std::cout<<sqaure<<" ";
+    // PRINT
+    for (const auto &row : _matrix) {
+        for (const auto &sqaure : row) {
+            std::cout << sqaure << " ";
         }
-        std::cout<<"\n";
+        std::cout << "\n";
     }
 }
 
 void View::setSize(int size) {
-    if(size<6 || size > 30) throw exception();
-
+    if (size < 6 || size > 30)
+        throw exception();
 
     _matrix.resize(size);
-    for_each(_matrix.begin(),_matrix.end(),[size](std::vector<char>& object)
-    {
-        object.resize(size);
-    });
+    for_each(_matrix.begin(), _matrix.end(),
+             [size](std::vector<char> &object) { object.resize(size); });
 
     _size = size;
 }
 
-int View::getSize() {
-    return _size;
-}
+int View::getSize() { return _size; }
 
-void View::insert(double x, double y,const shared_ptr<Sim_object>& obj ) {
+void View::insert(double x, double y, const shared_ptr<Sim_object> &obj) {
     double range = _size * _scale * 10;
 
     double x_range = _pan.x + range;
     double y_range = _pan.y = range;
 
-
-    if (x > x_range || y > y_range || x < _pan.x || y < _pan.y) return; //out of range depending on this scale,pan and size.
+    if (x > x_range || y > y_range || x < _pan.x || y < _pan.y)
+        return; // out of range depending on this scale,pan and size.
 
     int x_cordinate = x / _scale * 10;
     int y_cordinate = y / _scale * 10;
@@ -70,17 +61,11 @@ void View::insert(double x, double y,const shared_ptr<Sim_object>& obj ) {
 }
 
 void View::setPan(double x, double y) {
-    _pan.x = x; _pan.y = y;}
-
-View::View() {
-    makeDefault();
+    _pan.x = x;
+    _pan.y = y;
 }
 
-View &View::Get() {
-    static View instance;
-    return instance;
-}
+View::View() { makeDefault(); }
 void View::addObjects(shared_ptr<vector<shared_ptr<Sim_object>>> objects) {
     _objects = objects;
-
 }

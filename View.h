@@ -31,13 +31,7 @@ public:
 
     inline void Log(const std::string &str) noexcept;
 
-private: // Singleton
     View();
-    View(const View&) = delete;
-    View &operator=(const View&) = delete;
-
-public:
-    static View &Get();
 };
 
 

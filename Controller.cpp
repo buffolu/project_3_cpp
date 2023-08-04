@@ -166,9 +166,5 @@ bool Controller::GetUserInput() {
     catch (const std::exception &e) {
         std::cout << e.what();
     }
-}
-
-Controller &Controller::Get() {
-    static Controller instance;
-    return instance;
+    return false;
 }

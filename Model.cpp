@@ -181,19 +181,29 @@ void Model::setPanView(double x, double y) { View::Get().setPan(x, y); }
 
 void Model::show() { View::Get().show(); }
 
-void Model::attach(shared_ptr<View> someView) {
-    someView->addObjects(Sim_object_list);
-    views.push_back(someView);
-    if (views.size() == 1)
-        current_view = views.front();
+void Model::attach(std::unique_ptr<View> someView) {
+    if (!m_view) {
+        m_view = std::move(someView);
+    }
 }
 
-void Model::detach(shared_ptr<View> someView) {
-    auto it = remove_if(
-        views.begin(), views.end(),
-        [someView](shared_ptr<View> &view) { return someView == view; });
+void Model::detach(std::unique_ptr<View> someView) {
+    if (someView == m_view) {
+        m_view.reset();
+    }
 }
 
+void Model::attach(std::unique_ptr<Controller> someController) {
+    if (!m_view) {
+        m_controller = std::move(someController);
+    }
+}
+
+void Model::detach(std::unique_ptr<Controller> someController) {
+    if (someController == m_controller) {
+        m_controller.reset();
+    }
+}
 void Model::addFarm(const std::string &line) {
     std::vector<std::string> &&separated = utils::split(line, ',');
     std::string &name = separated[0];

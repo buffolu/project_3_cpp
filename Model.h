@@ -24,6 +24,9 @@ class Model {
     std::shared_ptr<std::vector<std::shared_ptr<Structure>>> Structure_list;
     std::shared_ptr<std::vector<std::shared_ptr<Agent>>> Agent_list;
     int time;
+    
+    std::unique_ptr<View> m_view;
+    std::unique_ptr<Controller> m_controller;
 
 public:
     void status(); // broadCast statue of every object
@@ -40,11 +43,12 @@ public:
 
     const shared_ptr<std::vector<std::shared_ptr<Sim_object>>> &getSimObjectList() const;
 
+    // attach detach view and controller
+    void attach(std::unique_ptr<View> someView);
+    void detach(std::unique_ptr<View> someView);
 
-    // getters
-    // setters
-    void attach(shared_ptr<View> someView);
-    void detach(shared_ptr<View> someView);
+    void attach(std::unique_ptr<Controller> someController);
+    void detach(std::unique_ptr<Controller> someController);
 
     // methods for model
     void run(int argc, char **argv);
