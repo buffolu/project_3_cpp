@@ -9,6 +9,7 @@ void View::makeDefault() {
     _size = 25;
     _pan = {0, 0};
     _scale = 2;
+    setSize(_size);
 }
 
 void View::show() {
