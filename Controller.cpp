@@ -78,11 +78,13 @@ bool Controller::GetUserInput() {
             Model::Get().setPanView(x, y);
         } else if (command == "show" && words.empty()) {
             Model::Get().show();
+            return 1;
         }
 
         // line 59- related to model
         else if (command == "status" && words.empty()) {
             Model::Get().status();
+            return 1;
         } else if (command == "go" && words.empty()) {
             Model::Get().go();
         } else if (command == "create" &&

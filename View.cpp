@@ -25,8 +25,21 @@ void View::show() {
         insert(x, y, obj->getName());
     }
     // PRINT
-    std::for_each(_matrix.rbegin(),_matrix.rend(),[](std::vector<std::array<char,2> >& row) {
+    int scale = (_size * _scale)-_scale;
+    int jump = 2;
+    if(scale<25)
+    {
+        jump = 0;
+    }
+    if(scale>25 && scale<50)
+    {
+        jump = 1;
+    }
+
+    std::for_each(_matrix.rbegin(),_matrix.rend(),[&jump,&scale](std::vector<std::array<char,2> >& row) {
+        int runner = 0;
         for (const auto &sqaure: row) {
+            if(jump == 0)
             std::cout << sqaure.front()<<sqaure.back();
         }
         std::cout << "\n";
@@ -55,10 +68,10 @@ void View::insert(double x, double y, const std::string& name) {
     if (x > x_range || y > y_range || x < _pan.x || y < _pan.y)
         return; // out of range depending on this scale,pan and size.
 
-    int x_cordinate =  x / (_scale );
-    int y_cordinate = y / (_scale );
+    int x_cordinate =  x / (_scale-_pan.x );
+    int y_cordinate = y / (_scale-_pan.y );
 
-
+\
 
 
     _matrix.at(y_cordinate).at(x_cordinate).front() = name[0];

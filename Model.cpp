@@ -52,6 +52,7 @@ std::shared_ptr<Structure> Model::findStructure(const std::string &name) {
 void Model::status() {
     for (const auto &obj : *Sim_object_list) {
         obj->broadcast_current_state();
+        std::cout<<std::endl;
     }
 }
 
