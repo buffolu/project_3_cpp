@@ -48,7 +48,7 @@ Point::Point() {
 }
 
 void Point::print() const {
-    cout << setprecision(2) << "(" << x << ", " << y << ")";
+    std::cout << std::setprecision(2) << "(" << x << ", " << y << ")";
 }
 
 bool Point::operator==(const Point &rhs) { return x == rhs.x && y == rhs.y; }

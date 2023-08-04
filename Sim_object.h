@@ -21,11 +21,10 @@ public:
     void setLocation(Point location);
     Point getLocation() const noexcept;
 
-    int getType() const;
 
     virtual void broadcast_current_state() const noexcept;
 
-    virtual ~Sim_object() = 0;
+    virtual ~Sim_object()= default;;
 };
 
 #endif // PROJECT_3_SIM_OBJECT_H

@@ -1,7 +1,6 @@
 
 #include <memory>
 #include "View.h"
-#include "Model.h"
 #include "Controller.h"
 
 

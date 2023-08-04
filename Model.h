@@ -90,7 +90,8 @@ private: // Singleton
 
 
 public:
-    static Model &Get();
+    static Model& Get();
+    static std::unique_ptr<Model> model;
 };
 
 #endif // PROJECT_3_MODEL_H

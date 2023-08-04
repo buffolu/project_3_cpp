@@ -6,8 +6,13 @@
 void Controller::run(int argc, char **argv) {
     // SETUP
     if (argc != 3) {
+        std::cout<<"bad input";
+        /**
+         * TODO:IMPLEMNT LOG IN VIEW
+         */
         Model::Get().log(std::string("Usage: ") + argv[0] +
                     " <castles.dat> <farms.dat>");
+        exit(1);
     }
     std::ifstream if_castles(argv[1]);
     std::ifstream if_farms(argv[2]);

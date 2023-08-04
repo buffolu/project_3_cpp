@@ -5,6 +5,7 @@
 #include "Model.h"
 
 
+std::unique_ptr<Model> Model::model = nullptr;
 
 void Model::go() {
     for (const auto &object : *Agent_list) {
@@ -125,10 +126,7 @@ void Model::badInput(const std::string &str) {
     m_view->Log(badInputMessage);
 }
 
-Model &Model::Get() {
-    static Model instance;
-    return instance;
-}
+
 
 void Model::start_working(const std::string &peasant_name,
                           const std::string &farm_name,
@@ -218,5 +216,14 @@ void Model::addCastle(const std::string &line) {
 
 void Model::log(std::string str) {
     m_view->Log(str);
+
+}
+
+Model &Model::Get() {
+    if(!model)
+    {
+        model = std::unique_ptr<Model>(new Model());
+    }
+    return *model;
 
 }
