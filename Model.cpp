@@ -8,7 +8,7 @@
 void Model::run(int argc, char **argv) {
     // SETUP
     if (argc != 3) {
-        m_view->Log(std::string("Usage: ") + argv[0] +
+        current_view->Log(std::string("Usage: ") + argv[0] +
                     " <castles.dat> <farms.dat>");
     }
     std::ifstream if_castles(argv[1]);
@@ -36,7 +36,7 @@ void Model::go() {
 }
 
 void Model::addKnight(const std::string &name, const std::string &home) {
-   auto it = findStrcture(home,CASTLE);
+   auto it = findStructure(home,CASTLE);
    if(!it) {
        throw exception();
    }
@@ -61,27 +61,36 @@ void Model::addThug(const std::string &name, Point position) {
     Agent_list->push_back(thug);
 }
 
-void Model::addAgent(const std::string &name,int type, Point &position,const std::string& home) {
+void Model::addAgent(const std::string &name,int type, Point &position) {
     if(findAgent(name,-1)) {throw exception();} //agent already exists.
 
     if (type == THUG) {
         addThug(name,position);
     } else if (type == PEASANT) {
         addPeasant(name,position);
-    } else if (type == KNIGHT) {
-        addKnight(name,home);}
+    }
      else{
         throw std::invalid_argument("invalid input");
     }
 
 }
+void Model::addAgent(const string &name, int type, string &structure) {
+    if(type ==KNIGHT)
+    {
+        addKnight(name,structure);
+
+    }
+    throw std::invalid_argument("invalid input");
+}
+
+
 
 
 
 shared_ptr<Structure> Model::findStructure(const string &name,int type)
  {
     auto it = find_if(Structure_list->begin(),Structure_list->end(),[&name,type] (shared_ptr<Structure>& structure) {return
-    name== structure->getName() && (structure->getType == type || type == -1);
+    name== structure->getName() && (structure->getType() == type || type == -1);
     });
     if(it != Structure_list->end())
     {
@@ -101,7 +110,7 @@ void Model::status() {
 void Model::course(string &basicString, double theta, int i) {
 
     auto agent = findAgent(basicString,-1);
-    if(agent && agent.getType() != PEASANT) {
+    if(agent && agent->getType() != PEASANT) {
         agent->setCourse(theta);
     }
     else
@@ -115,7 +124,7 @@ void Model::course(string &basicString, double theta, int i) {
 
 void Model::position(string &basicString, Point point, int i) {
     auto agent = findAgent(basicString,-1);
-    if(agent && agent.getType() != PEASANT) {
+    if(agent && agent->getType() != PEASANT) {
         agent->setDestinationCoordinates(point);
     }
     else
@@ -186,7 +195,7 @@ shared_ptr<Agent> Model::findAgent(const std::string &name, int type) {
 
 void Model::badInput(const std::string& str) {
     std::string badInputMessage = std::string("Bad input: \"") + str + "\"";
-    m_view->Log(badInputMessage);
+    current_view->Log(badInputMessage);
 }
 
 Model &Model::Get() {
@@ -196,8 +205,8 @@ Model &Model::Get() {
 
 void Model::start_working(string &peasant_name, string &farm_name, string &castle_name) {
     auto agent = findAgent(peasant_name,PEASANT);
-    auto structure1 = findStrcture(farm_name,FARM);
-    auto structure2  = findStrcture(castle_name,CASTLE);
+    auto structure1 = findStructure(farm_name,FARM);
+    auto structure2  = findStructure(castle_name,CASTLE);
     if(agent && structure1 && structure2)
     {
         shared_ptr<Peasant> peasant = dynamic_pointer_cast<Peasant>(agent);
@@ -214,6 +223,61 @@ void Model::start_working(string &peasant_name, string &farm_name, string &castl
     }
 
 }
+
+const shared_ptr<std::vector<std::shared_ptr<Sim_object>>> &Model::getSimObjectList() const {
+    return Sim_object_list;
+}
+
+
+
+void Model::makeDefault() {
+    for(const auto& view : views)
+    {
+        view->makeDefault();
+    }
+}
+
+void Model::setSizeView(int _size) {
+    for(const auto& view : views)
+    {
+        view->setSize(_size);
+    }
+}
+
+void Model::setZoomView(double zoom) {
+    for(const auto& view : views)
+    {
+        view->setScale(zoom);
+    }
+}
+
+void Model::setPanView(double x, double y) {
+    for(const auto& view : views)
+    {
+        view->setPan(x,y);
+    }
+}
+
+void Model::show() {
+    current_view->show();
+}
+
+void Model::attach(shared_ptr<View> someView) {
+    someView->addObjects(Sim_object_list);
+    views.push_back(someView);
+    if(views.size() ==1 )
+        current_view = views.front();
+}
+
+void Model::detach(shared_ptr<View> someView) {
+    auto it = find_if(views.begin(),views.end(),[someView](shared_ptr<View>& view)
+    {
+       return someView == view;
+    });
+
+}
+
+
 
 
 

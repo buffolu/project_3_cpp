@@ -16,30 +16,38 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include "View.h"
 
 class Model {
     shared_ptr<  std::vector<std::shared_ptr<Sim_object>> > Sim_object_list;
     shared_ptr<  std::vector<std::shared_ptr<Structure>> > Structure_list;
     shared_ptr<  std::vector<std::shared_ptr<Agent>> > Agent_list;
+
+    std::vector<shared_ptr<View>> views;
+    shared_ptr<View>  current_view;
+
     int time;
-    enum type { KNIGHT, PEASANT, THUG };
+    enum type { KNIGHT, PEASANT, THUG,CASTLE,FARM };
+
 
 public:
-
 
     void status(); //broadCast statue of every object
     void go();    //update every object in one time step
 
     //add agents
-    void addAgent(const string &name, int type, Point &position, const string &home);
+    void addAgent(const string &name, int type, Point &position);
+    void addAgent(const string &name, int type, std::string& structure);
 
+
+
+    const shared_ptr<std::vector<std::shared_ptr<Sim_object>>> &getSimObjectList() const;
 
 
     // getters
     // setters
-    void attach();
-    void detach();
-    void notify_Location();
+    void attach(shared_ptr<View> someView);
+    void detach(shared_ptr<View> someView);
 
 
 
@@ -63,6 +71,15 @@ public:
 
 
     void badInput(const std::string&);
+
+
+    //view methods
+    void makeDefault();
+    void setSizeView(int _size);
+    void setZoomView(double zoom);
+    void setPanView(double x , double y);
+    void show();
+
     
 private: // Singleton
     Model() : time(0){};
@@ -74,6 +91,10 @@ private: // Singleton
     //finders
     shared_ptr<Agent> findAgent(const std::string &name, int type);
     shared_ptr<Structure> findStructure(const string &basicString,int type);
+
+
+
+
 public:
     static Model& Get();
 

@@ -6,6 +6,7 @@ class Castle : public Structure {
     // container of subordinate villages?
 
 public:
-    void update() override;
+    Castle(string name,Point position,int hay);
+    void update() override{};
     void giveCrates(int crates);
 };

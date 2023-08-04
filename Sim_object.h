@@ -11,9 +11,10 @@
 class Sim_object {
     std::string name;
     Point location;
-
+    int type;
 public:
-    Sim_object(const std::string &name_, Point location_);
+    enum type_info {PEASANT,KNIGHT,THUG,FARM,CASTLE};
+    Sim_object(std::string name_, Point location_,int type);
     virtual void update() = 0;
 
     void setName(const std::string& name);
@@ -21,6 +22,8 @@ public:
 
     void setLocation(Point location);
     Point getLocation() const noexcept;
+
+    int getType() const;
 
     virtual void broadcast_current_state() const noexcept;
 };

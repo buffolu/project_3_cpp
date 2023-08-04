@@ -15,10 +15,12 @@ void View::makeDefault() {
 }
 
 
-void View::show(shared_ptr<vector<shared_ptr<Sim_object>>> objects) {
+void View::show() {
+
+
     //firstly , update matrix.
     for(auto i : _matrix) { std::fill(i.begin(), i.end(),'.');}
-    for(const auto& obj : *objects)
+    for(const auto& obj : *_objects)
     {
         double x = obj->getLocation().x;
         double y = obj->getLocation().y;
@@ -71,9 +73,9 @@ void View::insert(double x, double y,const shared_ptr<Sim_object>& obj ) {
 void View::setPan(double x, double y) {
     _pan.x = x; _pan.y = y;}
 
-View::View() {
-    _size  = 25;
-    _pan = {0,0};
-    _scale = 2;
-}
+View::View():_size(25),_pan(0,0),_scale(2) {}
 
+void View::addObjects(shared_ptr<vector<shared_ptr<Sim_object>>> objects) {
+    _objects = objects;
+
+}

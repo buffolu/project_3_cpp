@@ -42,7 +42,7 @@ public:
      *  speed_ : how fast he will walk
      *  health : how much health he starts with
      */
-    Agent(const std::string &name_, Point location, int speed_, int health);
+    Agent(const std::string &name_, Point location, int speed_, int health,int type);
 
     void update() override;
 

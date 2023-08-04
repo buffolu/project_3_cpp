@@ -10,7 +10,7 @@
 
 
 
-Thug::Thug(const std::string &name_, Point &position): Agent(name_,position,0,5){
+Thug::Thug(const std::string &name_, Point &position): Agent(name_,position,0,5,THUG){
 
 }
 
