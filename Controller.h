@@ -5,17 +5,18 @@
 #ifndef PROJECT_3_CONTROLLER_H
 #define PROJECT_3_CONTROLLER_H
 
-#include "utils.h"
 #include "Geometry.h"
 #include "Model.h"
-
+#include "utils.h"
 
 #include <algorithm>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <vector>
 
 class Controller {
+    bool exitflag = false;
+
 public:
     bool GetUserInput();
     // might delete

@@ -4,22 +4,21 @@
 
 #ifndef PROJECT_3_MODEL_H
 #define PROJECT_3_MODEL_H
+#include "Agent.h"
+#include "Castle.h"
+#include "Farm.h"
+#include "Knight.h"
+#include "Peasant.h"
 #include "Sim_object.h"
 #include "Structure.h"
-#include "Farm.h"
-#include "Castle.h"
-#include "Agent.h"
 #include "Thug.h"
-#include "Peasant.h"
-#include "Knight.h"
 #include "View.h"
 
 #include "utils.h"
 
+#include <algorithm>
 #include <memory>
 #include <vector>
-#include <algorithm>
-
 
 class Model {
     std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>> Sim_object_list;
@@ -47,11 +46,9 @@ public:
     const std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>> &
     getSimObjectList() const;
 
-    // attach detach view and controller
+    // attach detach view
     void attach(std::unique_ptr<View> someView);
     void detach(std::unique_ptr<View> someView);
-
-
 
     // methods for model
     void run(int argc, char **argv);
@@ -87,9 +84,8 @@ public:
 private: // Singleton
     Model();
 
-
 public:
-    static Model& Get();
+    static Model &Get();
     static std::unique_ptr<Model> model;
 };
 

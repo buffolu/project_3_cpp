@@ -23,7 +23,7 @@ void Controller::run(int argc, char **argv) {
         Model::Get().addFarm(farm);
     }
     if_farms.close();
-    while (1) {
+    while (!exitflag) {
         GetUserInput();
     }
 }
@@ -47,7 +47,9 @@ bool Controller::GetUserInput() {
 
         std::string command = words.front();
         words.erase(words.begin());
-        if (command == "default" && words.empty()) {
+        if (command == "exit" && words.empty()) {
+            exitflag = true;
+        } else if (command == "default" && words.empty()) {
             Model::Get().makeDefault();
 
         } else if (command == "size" && words.size() == 1) {
