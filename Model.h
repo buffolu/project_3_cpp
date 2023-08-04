@@ -35,8 +35,8 @@ public:
     void addThug(const std::string &name, Point position);
 
     // add structures
-    void addFarm(std::string);
-    void addCastle(std::string);
+    void addFarm(const std::string&);
+    void addCastle(const std::string&);
 
     const shared_ptr<std::vector<std::shared_ptr<Sim_object>>> &getSimObjectList() const;
 

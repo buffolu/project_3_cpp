@@ -63,46 +63,6 @@ void Model::addThug(const std::string &name, Point position) {
     Agent_list->push_back(thug);
 }
 
-/* to be removed
-<<<<<<< HEAD
-void Model::addAgent(const std::string &name, int type, Point &position,
-                     const std::string &home) {
-    if (findAgent(name, -1)) {
-        throw exception();
-    } // agent already exists.
-=======
-void Model::addAgent(const std::string &name,int type, Point &position) {
-    if(findAgent(name,-1)) {throw exception();} //agent already exists.
->>>>>>> de0d576e21e26b18cff7fb5af566fa7651d6cbad
-
-    if (type == THUG) {
-        addThug(name, position);
-    } else if (type == PEASANT) {
-<<<<<<< HEAD
-        addPeasant(name, position);
-    } else if (type == KNIGHT) {
-        addKnight(name, home);
-    } else {
-=======
-        addPeasant(name,position);
-    }
-     else{
->>>>>>> de0d576e21e26b18cff7fb5af566fa7651d6cbad
-        throw std::invalid_argument("invalid input");
-    }
-}
-<<<<<<< HEAD
-=======
-void Model::addAgent(const string &name, int type, string &structure) {
-    if(type ==KNIGHT)
-    {
-        addKnight(name,structure);
-
-    }
-    throw std::invalid_argument("invalid input");
-}
-*/
-
 shared_ptr<Structure> Model::findStructure(const string &name) {
     auto it = find_if(Structure_list->begin(), Structure_list->end(),
                       [&name](shared_ptr<Structure> &structure) {
@@ -203,9 +163,7 @@ void Model::start_working(string &peasant_name, string &farm_name,
         peasant->start_working(farm, castle);
 
     } else {
-        /*
-         * TODO: THROW EXCPETION OR IGNORE
-         */
+        View::Get().Log("Invalid name");
     }
 }
 const shared_ptr<std::vector<std::shared_ptr<Sim_object>>> &
@@ -213,21 +171,13 @@ Model::getSimObjectList() const {
     return Sim_object_list;
 }
 
-void Model::makeDefault() {
-    View::Get().makeDefault();
-}
+void Model::makeDefault() { View::Get().makeDefault(); }
 
-void Model::setSizeView(int _size) {
-    View::Get().setSize(_size);
-}
+void Model::setSizeView(int _size) { View::Get().setSize(_size); }
 
-void Model::setZoomView(double zoom) {
-    View::Get().setScale(zoom);
-}
+void Model::setZoomView(double zoom) { View::Get().setScale(zoom); }
 
-void Model::setPanView(double x, double y) {
-    View::Get().setPan(x, y);
-}
+void Model::setPanView(double x, double y) { View::Get().setPan(x, y); }
 
 void Model::show() { View::Get().show(); }
 
@@ -242,4 +192,44 @@ void Model::detach(shared_ptr<View> someView) {
     auto it = remove_if(
         views.begin(), views.end(),
         [someView](shared_ptr<View> &view) { return someView == view; });
+}
+
+void Model::addFarm(const std::string &line) {
+    std::vector<std::string> &&separated = utils::split(line, ',');
+    std::string &name = separated[0];
+    std::string &point = separated[1];
+    std::string &hay = separated[2];
+    std::string &prod = separated[3];
+
+    point = point.substr(2);                     // to cut off " ("
+    point = point.substr(0, point.length() - 1); // to cut off ")"
+    std::vector<std::string> &&point_coords = utils::split(point, ',');
+
+    double x = std::stod(point_coords[0]);
+    double y = std::stod(point_coords[1]);
+
+    int nhay = std::stoi(hay);
+
+    int production = std::stoi(prod);
+
+    Structure_list->push_back(
+        std::make_shared<Farm>(new Farm(name, {x, y}, nhay, production)));
+}
+void Model::addCastle(const std::string &line) {
+    std::vector<std::string> &&separated = utils::split(line, ',');
+    std::string &name = separated[0];
+    std::string &point = separated[1];
+    std::string &hay = separated[2];
+
+    point = point.substr(2);                     // to cut off " ("
+    point = point.substr(0, point.length() - 1); // to cut off ")"
+    std::vector<std::string> &&point_coords = utils::split(point, ',');
+
+    double x = std::stod(point_coords[0]);
+    double y = std::stod(point_coords[1]);
+
+    int nhay = std::stoi(hay);
+
+    Structure_list->push_back(
+        std::make_shared<Castle>(new Castle(name, {x, y}, nhay)));
 }
