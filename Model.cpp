@@ -270,10 +270,12 @@ void Model::attach(shared_ptr<View> someView) {
 }
 
 void Model::detach(shared_ptr<View> someView) {
-    auto it = find_if(views.begin(),views.end(),[someView](shared_ptr<View>& view)
+    auto it = remove_if(views.begin(),views.end(),[someView](shared_ptr<View>& view)
     {
        return someView == view;
     });
+
+
 
 }
 
