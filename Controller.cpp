@@ -3,12 +3,15 @@
 //
 
 #include "Controller.h"
+#include <algorithm>
+#include <cctype>
+#include <string>
 
 bool Controller::GetUserInput() {
     std::string input;
     if (std::getline(std::cin, input)) {
         if (input == "") {
-            model->badInput(input);
+            Model::Get().badInput(input);
             return 0;
         }
     }
@@ -24,19 +27,19 @@ bool Controller::GetUserInput() {
         std::string command = words.front();
         words.erase(words.begin());
         if (command == "default" && words.empty()) {
-            model->makeDefault();
+            Model::Get().makeDefault();
 
         } else if (command == "size" && words.size() == 1) {
             int s = std::stoi(words.back());
             if (s > 6 && s <= 30) {
-               model->setSizeView(s);
+                Model::Get().setSizeView(s);
             } else {
                 throw std::invalid_argument("invalid input");
             }
         } else if (command == "zoom" && words.size() == 1) {
             double num = std::stoi(words.back());
             if (num > 0) {
-                model->setZoomView(num);
+                Model::Get().setZoomView(num);
             }
 
             else {
@@ -49,24 +52,25 @@ bool Controller::GetUserInput() {
             words.erase(words.begin());
             double x = stoi(words.front());
             double y = stoi(words.back());
-                model->setPanView(x,y);
+            Model::Get().setPanView(x, y);
         } else if (command == "show" && words.empty()) {
-            model->show();
+            Model::Get().show();
         }
 
         // line 59- related to model
-        else if (command == "status " && words.empty()) {
-            model->status();
+        else if (command == "status" && words.empty()) {
+            Model::Get().status();
         } else if (command == "go" && words.empty()) {
-            model->go();
-        } else if (command == "create" && words.size() == 3 ||
-                   words.size() == 4) {
+            Model::Get().go();
+        } else if (command == "create" &&
+                   (words.size() == 3 || words.size() == 4)) {
             std::string name = words.front();
             words.erase(words.begin());
             std::string typeStr = words.front(); // knight , thug or peasant
-            int type = stoi(typeStr);
+            std::transform(typeStr.begin(), typeStr.end(), typeStr.begin(),
+                           [](char c) { return std::tolower(c); });
             words.erase(words.begin());
-            if (utils::isStringOnlyLetters(name)) {
+            if (!utils::isStringOnlyLetters(name)) {
                 throw std::invalid_argument("invalid input");
             }
 
@@ -84,14 +88,25 @@ bool Controller::GetUserInput() {
                 double y = std::stoi(word2);
                 Point p(x, y);
 
-                model->addAgent(name, type, p);
+
+                if (typeStr == "peasant") {
+                    // add peasant
+                    Model::Get().addPeasant(name, p);
+                } else if (typeStr == "thug") {
+                    // add thug
+                    Model::Get().addThug(name, p);
+                } else { throw std::invalid_argument("a point is given to thug or peasant");
+                }
             }
             else if(words.size() == 1)
             {
                 std::string structure = words.front();
-                model->addAgent(name,type,structure);
+                if (typeStr == "knight") {
+                    Model::Get().addKnight(name, structure);
+                }
+                else { // how does a not knight get here ??
+                }
             }
-
         }
         // this commands will be given after the name.
         std::string name = std::move(command);
@@ -114,7 +129,7 @@ bool Controller::GetUserInput() {
                     throw std::invalid_argument("invalid input");
                 }
             }
-            model->course(name, theta, speed);
+            Model::Get().course(name, theta, speed);
         }
         if (command2 == "position" &&
             (words.size() == 2 || words.size() == 3)) {
@@ -131,17 +146,17 @@ bool Controller::GetUserInput() {
                 std::string word3 = words.back();
                 speed = stoi(word3);
             }
-            model->position(name, p,  speed);
+            Model::Get().position(name, p, speed);
         }
         if (words.front() == "destination" && words.size() == 1) {
-            model->destination(name, words.back());
+            Model::Get().destination(name, words.back());
         }
         if (words.front() == "stop" && words.empty()) {
-            model->stop(name);
+            Model::Get().stop(name);
         }
         if (words.front() == "attack" && words.size() == 1) {
             std::string peasant = words.back();
-            model->attack(name, peasant);
+            Model::Get().attack(name, peasant);
         } else {
             throw std::invalid_argument("invalid input");
         }
@@ -157,4 +172,3 @@ Controller &Controller::Get() {
     static Controller instance;
     return instance;
 }
-
