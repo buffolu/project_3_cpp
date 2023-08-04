@@ -14,14 +14,17 @@
 
 class Controller {
 private:
-    // possibly unnecessary for a controller to have knowledge of view
-    shared_ptr<View> view;
-    std::shared_ptr<Model> model;
 
 public:
-    explicit Controller(Model &model1) : model(&model1){};
     bool GetUserInput();
     void readFile(std::fstream &file);
+
+private: // Singleton
+    Controller() {}
+    Controller(const Controller& other) = delete;
+    Controller &operator=(const Controller& other) = delete;
+public:
+    static Controller &Get();
 };
 
 #endif // PROJECT_3_CONTROLLER_H

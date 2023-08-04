@@ -19,7 +19,6 @@ class View {
     Point _origin;
     void insert(double x , double y,const shared_ptr<Sim_object>& obj);
 public:
-    View();
     // getters setters
     void setPan(double x,double y);
     void makeDefault();
@@ -30,6 +29,14 @@ public:
 
 
     inline void Log(const std::string &str) noexcept;
+
+private: // Singleton
+    View();
+    View(const View&) = delete;
+    View &operator=(const View&) = delete;
+
+public:
+    static View &Get();
 };
 
 

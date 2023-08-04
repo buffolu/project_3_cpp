@@ -11,7 +11,6 @@ void View::makeDefault() {
     _size  = 25;
     _pan = {0,0};
     _scale = 2;
-
 }
 
 
@@ -72,8 +71,10 @@ void View::setPan(double x, double y) {
     _pan.x = x; _pan.y = y;}
 
 View::View() {
-    _size  = 25;
-    _pan = {0,0};
-    _scale = 2;
+    makeDefault();
 }
 
+View &View::Get() {
+    static View instance;
+    return instance;
+}

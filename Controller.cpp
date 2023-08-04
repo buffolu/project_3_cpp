@@ -147,3 +147,9 @@ bool Controller::GetUserInput() {
         std::cout << e.what();
     }
 }
+
+Controller &Controller::Get() {
+    static Controller instance;
+    return instance;
+}
+

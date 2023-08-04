@@ -23,6 +23,8 @@ public:
     Point getLocation() const noexcept;
 
     virtual void broadcast_current_state() const noexcept;
+
+    virtual ~Sim_object() = 0;
 };
 
 #endif // PROJECT_3_SIM_OBJECT_H
