@@ -3,6 +3,7 @@
 //
 
 #include "View.h"
+#include <iostream>
 
 void View::setScale(double scale) { _scale = scale; }
 void View::makeDefault() {
@@ -34,7 +35,7 @@ void View::show() {
 
 void View::setSize(int size) {
     if (size < 6 || size > 30)
-        throw exception();
+        throw std::exception();
 
     _matrix.resize(size);
     for_each(_matrix.begin(), _matrix.end(),
@@ -45,7 +46,7 @@ void View::setSize(int size) {
 
 int View::getSize() { return _size; }
 
-void View::insert(double x, double y, const shared_ptr<Sim_object> &obj) {
+void View::insert(double x, double y, std::shared_ptr<Sim_object> obj) {
     double range = _size * _scale * 10;
 
     double x_range = _pan.x + range;
@@ -66,6 +67,6 @@ void View::setPan(double x, double y) {
 }
 
 View::View() { makeDefault(); }
-void View::addObjects(shared_ptr<vector<shared_ptr<Sim_object>>> objects) {
+void View::addObjects(std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>> objects) {
     _objects = objects;
 }

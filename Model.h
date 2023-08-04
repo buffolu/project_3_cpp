@@ -6,6 +6,7 @@
 #define PROJECT_3_MODEL_H
 
 #include "Agent.h"
+#include "Controller.h"
 #include "Farm.h"
 #include "Geometry.h"
 #include "Knight.h"
@@ -14,7 +15,6 @@
 #include "Structure.h"
 #include "Thug.h"
 #include "View.h"
-#include "Controller.h"
 #include <memory>
 #include <string>
 #include <vector>
@@ -24,9 +24,11 @@ class Model {
     std::shared_ptr<std::vector<std::shared_ptr<Structure>>> Structure_list;
     std::shared_ptr<std::vector<std::shared_ptr<Agent>>> Agent_list;
     int time;
-    
+
     std::unique_ptr<View> m_view;
     std::unique_ptr<Controller> m_controller;
+
+    bool exitflag = false;
 
 public:
     void status(); // broadCast statue of every object
@@ -38,10 +40,11 @@ public:
     void addThug(const std::string &name, Point position);
 
     // add structures
-    void addFarm(const std::string&);
-    void addCastle(const std::string&);
+    void addFarm(const std::string &);
+    void addCastle(const std::string &);
 
-    const shared_ptr<std::vector<std::shared_ptr<Sim_object>>> &getSimObjectList() const;
+    const std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>> &
+    getSimObjectList() const;
 
     // attach detach view and controller
     void attach(std::unique_ptr<View> someView);
@@ -54,36 +57,34 @@ public:
     void run(int argc, char **argv);
 
     // ralevent to diffrent kind of agents
-    void course(string &basicString, double theta, int i);
-    void position(string &basicString, Point point, int i);
-    void stop(string &basicString);
+    void course(const std::string &basicString, double theta, int i);
+    void position(const std::string &basicString, Point point, int i);
+    void stop(const std::string &basicString);
 
     // each method is relavant to only one kind of agent
-    void attack(std::string &thug, std::string &peasant);
-    void start_working(string &peasant_name, string &farm_name, string &castle);
-    void destination(string &knight_name, string &basicString1);
+    void attack(const std::string &thug, const std::string &peasant);
+    void start_working(const std::string &peasant_name,
+                       const std::string &farm_name, const std::string &castle);
+    void destination(const std::string &knight_name,
+                     const std::string &basicString1);
 
     // finders
-    inline shared_ptr<Agent> findAgent(const std::string &name);
-    shared_ptr<Structure> findStructure(const string &basicString);
+    inline std::shared_ptr<Agent> findAgent(const std::string &name);
+    std::shared_ptr<Structure> findStructure(const std::string &basicString);
 
     void badInput(const std::string &);
 
-
-
-
-    //view methods
+    // view methods
     void makeDefault();
     void setSizeView(int _size);
     void setZoomView(double zoom);
-    void setPanView(double x , double y);
+    void setPanView(double x, double y);
     void show();
 
-    
 private: // Singleton
     Model() : time(0){};
-    Model(const Model&) = delete;
-    Model &operator=(const Model&) = delete;
+    Model(const Model &) = delete;
+    Model &operator=(const Model &) = delete;
 
 public:
     static Model &Get();
