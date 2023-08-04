@@ -229,4 +229,5 @@ Model::Model() : time(0) {
         std::make_shared<std::vector<std::shared_ptr<Structure>>>();
     Agent_list = std::make_shared<std::vector<std::shared_ptr<Agent>>>();
     m_view = std::make_unique<View>();
+    m_view->addObjects(Sim_object_list);
 };
