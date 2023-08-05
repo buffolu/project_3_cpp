@@ -96,7 +96,7 @@ bool Controller::GetUserInput() {
         return position(words);
     }
     if (command2 == "destination" && words.size() == 3) {
-        Model::Get().destination(name, words.back());
+        Model::Get().destination(name, words[2]);
         return true;
     }
     if (command2 == "stop" && words.size() == 2) {

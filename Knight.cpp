@@ -4,7 +4,6 @@
 
 #include "Knight.h"
 
-
 Knight::Knight(const std::string &name, Point position)
     : Agent(name, position, 10, 1) {}
 
@@ -32,7 +31,7 @@ void Knight::update() {
                     ->getLocation())); // set a new direction(angle)
         }
         setLocation(
-            Point::advance(getLocation(), getDestinationCoordinates(),
+            Point::advance(getLocation(), destination_structure->getLocation(),
                            getSpeed())); // advance towards new direction
     }
 }
@@ -54,7 +53,7 @@ void Knight::broadcast_current_state() const noexcept {
     if (getState() == ON_DUTY) {
         std::cout << " patrolling around " << destination_structure->getName();
     }
-    std::cout<<std::endl;
+    std::cout << std::endl;
 }
 std::shared_ptr<Structure> Knight::check_for_closest() {
     if (visited.size() == myStructures->size())
