@@ -194,7 +194,7 @@ void Model::start_working(const std::string &peasant_name,
         std::shared_ptr<Farm> farm =
             std::dynamic_pointer_cast<Farm>(structure1);
         std::shared_ptr<Castle> castle =
-            std::dynamic_pointer_cast<Castle>(structure1);
+            std::dynamic_pointer_cast<Castle>(structure2);
         if (peasant && farm && castle) {
             peasant->start_working(farm, castle);
         }

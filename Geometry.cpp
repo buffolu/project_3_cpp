@@ -1,6 +1,8 @@
 #include "Geometry.h"
 #include <cmath>
 #include <ctgmath>
+#include <limits>
+
 const double pi = 2. * atan2(1., 0.);
 double to_radians(double theta_d) { return theta_d * pi / 180.0; }
 
@@ -65,15 +67,25 @@ double Point::distance(const Point &a, const Point &b) {
 
 //return angle as degrees
 double Point::getAngle(const Point &a, const Point &b) {
-    return  atan2(a.y - b.y, a.x - b.x) *180 /M_PI;
+    double angle =  atan2(b.y - a.y,b.x - a.x) *180 /M_PI;
+    if(angle <0){angle+=360;}
+    return angle;
 
 
 }
 
 Point Point::advance(Point point, double speed, double angle) {
      double radians = to_radians(angle);
-     double delta_x = speed/10* sin(radians);
-     double delta_y = speed/10* cos(radians);
+     double delta_x = speed/10 * cos(radians);
+     double delta_y = speed/10 * sin(radians);
+     double epsilon = std::numeric_limits<double>::epsilon();
+     if (std::abs(delta_x) < epsilon) {
+        delta_x = 0.0;
+     }
+     if (std::abs(delta_y) < epsilon) {
+         delta_y = 0.0;
+     }
+
 
      return {point.x + delta_x, point.y + delta_y};
 
