@@ -21,7 +21,7 @@ void Agent::update() {
     }
     else if(state == MOVING_ON_COURSE)
     {
-        setLocation(Point::advance(getLocation(),getSpeed(),getAngle()));
+        setLocation(Point::advance(getLocation(),getSpeed(),getAngle(),1));
     }
 }
 
