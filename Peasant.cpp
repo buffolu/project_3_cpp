@@ -88,13 +88,17 @@ void Peasant::broadcast_current_state() const noexcept {
         std::cout << " inventory: " << carried_crates;
     }
     std::cout << ", health:" << getHealth();
-    std::cout << std::endl;
 }
 
 void Peasant::stop() { // beside the change of state, it also makes sense to use
                        // it when killing the farmer
-    setState(STOPPED);
+    Agent::stop();
     m_castle.reset();
     m_farm.reset();
+    while (!farms.empty())
+        farms.pop();
+    while (!castles.empty())
+        castles.pop();
+
     carried_crates = 0;
 }

@@ -23,8 +23,10 @@ void Agent::update() {
 }
 
 void Agent::stop() {
-    state = STOPPED;
-    destination_coordinates = getLocation();
+    if(state != DEAD) {
+        state = STOPPED;
+        destination_coordinates = getLocation();
+    }
     // course unchanged
 }
 
@@ -54,10 +56,14 @@ void Agent::setSpeed(double speed_) { Agent::speed = speed_; }
 double Agent::getSpeed() const { return speed; }
 
 void Agent::setHealth(int health1) {
-    if (health != 20)
-        Agent::health = health1;
-    if (health == 0)
-        state = DEAD;
+    if(health1 > 20){
+        std::cout<<"value too high, result in default value of 5 health";
+        health =5;}
+    else {
+        health = health1;
+        if (health == 0)
+            state = DEAD;
+    }
 }
 
 int Agent::getHealth() const { return health; }
@@ -75,6 +81,7 @@ void Agent::broadcast_current_state() const noexcept {
     } else if (state == STOPPED) {
         std::cout << " stopped";
     }
+    std::cout<<"health: "<<getHealth();
 }
 
 void Agent::setState(enum Agent::state _state) { Agent::state = _state; }

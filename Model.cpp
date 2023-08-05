@@ -7,7 +7,7 @@
 std::unique_ptr<Model> Model::model = nullptr;
 
 void Model::go() {
-    for (const auto &object : *Agent_list) {
+    for (const auto &object : *Sim_object_list) {
         object->update();
     }
     time++;
@@ -208,16 +208,17 @@ void Model::badInput(const std::string &str) {
 void Model::start_working(const std::string &peasant_name,
                           const std::string &farm_name,
                           const std::string &castle_name) {
-    auto agent = findAgent(peasant_name);
-    auto farm = findStructure(farm_name);
-    auto castle = findStructure(castle_name);
-    if (agent && farm && castle) {
+    auto _agent = findAgent(peasant_name);
+    auto _farm = findStructure(farm_name);
+    auto _castle = findStructure(castle_name);
+    if (_agent && _farm && _castle) {
         std::shared_ptr<Peasant> peasant =
-            std::dynamic_pointer_cast<Peasant>(agent);
-        std::shared_ptr<Farm> farm = std::dynamic_pointer_cast<Farm>(farm);
+            std::dynamic_pointer_cast<Peasant>(_agent);
+        std::shared_ptr<Farm> farm =
+            std::dynamic_pointer_cast<Farm>(_farm);
         std::shared_ptr<Castle> castle =
-            std::dynamic_pointer_cast<Castle>(castle);
-        if (peasant && farm && castle) {
+            std::dynamic_pointer_cast<Castle>(_castle);
+        if (peasant && _farm && _castle) {
             peasant->start_working(farm, castle);
         }
 
