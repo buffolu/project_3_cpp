@@ -9,9 +9,13 @@ Agent::Agent(const std::string &name_, Point location_, int speed_, int health_)
       state(STOPPED) {}
 
 void Agent::update() {
-    if (state == MOVING_TO_POSITION || state == MOVING_ON_COURSE){
-        setLocation(Point::advance(getLocation(), getSpeed(), angle));
-        if(state == MOVING_TO_POSITION && getLocation() == destination_coordinates) // the agent reached the destination
+    if (state == MOVING_TO_POSITION || state == MOVING_ON_COURSE) {
+        setLocation(Point::advance(
+            getLocation(), getSpeed(),
+            Point::getAngle(getLocation(), destination_coordinates)));
+        if (state == MOVING_TO_POSITION &&
+            getLocation() ==
+                destination_coordinates) // the agent reached the destination
         {
             stop();
         }
@@ -34,7 +38,7 @@ double Agent::getCourse() const { return angle; }
 
 void Agent::setDestinationCoordinates(Point destination_) {
     state = MOVING_TO_POSITION;
-    angle = Point ::getAngle(getLocation(),destination_);
+    // angle unchanged
     destination_coordinates = destination_;
     // course unchanged
 }
@@ -43,11 +47,6 @@ Point Agent::getDestinationCoordinates() const {
     return destination_coordinates;
 }
 
-
-
-
-// void Agent::setState(enum state state) { Agent::state = state; }
-
 int Agent::getState() const { return state; }
 
 void Agent::setSpeed(double speed_) { Agent::speed = speed_; }
@@ -55,7 +54,7 @@ void Agent::setSpeed(double speed_) { Agent::speed = speed_; }
 double Agent::getSpeed() const { return speed; }
 
 void Agent::setHealth(int health1) {
-    if(health != 20)
+    if (health != 20)
         Agent::health = health1;
     if (health == 0)
         state = DEAD;
@@ -69,23 +68,17 @@ void Agent::broadcast_current_state() const noexcept {
         std::cout << " heading to: (" << getDestinationCoordinates().x << ", "
                   << getDestinationCoordinates().y << "), at speed: " << speed;
     } else if (getState() == MOVING_ON_COURSE) {
-        std::cout << " heading on course " << std::to_string(getAngle())<<" deg, speed "<<getSpeed()<<" km/h";
-    }
-    else if (state == DEAD) {
+        std::cout << " heading on course " << std::to_string(getAngle())
+                  << " deg, speed " << getSpeed() << " km/h";
+    } else if (state == DEAD) {
         std::cout << " dead";
     } else if (state == STOPPED) {
         std::cout << " stopped";
     }
 }
 
-void Agent::setState(enum Agent::state _state) {
-    Agent::state = _state;
-}
+void Agent::setState(enum Agent::state _state) { Agent::state = _state; }
 
-double Agent::getAngle() const {
-    return angle;
-}
+double Agent::getAngle() const { return angle; }
 
-void Agent::setAngle(double angle_) {
-    Agent::angle = angle_;
-}
+void Agent::setAngle(double angle_) { Agent::angle = angle_; }
