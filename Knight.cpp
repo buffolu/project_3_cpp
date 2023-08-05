@@ -10,34 +10,40 @@ Knight::Knight(const std::string &name, Point position)
 void Knight::update() {
     Agent::update();
     if (getState() == ON_DUTY) {
-        if (getLocation() ==
-            destination_structure->getLocation()) { // continue the patrol to a new structure
-            if (getLocation() == home_castle->getLocation() &&
-                going_home) // knight reached the end
-            {
-                stop();
-                return;
-            }
-            destination_structure =
-                check_for_closest(); // with visited and mystructres}
-            if (destination_structure == home_castle) {
-                going_home = true;
-            } // knight is ending his patrol
-
-            setAngle(Point ::getAngle(
-                getLocation(),
-                destination_structure
-                    ->getLocation())); // set a new direction(angle)
+        if (getLocation() != destination_structure->getLocation()) {
+            // advance towards destination
+            setLocation(Point::advance(getLocation(),
+                                       destination_structure->getLocation(),
+                                       getSpeed()));
+            return;
         }
-        setLocation(
-            Point::advance(getLocation(), destination_structure->getLocation(),
-                           getSpeed())); // advance towards new direction
+
+        // continue the patrol to a new structure
+        destination_structure =
+            check_for_closest(); // with visited and mystructres}
+        if (!destination_structure) {
+            going_home = true;
+            destination_structure = home_castle;
+        } // knight is ending his patrol
+
+        if (getLocation() == home_castle->getLocation() &&
+            going_home) // knight reached the end
+        {
+            stop();
+            return;
+        }
+        /* possibly unnecessary
+        setAngle(Point ::getAngle(
+            getLocation(),
+            destination_structure
+                ->getLocation())); // set a new direction(angle)
+                                   */
     }
 }
 
 void Knight::setOnPatrol(
-    const std::shared_ptr<Structure>& structure_,
-    std::shared_ptr<std::vector<std::shared_ptr<Structure>>>& structures) {
+    const std::shared_ptr<Structure> &structure_,
+    std::shared_ptr<std::vector<std::shared_ptr<Structure>>> &structures) {
     setState(ON_DUTY);
     home_castle = structure_;
     destination_structure = home_castle;

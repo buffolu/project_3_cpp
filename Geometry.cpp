@@ -54,6 +54,7 @@ void Point::print() const {
 }
 
 bool Point::operator==(const Point &rhs) { return x == rhs.x && y == rhs.y; }
+bool Point::operator!=(const Point &rhs) { return !operator==(rhs); }
 
 double Point::distance(Point a, Point b) {
     double x1 = a.x;
@@ -74,13 +75,10 @@ double Point::getAngle(Point a, Point b) {
     return angle;
 }
 
+Point Point::advance(Point point, double speed, double angle, int flag) {
 
-
-Point Point::advance(Point point, double speed, double angle,int flag) {
-
-    if (flag)
-    {
-        angle-=90;
+    if (flag) {
+        angle -= 90;
     }
 
     double radians = to_radians(angle);
