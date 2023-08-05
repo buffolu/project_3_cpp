@@ -64,7 +64,6 @@ void Peasant::update() {
                 else{         setLocation(Point::advance(getLocation(), getSpeed(), getAngle()));
                 }
             }
-            setLocation(Point::advance(getLocation(),getSpeed(),getAngle()));
 
         }
 
