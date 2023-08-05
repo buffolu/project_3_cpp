@@ -32,22 +32,34 @@ void View::show() {
     }
 
     // PRINT
-    int scale = (_size * _scale) - _scale;
-    int jump = 2;
-    if (scale < 25) {
-        jump = 0;
-    } else if (scale < 50) {
-        jump = 1;
-    }
+    double largest_y  = _pan.y+(_scale*_size)-_scale;
     std::cout << "Display size: " << _size << ", scale: " << _scale
               << " origin: (" << _pan.x << ", " << _pan.y << ")\n";
 
     for (int i = 0; i < _size; i++) {
+        if(i%3 == 0 ){    std::cout << std::setw(4) << std::setfill(' ')<<
+            largest_y<<" ";largest_y-=_scale*3;}
+        else{std::cout<<"     ";}
         for (int j = 0; j < _size; j++) {
             std::cout << _matrix[_size * i + j].substr(0, 2);
         }
         std::cout << std::endl;
     }
+    int smallest_x = 0;
+    std::cout<<"     ";
+    std::cout<<smallest_x;
+    smallest_x+=_scale*3;
+    for(int i = 0;i<_size;i++)
+    {
+        if(i%3 == 0 && i != 0)
+        {
+               std::cout << std::setw(6) << std::setfill(' ')<<smallest_x;
+               smallest_x+=_scale*3;
+        }
+
+    }
+    std::cout<<std::endl;
+
 
     /*
     std::for_each(_matrix.rbegin(), _matrix.rend(),
