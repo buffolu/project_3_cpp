@@ -90,7 +90,7 @@ Point Point::advance(Point point, double speed, double angle) {
     return {point.x + delta_x, point.y + delta_y};
 }
 
-Point Point::advance(Point beginning, Point target, int speed) {
+Point Point::advance(Point beginning, Point target, double speed) {
     if (distance(beginning, target) <= speed) {
         return target;
     }

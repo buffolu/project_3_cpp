@@ -9,7 +9,7 @@ Agent::Agent(const std::string &name_, Point location_, int speed_, int health_)
       state(STOPPED) {}
 
 void Agent::update() {
-    if (state == MOVING_TO_POSITION || state == MOVING_ON_COURSE) {
+    if (state == MOVING_TO_POSITION) {
         setLocation(
             Point::advance(getLocation(), destination_coordinates, getSpeed()));
         if (state == MOVING_TO_POSITION &&
@@ -18,6 +18,10 @@ void Agent::update() {
         {
             stop();
         }
+    }
+    else if(state == MOVING_ON_COURSE)
+    {
+        setLocation(Point::advance(getLocation(),getSpeed(),getAngle()));
     }
 }
 
