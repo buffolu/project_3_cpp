@@ -37,4 +37,5 @@ public:
     void stop() override;
 
 
+    void nextPair();
 };
