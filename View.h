@@ -19,7 +19,6 @@ class View {
     int _size;
     Point _pan;
     std::vector<std::vector<std::array<char,2>>> _matrix;
-    Point _origin;
 
 public:
     // getters setters
@@ -27,14 +26,14 @@ public:
 
     void setPan(double x, double y);
     void makeDefault();
-    int getSize();
+    int getSize() const;
     void setSize(int size);
     void setScale(double scale);
     void show();
     void addObjects(
         std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>>& objects);
 
-    void Log(const std::string &str);
+    static void Log(const std::string &str);
 
     View();
 };

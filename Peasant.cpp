@@ -6,11 +6,11 @@
 #include <memory>
 
 // TODO: why is loading true on creation
-Peasant::Peasant(const std::string &name, Point &position) : Agent(name, position,10,5),carried_crates(0),loading(true) {
+Peasant::Peasant(const std::string &name, Point &position) : Agent(name, position,5,10),carried_crates(0),loading(true) {
 
 }
 
-void Peasant::start_working(std::shared_ptr<Farm> farm, std::shared_ptr<Castle> castle) {
+void Peasant::start_working(const std::shared_ptr<Farm>& farm, const std::shared_ptr<Castle>& castle) {
     if(castles.empty())
     {
         m_farm = farm;
@@ -64,6 +64,13 @@ int Peasant::getCarriedCrates() const { return carried_crates; }
 
 void Peasant::setCarriedCrates(int carriedCrates) {
     carried_crates = carriedCrates;
+}
+void Peasant::broadcast_current_state() const noexcept
+{
+    Agent::broadcast_current_state();
+    if(getState() == ON_DUTY)
+    {}
+
 }
 
 void Peasant::stop() {

@@ -77,7 +77,7 @@ public:
     void setZoomView(double zoom);
     void setPanView(double x, double y);
     void show();
-    void log(std::string str);
+    void log(const std::string& str);
     Model(const Model &) = delete;
     Model &operator=(const Model &) = delete;
 

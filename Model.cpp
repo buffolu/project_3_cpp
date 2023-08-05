@@ -267,7 +267,7 @@ void Model::addCastle(const std::string &line) {
     Sim_object_list->push_back(castle);
 }
 
-void Model::log(std::string str) { m_view->Log(str); }
+void Model::log(const std::string& str) { m_view->Log(str); }
 
 Model &Model::Get() {
     if (!model) {

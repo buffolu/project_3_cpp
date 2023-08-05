@@ -6,10 +6,9 @@
 
 void View::setScale(double scale) { _scale = scale; }
 void View::makeDefault() {
-    _size = 25;
     _pan = {0, 0};
     _scale = 2;
-    setSize(_size);
+    setSize(25);
 }
 
 void View::show() {
@@ -81,7 +80,7 @@ void View::setSize(int size) {
     _size = size;
 }
 
-int View::getSize() { return _size; }
+int View::getSize() const { return _size; }
 
 void View::insert(double x, double y, const std::string& name) {
     double range = _size * _scale ;
@@ -113,4 +112,4 @@ void View::addObjects(
     _objects = objects;
 }
 
-void View::Log(const std::string &str) { std::cout << str << std::endl; }
+void View::Log(const std::string &str) { std::cerr<<"ERROR: " << str << std::endl; }

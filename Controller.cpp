@@ -42,9 +42,9 @@ bool Controller::GetUserInput() {
     std::cout<<"Time: "<<Model::Get().getTime()<<":Enter command: ";
     std::string input;
     std::getline(std::cin, input);
-    if (input == "") {
+    if (input.empty()) {
         Model::Get().badInput(input);
-        return 0;
+        return false;
     }
 
     // transform the entire string to lowercase
@@ -120,7 +120,7 @@ bool Controller::GetUserInput() {
     return false;
 }
 
-Controller::Controller() {}
+Controller::Controller() = default;
 bool Controller::zoom(const std::vector<std::string> &words) {
     //TODO: ZOOM SHOULD NOT ACCEPT STRING IN THE FORM OF "123KK"
     double num;
@@ -179,10 +179,10 @@ bool Controller::create(const std::vector<std::string> &words) {
     }
     name[0] = std::toupper(name[0]);
 
-    std::string typeStr = words[2]; // knight , thug or peasant
+    const std::string& typeStr = words[2]; // knight , thug or peasant
 
     if (typeStr == "Knight" && words.size() == 4) {
-        std::string castle_name = words[3];
+        const std::string& castle_name = words[3];
         Model::Get().addKnight(name, castle_name);
         return true;
     }

@@ -19,11 +19,11 @@ public:
     void update() override;
 
     void attack(std::shared_ptr<Peasant>&peasant,
-                std::shared_ptr<std::vector<std::shared_ptr<Agent>>>
+                const std::shared_ptr<std::vector<std::shared_ptr<Agent>>>&
                     agents_); // check if there is a peasant nearby to attack
 
     void broadcast_current_state() const noexcept override;
 
-    bool check_for_knight(std::shared_ptr<std::vector<std::shared_ptr<Agent>>> agents);
+    bool check_for_knight(const std::shared_ptr<std::vector<std::shared_ptr<Agent>>>& agents);
 ;
 };
