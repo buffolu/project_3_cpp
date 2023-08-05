@@ -75,7 +75,7 @@ double Point::getAngle(Point a, Point b) {
     return angle;
 }
 
-Point Point::advance(Point point, double speed, double angle,int flag) {
+Point Point::advance(Point point, double speed, double angle) {
 
     double radians = to_radians(angle);
     double delta_x = speed / 10 * sin(radians);
