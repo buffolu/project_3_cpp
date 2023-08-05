@@ -59,13 +59,21 @@ void Model::status() {
     }
 }
 
-void Model::course(const std::string &basicString, double theta, int i) {
+void Model::course(const std::string &basicString, double theta, int speed) {
+
+    if (speed <= 0) {
+        badInput("speed must be positive");
+        return;
+    } else if (speed > 30) {
+        badInput("speed cant be bigger than 30");
+        return;
+    }
 
     auto agent = findAgent(basicString);
     std::shared_ptr<Thug> thug = std::dynamic_pointer_cast<Thug>(agent);
     if (thug) {
         thug->setCourse(theta);
-        thug->setSpeed(i);
+        thug->setSpeed(speed);
     } else {
         m_view->Log("No thug named " + basicString);
     }
@@ -133,24 +141,24 @@ void Model::attack(const std::string &thug, const std::string &peasant) {
     if (thug_) {
         thug1 = std::dynamic_pointer_cast<Thug>(thug_);
         if (!thug1) {
-            m_view->Log("No thug named " + thug);
+            m_view->Log(thug + " is not a thug");
             return;
         }
     } else {
-        m_view->Log("No thug named " + thug);
+        m_view->Log("No agent named " + thug);
         return;
     }
 
     // find if peasant exists
     std::shared_ptr<Agent> peasant_ = findAgent(peasant);
     if (!peasant_) {
-        m_view->Log("No peasant named " + thug);
+        m_view->Log("No agent named " + peasant);
         return;
     }
     std::shared_ptr<Peasant> peasant1 =
         std::dynamic_pointer_cast<Peasant>(peasant_);
     if (!peasant1) {
-        m_view->Log("No peasant named " + thug);
+        m_view->Log(peasant + " is not a peasant");
         return;
     }
     thug1->attack(peasant1, Agent_list);
@@ -161,9 +169,8 @@ std::shared_ptr<Agent> Model::findAgent(const std::string &a_name) {
                            [a_name](std::shared_ptr<Agent> &agent) {
                                return agent->getName() == a_name;
                            });
-    if (it != Agent_list->end())
-        return *it;
-    return nullptr;
+    // if it points to end() then it is nullptr
+    return *it;
 }
 
 void Model::badInput(const std::string &str) {

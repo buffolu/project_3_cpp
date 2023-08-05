@@ -28,8 +28,6 @@ class Model {
 
     std::unique_ptr<View> m_view;
 
-    bool exitflag = false;
-
 public:
     void status(); // broadCast statue of every object
     void go();     // update every object in one time step
