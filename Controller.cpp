@@ -117,6 +117,8 @@ bool Controller::GetUserInput() {
 }
 
 Controller::Controller() {}
+
+//the set the zoom of the map
 bool Controller::zoom(const std::vector<std::string> &words) {
     if (words.size() != 2)
         return false;
@@ -133,6 +135,7 @@ bool Controller::zoom(const std::vector<std::string> &words) {
     return true;
 }
 
+//set the size
 bool Controller::size(const std::vector<std::string> &words) {
     int num;
     try {
@@ -147,6 +150,7 @@ bool Controller::size(const std::vector<std::string> &words) {
     return true;
 }
 
+//set the origin point (down left point)
 bool Controller::pan(const std::vector<std::string> &words) {
     double x, y;
     try {

@@ -13,6 +13,7 @@ void Model::go() {
     time++;
 }
 
+//add a new knight
 void Model::addKnight(const std::string &name, const std::string &home) {
     if (findAgent(name)) {
         log(name + " already exists");
@@ -39,6 +40,7 @@ void Model::addKnight(const std::string &name, const std::string &home) {
     Agent_list->push_back(knight);
 }
 
+//add a new peasant
 void Model::addPeasant(const std::string &name, Point position) {
     if (findAgent(name)) {
         log(name + " already exists");
@@ -51,6 +53,7 @@ void Model::addPeasant(const std::string &name, Point position) {
     Agent_list->push_back(peasant);
 }
 
+//add a new thug
 void Model::addThug(const std::string &name, Point position) {
     if (findAgent(name)) {
         log(name + " already exists");
@@ -62,7 +65,7 @@ void Model::addThug(const std::string &name, Point position) {
     Sim_object_list->push_back(thug);
     Agent_list->push_back(thug);
 }
-
+//find structure in my world and return pointer, otherwise return nullptr
 std::shared_ptr<Structure> Model::findStructure(const std::string &name) {
     auto it = find_if(Structure_list->begin(), Structure_list->end(),
                       [&name](std::shared_ptr<Structure> &structure) {
@@ -73,7 +76,7 @@ std::shared_ptr<Structure> Model::findStructure(const std::string &name) {
     }
     return nullptr;
 }
-
+//print status of every object
 void Model::status() {
     for (const auto &obj : *Sim_object_list) {
         obj->broadcast_current_state();
@@ -81,6 +84,7 @@ void Model::status() {
     }
 }
 
+//set course for agent to do using an angle and speed (usefull for thug)
 void Model::course(const std::string &basicString, double theta, int speed) {
 
     if (speed <= 0) {
@@ -100,7 +104,7 @@ void Model::course(const std::string &basicString, double theta, int speed) {
         m_view->Log("No thug named " + basicString);
     }
 }
-
+//same as before without speed
 void Model::course(const std::string &basicString, double theta) {
 
     auto agent = findAgent(basicString);
@@ -111,6 +115,7 @@ void Model::course(const std::string &basicString, double theta) {
     }
 }
 
+//set agent to a position in map (x, y) and set his speed (only works for thug)
 void Model::position(const std::string &basicString, Point point, int speed) {
     auto agent = findAgent(basicString);
     if (agent && std::dynamic_pointer_cast<Thug>(agent)) {
@@ -120,7 +125,7 @@ void Model::position(const std::string &basicString, Point point, int speed) {
         m_view->Log("No agent named " + basicString);
     }
 }
-
+//same as the previous without speed
 void Model::position(const std::string &basicString, Point point) {
     auto agent = findAgent(basicString);
     if (agent && (std::dynamic_pointer_cast<Peasant>(agent) ||
@@ -130,7 +135,7 @@ void Model::position(const std::string &basicString, Point point) {
         m_view->Log("No agent named " + basicString);
     }
 }
-
+//stop an agent that is not dead
 void Model::stop(const std::string &basicString) {
     auto agent = findAgent(basicString);
     if (agent) {
@@ -139,6 +144,8 @@ void Model::stop(const std::string &basicString) {
         m_view->Log("No agent named " + basicString);
     }
 }
+
+//set destination using a structure,only works for knight
 void Model::destination(const std::string &basicString,
                         const std::string &castle) {
     auto agent = findAgent(basicString);
@@ -160,6 +167,7 @@ void Model::destination(const std::string &basicString,
     }
 }
 
+//attack a peasant , only works for thug
 void Model::attack(const std::string &thug, const std::string &peasant) {
     // find if thug exists
     std::shared_ptr<Agent> thug_ = findAgent(thug);
@@ -190,6 +198,7 @@ void Model::attack(const std::string &thug, const std::string &peasant) {
     thug1->attack(peasant1, Agent_list);
 }
 
+//find agent and return pointer, otherwise return nullptr
 std::shared_ptr<Agent> Model::findAgent(const std::string &a_name) {
     auto it = std::find_if(Agent_list->begin(), Agent_list->end(),
                            [a_name](std::shared_ptr<Agent> &agent) {
@@ -206,6 +215,7 @@ void Model::badInput(const std::string &str) {
     m_view->Log(badInputMessage);
 }
 
+//make peasant start working and loading and unloading from farm to castle
 void Model::start_working(const std::string &peasant_name,
                           const std::string &farm_name,
                           const std::string &castle_name) {
@@ -236,6 +246,7 @@ Model::getSimObjectList() const {
     return Sim_object_list;
 }
 
+//methods for view
 void Model::makeDefault() { m_view->makeDefault(); }
 
 void Model::setSizeView(int _size) { m_view->setSize(_size); }
@@ -258,6 +269,7 @@ void Model::detach(std::unique_ptr<View> someView) {
     }
 }
 
+//add a new farm with a unique name
 void Model::addFarm(const std::string &line) {
     std::vector<std::string> &&separated = utils::split(line, ',');
     std::string &name = separated[0];
@@ -286,7 +298,7 @@ void Model::addFarm(const std::string &line) {
     Structure_list->push_back(farm);
     Sim_object_list->push_back(farm);
 }
-
+//add a new castle with a unique name
 void Model::addCastle(const std::string &line) {
     std::vector<std::string> &&separated = utils::split(line, ',');
     std::string &name = separated[0];
