@@ -49,8 +49,10 @@ bool Controller::GetUserInput() {
 
     // transform the entire string to lowercase
     //TODO: WHY? NAMES CAN BE WITH HIGHER CASE
+    /**
     std::transform(input.begin(), input.end(), input.begin(),
                    [](char c) { return std::tolower(c); });
+                   **/
     std::vector<std::string> &&words = utils::split(input, ' ');
 
     std::string command = words[0];
@@ -179,7 +181,7 @@ bool Controller::create(const std::vector<std::string> &words) {
 
     std::string typeStr = words[2]; // knight , thug or peasant
 
-    if (typeStr == "knight" && words.size() == 4) {
+    if (typeStr == "Knight" && words.size() == 4) {
         std::string castle_name = words[3];
         Model::Get().addKnight(name, castle_name);
         return true;
@@ -199,11 +201,11 @@ bool Controller::create(const std::vector<std::string> &words) {
         return false;
     }
 
-    if (typeStr == "peasant") {
+    if (typeStr == "Peasant") {
         // add peasant
         Model::Get().addPeasant(name, {x, y});
         return true;
-    } else if (typeStr == "thug") {
+    } else if (typeStr == "Thug") {
         // add thug
         Model::Get().addThug(name, {x, y});
         return true;
