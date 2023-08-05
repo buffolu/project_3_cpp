@@ -206,15 +206,15 @@ void Model::start_working(const std::string &peasant_name,
                           const std::string &farm_name,
                           const std::string &castle_name) {
     auto agent = findAgent(peasant_name);
-    auto structure1 = findStructure(farm_name);
-    auto structure2 = findStructure(castle_name);
-    if (agent && structure1 && structure2) {
+    auto farm = findStructure(farm_name);
+    auto castle = findStructure(castle_name);
+    if (agent && farm && castle) {
         std::shared_ptr<Peasant> peasant =
             std::dynamic_pointer_cast<Peasant>(agent);
         std::shared_ptr<Farm> farm =
-            std::dynamic_pointer_cast<Farm>(structure1);
+            std::dynamic_pointer_cast<Farm>(farm);
         std::shared_ptr<Castle> castle =
-            std::dynamic_pointer_cast<Castle>(structure1);
+            std::dynamic_pointer_cast<Castle>(castle);
         if (peasant && farm && castle) {
             peasant->start_working(farm, castle);
         }
@@ -309,7 +309,7 @@ void Model::addCastle(const std::string &line) {
     Sim_object_list->push_back(castle);
 }
 
-void Model::log(std::string str) { m_view->Log(str); }
+void Model::log(const std::string &str) { m_view->Log(str); }
 
 Model &Model::Get() {
     if (!model) {
