@@ -75,6 +75,8 @@ double Point::getAngle(const Point &a, const Point &b) {
 }
 
 Point Point::advance(Point point, double speed, double angle) {
+
+
      double radians = to_radians(angle);
      double delta_x = speed/10 * cos(radians);
      double delta_y = speed/10 * sin(radians);
