@@ -48,6 +48,7 @@ void Model::addPeasant(const std::string &name, Point position) {
 
     std::shared_ptr<Peasant> peasant =
         std::make_shared<Peasant>(name, position);
+
     Sim_object_list->push_back(peasant);
     Agent_list->push_back(peasant);
 }
@@ -59,6 +60,7 @@ void Model::addThug(const std::string &name, Point position) {
     }
 
     std::shared_ptr<Thug> thug = std::make_shared<Thug>(name, position);
+
     Sim_object_list->push_back(thug);
     Agent_list->push_back(thug);
 }
@@ -123,7 +125,8 @@ void Model::position(const std::string &basicString, Point point, int speed) {
 
 void Model::position(const std::string &basicString, Point point) {
     auto agent = findAgent(basicString);
-    if (agent && std::dynamic_pointer_cast<Knight>(agent)) {
+    if (agent && (std::dynamic_pointer_cast<Peasant>(agent) ||
+                  std::dynamic_pointer_cast<Knight>(agent))) {
         agent->setDestinationCoordinates(point);
     } else {
         m_view->Log("No agent named " + basicString);

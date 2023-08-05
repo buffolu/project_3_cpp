@@ -1,7 +1,6 @@
 #pragma once
-#include <iostream>
 #include <iomanip>
-
+#include <iostream>
 
 // angle units conversion functions
 double to_radians(double theta_d);
@@ -14,10 +13,11 @@ typedef struct Point {
     Point();
     void print() const;
     bool operator==(const Point &rhs);
-    static double distance(const Point& a,const Point& b);
-    static double getAngle(const Point& a , const Point& b);
+    static double distance(Point a, Point b);
+    static double getAngle(Point a, Point b);
 
     static Point advance(Point point, double speed, double angle);
+    static Point advance(Point beginning, Point target, int speed);
 } Point;
 struct Polar_vector;
 typedef struct Cartesian_vector {
@@ -34,4 +34,3 @@ typedef struct Polar_vector {
     double r;
     double theta;
 } Polar_vector;
-

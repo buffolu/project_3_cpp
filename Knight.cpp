@@ -32,8 +32,8 @@ void Knight::update() {
                     ->getLocation())); // set a new direction(angle)
         }
         setLocation(
-            Point::advance(getLocation(), getSpeed(),
-                           getAngle())); // advance towards new direction
+            Point::advance(getLocation(), getDestinationCoordinates(),
+                           getSpeed())); // advance towards new direction
     }
 }
 
