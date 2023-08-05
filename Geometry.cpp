@@ -75,15 +75,10 @@ double Point::getAngle(Point a, Point b) {
     return angle;
 }
 
-Point Point::advance(Point point, double speed, double angle, int flag) {
-
-    if (flag) {
-        angle += 90;
-    }
-
+Point Point::advance(Point point, double speed, double angle) {
     double radians = to_radians(angle);
-    double delta_x = speed / 10 * cos(radians);
-    double delta_y = speed / 10 * sin(radians);
+    double delta_x = speed / 10 * sin(radians);
+    double delta_y = speed / 10 * cos(radians);
     double epsilon = std::numeric_limits<double>::epsilon();
     if (std::abs(delta_x) < epsilon) {
         delta_x = 0.0;
