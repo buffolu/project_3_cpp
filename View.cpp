@@ -35,11 +35,10 @@ void View::show() {
     {
         jump = 1;
     }
-
+    std::cout<<"Display size: "<<_size<<", scale: "<<_scale<<" origin: ("<<_pan.x<<", "<<_pan.y<<")\n";
     std::for_each(_matrix.rbegin(),_matrix.rend(),[&jump,&scale](std::vector<std::array<char,2> >& row) {
         int runner = 0;
         for (const auto &sqaure: row) {
-            if(jump == 0)
             std::cout << sqaure.front()<<sqaure.back();
         }
         std::cout << "\n";
@@ -62,16 +61,15 @@ int View::getSize() { return _size; }
 void View::insert(double x, double y, const std::string& name) {
     double range = _size * _scale ;
 
-    double x_range = _pan.x + range;
-    double y_range = _pan.y + range;
+    double x_range = _pan.x + range-_scale;
+    double y_range = _pan.y + range-_scale;
 
     if (x > x_range || y > y_range || x < _pan.x || y < _pan.y)
         return; // out of range depending on this scale,pan and size.
 
-    int x_cordinate =  x / (_scale-_pan.x );
-    int y_cordinate = y / (_scale-_pan.y );
+    int x_cordinate =  (x / (_scale))   - _pan.x/_scale;
+    int y_cordinate = (y / (_scale ))      - _pan.y/_scale;
 
-\
 
 
     _matrix.at(y_cordinate).at(x_cordinate).front() = name[0];
@@ -86,7 +84,7 @@ void View::setPan(double x, double y) {
 
 View::View() { makeDefault(); }
 void View::addObjects(
-    std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>> objects) {
+    std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>>& objects) {
     _objects = objects;
 }
 

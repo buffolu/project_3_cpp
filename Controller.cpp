@@ -39,6 +39,7 @@ void Controller::run(int argc, char **argv) {
  * doesn't do anything else
  */
 bool Controller::GetUserInput() {
+    std::cout<<"Time: "<<Model::Get().getTime()<<":Enter command: ";
     std::string input;
     std::getline(std::cin, input);
     if (input == "") {
@@ -47,6 +48,7 @@ bool Controller::GetUserInput() {
     }
 
     // transform the entire string to lowercase
+    //TODO: WHY? NAMES CAN BE WITH HIGHER CASE
     std::transform(input.begin(), input.end(), input.begin(),
                    [](char c) { return std::tolower(c); });
     std::vector<std::string> &&words = utils::split(input, ' ');
@@ -64,12 +66,12 @@ bool Controller::GetUserInput() {
         return zoom(words);
     } else if (command == "pan" && words.size() == 3) {
         return pan(words);
-    } else if (command == "show" && words.empty()) {
+    } else if (command == "show" && words.size() == 1) {
         Model::Get().show();
         return true;
     }
 
-    // line 59- related to model
+    //related to model
     else if (command == "status") {
         Model::Get().status();
         return true;
@@ -84,6 +86,7 @@ bool Controller::GetUserInput() {
     // at this point words[0] is a name of an agent
     std::string &name = command;
     if (words.size() == 1) {
+        //TODO: CATCH IT???
         throw std::invalid_argument("invalid input");
     }
 
@@ -108,6 +111,7 @@ bool Controller::GetUserInput() {
         Model::Get().attack(name, peasant);
         return true;
     }
+    //TODO : start_working command for peasant
 
     Model::Get().badInput("invalid input");
 
@@ -116,9 +120,11 @@ bool Controller::GetUserInput() {
 
 Controller::Controller() {}
 bool Controller::zoom(const std::vector<std::string> &words) {
+    //TODO: ZOOM SHOULD NOT ACCEPT STRING IN THE FORM OF "123KK"
     double num;
     try {
         num = std::stod(words[1]);
+
     } catch (std::invalid_argument &) {
         Model::Get().badInput("Expected a double");
         return false;

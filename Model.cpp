@@ -46,7 +46,11 @@ std::shared_ptr<Structure> Model::findStructure(const std::string &name) {
                       [&name](std::shared_ptr<Structure> &structure) {
                           return name == structure->getName();
                       });
-    return *it;
+    if(it != Structure_list->end())
+    {
+        return *it;
+    }
+    return nullptr;
 }
 
 void Model::status() {
@@ -71,7 +75,7 @@ void Model::course(const std::string &basicString, double theta, int i) {
 void Model::course(const std::string &basicString, double theta) {
 
     auto agent = findAgent(basicString);
-    if (agent) {
+    if (agent && !std::dynamic_pointer_cast<Peasant>(agent)) {
         agent->setCourse(theta);
     } else {
         m_view->Log("No agent named " + basicString);
@@ -79,19 +83,18 @@ void Model::course(const std::string &basicString, double theta) {
 }
 
 void Model::position(const std::string &basicString, Point point, int speed) {
-    // TODO: must be thug
     auto agent = findAgent(basicString);
-    if (agent) {
+    if (agent && std::dynamic_pointer_cast<Thug>(agent)) {
         agent->setDestinationCoordinates(point);
+        agent->setSpeed(speed);
     } else {
         m_view->Log("No agent named " + basicString);
     }
 }
 
 void Model::position(const std::string &basicString, Point point) {
-    // TODO: must be peasant or knight
     auto agent = findAgent(basicString);
-    if (agent) {
+    if (agent && std::dynamic_pointer_cast<Knight>(agent)) {
         agent->setDestinationCoordinates(point);
     } else {
         m_view->Log("No agent named " + basicString);
@@ -123,25 +126,45 @@ void Model::destination(const std::string &basicString,
 void Model::attack(const std::string &thug, const std::string &peasant) {
     // find if thug exists
     std::shared_ptr<Agent> thug_ = findAgent(thug);
-    std::shared_ptr<Thug> thug1 = std::dynamic_pointer_cast<Thug>(thug_);
-    if (!thug_ || !thug1) {
-        // illegal argument - peasant does not exists
+    std::shared_ptr<Thug> thug1;
+    if (thug_) {
+         thug1 = std::dynamic_pointer_cast<Thug>(thug_);
+        if (!thug1)
+        {
+            m_view->Log("No thug named " + thug);
+            return;
+        }
+    }
+    else
+    {
+        m_view->Log("No thug named " + thug);
+        return;
+
     }
 
     // find if peasant exists
     std::shared_ptr<Agent> peasant_ = findAgent(peasant);
     if (!peasant_) {
-        // illegal argument - peasant does not exists
+        m_view->Log("No peasant named " + thug);
+        return;
     }
-    thug1->attack(std::dynamic_pointer_cast<Peasant>(peasant_), Agent_list);
+    std::shared_ptr<Peasant> peasant1 = std::dynamic_pointer_cast<Peasant>(peasant_);
+    if(!peasant1)
+    {
+        m_view->Log("No peasant named " + thug);
+        return;
+    }
+    thug1->attack(peasant1, Agent_list);
 }
 
 std::shared_ptr<Agent> Model::findAgent(const std::string &a_name) {
     auto it = std::find_if(Agent_list->begin(), Agent_list->end(),
-                           [&a_name](std::shared_ptr<Agent> agent) {
+                           [a_name](std::shared_ptr<Agent>& agent) {
                                return agent->getName() == a_name;
                            });
-    return *it;
+    if(it !=Agent_list->end())
+          return *it;
+    return nullptr;
 }
 
 void Model::badInput(const std::string &str) {
@@ -162,8 +185,12 @@ void Model::start_working(const std::string &peasant_name,
             std::dynamic_pointer_cast<Farm>(structure1);
         std::shared_ptr<Castle> castle =
             std::dynamic_pointer_cast<Castle>(structure1);
+        if(peasant && farm && castle){
+            peasant->start_working(farm, castle);}
 
-        peasant->start_working(farm, castle);
+        else{
+            m_view->Log("Invalid name");
+        }
 
     } else {
         m_view->Log("Invalid name");
@@ -257,4 +284,8 @@ Model::Model() : time(0) {
     Agent_list = std::make_shared<std::vector<std::shared_ptr<Agent>>>();
     m_view = std::make_unique<View>();
     m_view->addObjects(Sim_object_list);
+}
+
+const int &Model::getTime() {
+    return time;
 };

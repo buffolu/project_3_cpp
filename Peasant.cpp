@@ -11,8 +11,13 @@ Peasant::Peasant(const std::string &name, Point &position) : Agent(name, positio
 }
 
 void Peasant::start_working(std::shared_ptr<Farm> farm, std::shared_ptr<Castle> castle) {
-    m_farm = farm;
-    m_castle = castle;
+    if(castles.empty())
+    {
+        m_farm = farm;
+        m_castle =castle;
+    }
+    farms.push(farm);
+    castles.push(castle);
     setState(ON_DUTY);
     setAngle(Point::getAngle(getLocation(),m_farm->getLocation()));
     loading = true;
@@ -37,7 +42,10 @@ void Peasant::update() {
 
                 m_castle->giveCrates(carried_crates);
                 setHealth(getHealth()+1);
-                stop();
+                farms.pop();
+                castles.pop();
+                if(castles.empty()) {stop();}
+                else{ start_working(farms.front(),castles.front());}
 
         }
         else //peasant is still on his way, advance

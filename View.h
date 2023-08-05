@@ -32,7 +32,7 @@ public:
     void setScale(double scale);
     void show();
     void addObjects(
-        std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>> objects);
+        std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>>& objects);
 
     void Log(const std::string &str);
 

@@ -50,8 +50,6 @@ public:
     void attach(std::unique_ptr<View> someView);
     void detach(std::unique_ptr<View> someView);
 
-    // methods for model
-    void run(int argc, char **argv);
 
     // ralevent to diffrent kind of agents
     void course(const std::string &basicString, double theta, int speed);
@@ -89,6 +87,8 @@ private: // Singleton
 public:
     static Model &Get();
     static std::unique_ptr<Model> model;
+
+    const int & getTime();
 };
 
 #endif // PROJECT_3_MODEL_H
