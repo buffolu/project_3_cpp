@@ -80,7 +80,7 @@ Point Point::advance(Point point, double speed, double angle,int flag) {
 
     if (flag)
     {
-        angle-=90;
+       // angle-=180;
     }
 
     double radians = to_radians(angle);

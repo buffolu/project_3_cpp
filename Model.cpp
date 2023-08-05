@@ -147,15 +147,14 @@ void Model::destination(const std::string &basicString,
     auto castle_ = findStructure(castle);
     if (!castle_) {
         badInput("No structure named " + castle);
+        return;
     }
     if (!agent) {
         badInput("No agent named " + basicString);
+        return;
     }
     std::shared_ptr<Knight> knight = std::dynamic_pointer_cast<Knight>(agent);
-    if(!std::dynamic_pointer_cast<Castle>(castle_))
-    {
-        badInput(castle + "not a castle\n");
-    }
+
     if (knight ) {
         knight->setOnPatrol(castle_, Structure_list);
     } else {
