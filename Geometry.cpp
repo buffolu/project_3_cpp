@@ -68,7 +68,7 @@ double Point::distance(Point a, Point b) {
 
 // return angle as degrees
 double Point::getAngle(Point a, Point b) {
-    double angle = atan2(b.y - a.y, b.x - a.x) * 180 / M_PI;
+    double angle = atan2(b.x - a.x, b.y - a.y) * 180 / M_PI;
     if (angle < 0) {
         angle += 360;
     }
