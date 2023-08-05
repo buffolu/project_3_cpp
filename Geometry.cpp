@@ -78,7 +78,7 @@ double Point::getAngle(Point a, Point b) {
 Point Point::advance(Point point, double speed, double angle, int flag) {
 
     if (flag) {
-        angle -= 90;
+        angle += 90;
     }
 
     double radians = to_radians(angle);
