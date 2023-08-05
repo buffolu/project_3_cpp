@@ -12,7 +12,7 @@ Thug::Thug(const std::string &name_, Point &position): Agent(name_,position,0,5)
 
 }
 
-
+//attack
 void Thug::attack(std::shared_ptr<Peasant>& _peasant,const std::shared_ptr<std::vector<std::shared_ptr<Agent>>>& agents_) {
     if(getState() == DEAD || _peasant->getState() == DEAD) {//thug or peasant are dead
         std::cerr << "ERROR: peasant or Thug are not alive anymore\n.";
