@@ -60,16 +60,18 @@ void Peasant::update() {
                     getSpeed())
                     setLocation(m_farm->getLocation());
                 else {
-                    setLocation(
-                        Point::advance(getLocation(), getSpeed(), getAngle()));
+                    setLocation(Point::advance(getLocation(),
+                                               getDestinationCoordinates(),
+                                               getAngle()));
                 }
             } else {
                 if (Point::distance(getLocation(), m_castle->getLocation()) <
                     getSpeed())
                     setLocation(m_castle->getLocation());
                 else {
-                    setLocation(
-                        Point::advance(getLocation(), getSpeed(), getAngle()));
+                    setLocation(Point::advance(getLocation(),
+                                               getDestinationCoordinates(),
+                                               getAngle()));
                 }
             }
         }
