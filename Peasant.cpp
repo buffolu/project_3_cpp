@@ -51,15 +51,18 @@ void Peasant::update() {
         else //peasant is still on his way, advance
         {
             if(loading) {
-                if (Point::distance(getLocation(),m_farm->getLocation())<getSpeed());
-                setLocation(m_farm->getLocation());
-                return;
+                if (Point::distance(getLocation(),m_farm->getLocation())<getSpeed())
+                    setLocation(m_farm->getLocation());
+                else{
+                    setLocation(Point::advance(getLocation(), getSpeed(), getAngle()));
+                }
             }
             else
             {
-                if (Point::distance(getLocation(),m_castle->getLocation())<getSpeed());
-                setLocation(m_castle->getLocation());
-                return;
+                if (Point::distance(getLocation(),m_castle->getLocation())<getSpeed())
+                    setLocation(m_castle->getLocation());
+                else{         setLocation(Point::advance(getLocation(), getSpeed(), getAngle()));
+                }
             }
             setLocation(Point::advance(getLocation(),getSpeed(),getAngle()));
 
