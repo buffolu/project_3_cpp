@@ -5,7 +5,7 @@
 #include "Knight.h"
 
 Knight::Knight(const std::string &name, Point position)
-    : Agent(name, position, 10, 1) {}
+    : Agent(name, position, 10, 1),going_home(false) {}
 
 void Knight::update() {
     Agent::update();
