@@ -96,8 +96,8 @@ int View::getSize() { return _size; }
 void View::insert(double x, double y, const std::string &name) {
     double range = _size * _scale;
 
-    double x_range = _pan.x + range;
-    double y_range = _pan.y + range;
+    double x_range = _pan.x + range -_scale;
+    double y_range = _pan.y + range- _scale;
     // Point top_right{x_range, y_range};
 
     if (x > x_range || y > y_range || x < _pan.x || y < _pan.y)
