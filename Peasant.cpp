@@ -69,7 +69,10 @@ void Peasant::broadcast_current_state() const noexcept
 {
     Agent::broadcast_current_state();
     if(getState() == ON_DUTY)
-    {}
+    {
+        std::cout<<" inventory: "<<carried_crates;
+    }
+    std::cout<<std::endl;
 
 }
 

@@ -54,6 +54,7 @@ void Knight::broadcast_current_state() const noexcept {
     if (getState() == ON_DUTY) {
         std::cout << " patrolling around " << destination_structure->getName();
     }
+    std::cout<<std::endl;
 }
 std::shared_ptr<Structure> Knight::check_for_closest() {
     if (visited.size() == myStructures->size())

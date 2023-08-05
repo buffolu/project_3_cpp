@@ -69,7 +69,7 @@ void Agent::broadcast_current_state() const noexcept {
         std::cout << " heading to: (" << getDestinationCoordinates().x << ", "
                   << getDestinationCoordinates().y << "), at speed: " << speed;
     } else if (getState() == MOVING_ON_COURSE) {
-        std::cout << " heading on course " << std::to_string(getAngle())<<" deg, speed "<<getSpeed()<<" km/h\n";
+        std::cout << " heading on course " << std::to_string(getAngle())<<" deg, speed "<<getSpeed()<<" km/h";
     }
     else if (state == DEAD) {
         std::cout << " dead";

@@ -62,6 +62,8 @@ void Thug::update() {
 
 void Thug::broadcast_current_state() const noexcept {
     Agent::broadcast_current_state();
+    std::cout<<std::endl;
+
 }
 
 bool Thug::check_for_knight(const std::shared_ptr<std::vector<std::shared_ptr<Agent>>>& agents) {
