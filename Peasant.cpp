@@ -26,16 +26,11 @@ void Peasant::start_working(const std::shared_ptr<Farm>& farm, const std::shared
 void Peasant::update() {
      if(getState() == ON_DUTY)
      {
-        if(getLocation() == m_farm->getLocation()) // peasant reached the farm
+        if(getLocation() == m_farm->getLocation() && loading) // peasant reached the farm
         {
-            if(loading) { // peasant needs to load
                 carried_crates = m_farm->takeCrates();
                 loading = false;
-            }
-            else //set new direction for peasant
-            {
                 setAngle( Point::getAngle(getLocation(),m_castle->getLocation()));
-            }
         }
         if(getLocation() == m_castle->getLocation()) //peasant reached the castle, unload and stop
         {

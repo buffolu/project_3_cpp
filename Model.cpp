@@ -7,7 +7,7 @@
 std::unique_ptr<Model> Model::model = nullptr;
 
 void Model::go() {
-    for (const auto &object : *Agent_list) {
+    for (const auto &object : *Sim_object_list) {
         object->update();
     }
     time++;
