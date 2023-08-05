@@ -45,9 +45,8 @@ void View::show() {
         }
         std::cout << std::endl;
     }
-    int smallest_x = 0;
-    std::cout<<"     ";
-    std::cout<<smallest_x;
+    int smallest_x = _pan.x;
+    std::cout<<std::setw(6) << std::setfill(' ') <<smallest_x;
     smallest_x+=_scale*3;
     for(int i = 0;i<_size;i++)
     {
