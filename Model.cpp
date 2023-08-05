@@ -7,16 +7,28 @@
 std::unique_ptr<Model> Model::model = nullptr;
 
 void Model::go() {
-    for (const auto &object : *Sim_object_list) {
+    for (const auto &object : *Agent_list) {
         object->update();
     }
     time++;
 }
 
 void Model::addKnight(const std::string &name, const std::string &home) {
+    if (findAgent(name)) {
+        log(name + " already exists");
+        return;
+    }
+
     auto it = findStructure(home);
     if (!it) {
-        throw std::exception();
+        log(home + " structure doesn't exist");
+        return;
+    }
+
+    std::shared_ptr<Castle> p_castle = std::dynamic_pointer_cast<Castle>(it);
+    if (!p_castle) {
+        log(home + " is not a castle");
+        return;
     }
     double x = it->getLocation().x;
     double y = it->getLocation().y;
@@ -29,6 +41,11 @@ void Model::addKnight(const std::string &name, const std::string &home) {
 }
 
 void Model::addPeasant(const std::string &name, Point position) {
+    if (findAgent(name)) {
+        log(name + " already exists");
+        return;
+    }
+
     std::shared_ptr<Peasant> peasant =
         std::make_shared<Peasant>(name, position);
     Sim_object_list->push_back(peasant);
@@ -36,6 +53,11 @@ void Model::addPeasant(const std::string &name, Point position) {
 }
 
 void Model::addThug(const std::string &name, Point position) {
+    if (findAgent(name)) {
+        log(name + " already exists");
+        return;
+    }
+
     std::shared_ptr<Thug> thug = std::make_shared<Thug>(name, position);
     Sim_object_list->push_back(thug);
     Agent_list->push_back(thug);
@@ -169,9 +191,7 @@ std::shared_ptr<Agent> Model::findAgent(const std::string &a_name) {
                            [a_name](std::shared_ptr<Agent> &agent) {
                                return agent->getName() == a_name;
                            });
-    // if it points to end() then it is nullptr
-    if(it != Agent_list->end())
-    {
+    if (it != Agent_list->end()) {
         return *it;
     }
     return nullptr;
@@ -194,7 +214,7 @@ void Model::start_working(const std::string &peasant_name,
         std::shared_ptr<Farm> farm =
             std::dynamic_pointer_cast<Farm>(structure1);
         std::shared_ptr<Castle> castle =
-            std::dynamic_pointer_cast<Castle>(structure2);
+            std::dynamic_pointer_cast<Castle>(structure1);
         if (peasant && farm && castle) {
             peasant->start_working(farm, castle);
         }
@@ -242,6 +262,11 @@ void Model::addFarm(const std::string &line) {
     std::string &hay = separated[3];
     std::string &prod = separated[4];
 
+    if (findStructure(name)) {
+        log(name + " already exists");
+        throw std::invalid_argument("a structure with similar name exists");
+    }
+
     xstr = xstr.substr(2);                    // to cut off " ("
     ystr = ystr.substr(0, ystr.length() - 1); // to cut off ")"
 
@@ -265,6 +290,11 @@ void Model::addCastle(const std::string &line) {
     std::string &ystr = separated[2];
     std::string &hay = separated[3];
 
+    if (findStructure(name)) {
+        log(name + " already exists");
+        throw std::invalid_argument("a structure with similar name exists");
+    }
+
     xstr = xstr.substr(2);                    // to cut off " ("
     ystr = ystr.substr(0, ystr.length() - 1); // to cut off ")"
 
@@ -279,7 +309,7 @@ void Model::addCastle(const std::string &line) {
     Sim_object_list->push_back(castle);
 }
 
-void Model::log(const std::string& str) { m_view->Log(str); }
+void Model::log(std::string str) { m_view->Log(str); }
 
 Model &Model::Get() {
     if (!model) {
