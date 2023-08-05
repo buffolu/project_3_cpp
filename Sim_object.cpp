@@ -23,6 +23,6 @@ void Sim_object::setLocation(Point location_) {
 Point Sim_object::getLocation() const noexcept { return location; }
 
 void Sim_object::broadcast_current_state() const noexcept {
-    std::cout << "name: " << name << " at position: (" << location.x << ", "
+    std::cout<< name << " at position: (" << location.x << ", "
               << location.y << "),";
 }

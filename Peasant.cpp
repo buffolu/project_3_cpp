@@ -3,22 +3,28 @@
 //
 #include "Peasant.h"
 
-#include <memory>
 
-// TODO: why is loading true on creation
+
+
 Peasant::Peasant(const std::string &name, Point &position) : Agent(name, position,5,10),carried_crates(0),loading(true) {
 
 }
 
-void Peasant::start_working(const std::shared_ptr<Farm>& farm, const std::shared_ptr<Castle>& castle) {
 
-    farms.push(farm);
-    castles.push(castle);
-    if(castles.size() == 1)
-    {
-        nextPair();
+
+//add another farm and castle to peasant , make him to begin work if he doesn't do anything(Stopped)
+void Peasant::start_working(const std::shared_ptr<Farm>& farm, const std::shared_ptr<Castle>& castle) {
+    if(getState() != DEAD) {
+        farms.push(farm);
+        castles.push(castle);
+        if (castles.size() == 1) {
+            nextPair();
+        }
     }
+    else{std::cout<<"this peasant is dead unfortunately\n";}  //peasant is dead, nothing we can do...
 }
+
+//make him work on the next pair
 void Peasant::nextPair()
 {
     m_farm = farms.front(),
@@ -80,19 +86,27 @@ void Peasant::setCarriedCrates(int carriedCrates) {
 }
 void Peasant::broadcast_current_state() const noexcept
 {
+    std::cout<<"Peasant: ";
     Agent::broadcast_current_state();
     if(getState() == ON_DUTY)
     {
         std::cout<<" inventory: "<<carried_crates;
     }
+    std::cout<<", health:"<<getHealth();
     std::cout<<std::endl;
 
 }
 
-void Peasant::stop() {
+void Peasant::stop() { // beside the change of state, it also makes sense to use it when killing the farmer
     setState(STOPPED);
     m_castle.reset();
     m_farm.reset();
     carried_crates = 0;
 
 }
+
+
+
+
+
+

@@ -60,7 +60,7 @@ public:
 
     double getAngle() const;
 
-    void setHealth(int health);
+    virtual void setHealth(int health);
     int getHealth() const;
 
     void broadcast_current_state() const noexcept override;
