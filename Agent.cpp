@@ -82,7 +82,7 @@ void Agent::broadcast_current_state() const noexcept {
     } else if (state == STOPPED) {
         std::cout << " stopped";
     }
-    std::cout<<"health: "<<getHealth();
+    std::cout<<" health: "<<getHealth();
 }
 
 void Agent::setState(enum Agent::state _state) {

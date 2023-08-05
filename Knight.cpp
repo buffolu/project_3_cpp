@@ -6,7 +6,7 @@
 
 
 Knight::Knight(const std::string &name, Point position)
-    : Agent(name, position, 10, -1) {}
+    : Agent(name, position, 10, 1) {}
 
 void Knight::update() {
     Agent::update();
