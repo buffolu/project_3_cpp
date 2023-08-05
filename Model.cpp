@@ -33,8 +33,7 @@ void Model::addKnight(const std::string &name, const std::string &home) {
     double x = it->getLocation().x;
     double y = it->getLocation().y;
 
-    std::shared_ptr<Knight> knight =
-        std::make_shared<Knight>(name, Point(x, y));
+    std::shared_ptr<Knight> knight(new Knight(name, {x, y}));
 
     Sim_object_list->push_back(knight);
     Agent_list->push_back(knight);
@@ -46,8 +45,7 @@ void Model::addPeasant(const std::string &name, Point position) {
         return;
     }
 
-    std::shared_ptr<Peasant> peasant =
-        std::make_shared<Peasant>(name, position);
+    std::shared_ptr<Peasant> peasant(new Peasant(name, position));
 
     Sim_object_list->push_back(peasant);
     Agent_list->push_back(peasant);
@@ -59,7 +57,7 @@ void Model::addThug(const std::string &name, Point position) {
         return;
     }
 
-    std::shared_ptr<Thug> thug = std::make_shared<Thug>(name, position);
+    std::shared_ptr<Thug> thug(new Thug(name, position));
 
     Sim_object_list->push_back(thug);
     Agent_list->push_back(thug);
@@ -283,8 +281,8 @@ void Model::addFarm(const std::string &line) {
 
     int production = std::stoi(prod);
 
-    std::shared_ptr<Farm> farm =
-        std::make_shared<Farm>(name, Point(x, y), nhay, production);
+    std::shared_ptr<Farm> farm(new Farm(name, Point(x, y), nhay, production));
+
     Structure_list->push_back(farm);
     Sim_object_list->push_back(farm);
 }
@@ -309,8 +307,7 @@ void Model::addCastle(const std::string &line) {
 
     int nhay = std::stoi(hay);
 
-    std::shared_ptr<Castle> castle =
-        std::make_shared<Castle>(name, Point(x, y), nhay);
+    std::shared_ptr<Castle> castle(new Castle(name, Point(x, y), nhay));
     Structure_list->push_back(castle);
     Sim_object_list->push_back(castle);
 }
@@ -326,11 +323,11 @@ Model &Model::Get() {
 
 Model::Model() : time(0) {
     Sim_object_list =
-        std::make_shared<std::vector<std::shared_ptr<Sim_object>>>();
+        std::shared_ptr<std::vector<std::shared_ptr<Sim_object>>>();
     Structure_list =
-        std::make_shared<std::vector<std::shared_ptr<Structure>>>();
-    Agent_list = std::make_shared<std::vector<std::shared_ptr<Agent>>>();
-    m_view = std::make_unique<View>();
+        std::shared_ptr<std::vector<std::shared_ptr<Structure>>>();
+    Agent_list = std::shared_ptr<std::vector<std::shared_ptr<Agent>>>();
+    m_view = std::unique_ptr<View>();
     m_view->addObjects(Sim_object_list);
 }
 

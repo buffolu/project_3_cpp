@@ -5,7 +5,8 @@
 
 
 int main(int argc, char **argv) {
-    Model::Get().attach(std::make_unique<View>());
+    std::unique_ptr<View> view_ptr;
+    Model::Get().attach(std::move(view_ptr));
     Controller controller;
     controller.run(argc,argv);
 
