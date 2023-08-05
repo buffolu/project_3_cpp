@@ -91,7 +91,7 @@ Point Point::advance(Point point, double speed, double angle) {
 }
 
 Point Point::advance(Point beginning, Point target, double speed) {
-    if (distance(beginning, target) <= speed) {
+    if (distance(beginning, target) * 10 <= speed) {
         return target;
     }
 
