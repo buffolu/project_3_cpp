@@ -23,8 +23,8 @@ public:
     Knight(const std::string &basicString, Point point);
     // check if there is a thug attacking a peasant nearby
     void update() override;
-    void setOnPatrol(std::shared_ptr<Structure> structure,
-                     std::shared_ptr<std::vector<std::shared_ptr<Structure>>> structures);
+    void setOnPatrol(const std::shared_ptr<Structure>& structure,
+                     std::shared_ptr<std::vector<std::shared_ptr<Structure>>>& structures);
     void broadcast_current_state() const noexcept override;
     void stop() override;
     std::shared_ptr<Structure> check_for_closest();

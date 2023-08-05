@@ -17,7 +17,7 @@ typedef struct Point {
     static double getAngle(Point a, Point b);
 
     static Point advance(Point point, double speed, double angle);
-    static Point advance(Point beginning, Point target, int speed);
+    static Point advance(Point beginning, Point target, double speed);
 } Point;
 struct Polar_vector;
 typedef struct Cartesian_vector {
