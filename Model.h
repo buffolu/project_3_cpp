@@ -50,12 +50,11 @@ public:
     void attach(std::unique_ptr<View> someView);
     void detach(std::unique_ptr<View> someView);
 
-
     // ralevent to diffrent kind of agents
-    void course(const std::string &basicString, double theta, int speed);
-    void course(const std::string &basicString, double theta);
-    void position(const std::string &basicString, Point point, int speed);
-    void position(const std::string &basicString, Point point);
+    void course(const std::string &agent_name, double theta, int speed);
+    void course(const std::string &agent_name, double theta);
+    void position(const std::string &agent_name, Point point, int speed);
+    void position(const std::string &agent_name, Point point);
     void stop(const std::string &basicString);
 
     // each method is relavant to only one kind of agent
@@ -88,7 +87,7 @@ public:
     static Model &Get();
     static std::unique_ptr<Model> model;
 
-    const int & getTime();
+    const int &getTime();
 };
 
 #endif // PROJECT_3_MODEL_H

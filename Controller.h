@@ -23,6 +23,7 @@ class Controller {
     bool create(const std::vector<std::string> &words);
     bool course(const std::vector<std::string> &words);
     bool position(const std::vector<std::string> &words);
+    bool start_working(const std::vector<std::string> &words);
 
 public:
     Controller();

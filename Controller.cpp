@@ -39,7 +39,7 @@ void Controller::run(int argc, char **argv) {
  * doesn't do anything else
  */
 bool Controller::GetUserInput() {
-    std::cout<<"Time: "<<Model::Get().getTime()<<":Enter command: ";
+    std::cout << "Time: " << Model::Get().getTime() << ":Enter command: ";
     std::string input;
     std::getline(std::cin, input);
     if (input == "") {
@@ -48,12 +48,15 @@ bool Controller::GetUserInput() {
     }
 
     // transform the entire string to lowercase
-    //TODO: WHY? NAMES CAN BE WITH HIGHER CASE
+    // TODO: WHY? NAMES CAN BE WITH HIGHER CASE
     std::transform(input.begin(), input.end(), input.begin(),
                    [](char c) { return std::tolower(c); });
     std::vector<std::string> &&words = utils::split(input, ' ');
 
-    std::string command = words[0];
+    std::string &command = words[0];
+    // the name will be uppercase
+    words[1][0] = std::toupper(words[1][0]);
+
     if (command == "exit") {
         exitflag = true;
         return true;
@@ -71,7 +74,7 @@ bool Controller::GetUserInput() {
         return true;
     }
 
-    //related to model
+    // related to model
     else if (command == "status") {
         Model::Get().status();
         return true;
@@ -85,12 +88,16 @@ bool Controller::GetUserInput() {
     // this commands will be given after the name.
     // at this point words[0] is a name of an agent
     std::string &name = command;
+    name[0] = std::toupper(name[0]);
+
+    words[1][0] = std::tolower(words[1][0]);
+
     if (words.size() == 1) {
-        //TODO: CATCH IT???
-        throw std::invalid_argument("invalid input");
+        Model::Get().badInput("invalid input");
+        return false;
     }
 
-    std::string command2 = words[1];
+    const std::string &command2 = words[1];
 
     if (command2 == "course") {
         return course(words);
@@ -111,20 +118,20 @@ bool Controller::GetUserInput() {
         Model::Get().attack(name, peasant);
         return true;
     }
-    //TODO : start_working command for peasant
+    if (command2 == "start_working" && words.size() == 4) {
+        return start_working(words);
+    }
 
     Model::Get().badInput("invalid input");
-
     return false;
 }
 
 Controller::Controller() {}
 bool Controller::zoom(const std::vector<std::string> &words) {
-    //TODO: ZOOM SHOULD NOT ACCEPT STRING IN THE FORM OF "123KK"
     double num;
     try {
+        // this filters words of kind "123KK"
         num = std::stod(words[1]);
-
     } catch (std::invalid_argument &) {
         Model::Get().badInput("Expected a double");
         return false;
@@ -269,22 +276,14 @@ bool Controller::position(const std::vector<std::string> &words) {
         return true;
     }
     return false;
-    /*
-    && (words.size() == 2 || words.size() == 3)) {
-        std::string word1 = words.front(); // should be in the form of (x,
-        word1 = word1.substr(1);
-        word1.pop_back();
-        double x = std::stoi(word1);
-        std::string word2 = words.front();
-        words.erase(words.begin());
-        double y = std::stoi(word2);
-        Point p(x, y);
-        int speed;
-        if (!words.empty()) { // its a thug
-            std::string word3 = words.back();
-            speed = stoi(word3);
-        }
-        Model::Get().position(name, p, speed);
-    }
-    */
+}
+
+bool Controller::start_working(const std::vector<std::string> &words) {
+    std::string peasant_name = words[0];
+    std::string farm_name = words[2];
+    std::string castle_name = words[3];
+
+    Model::Get().start_working(peasant_name, farm_name, castle_name);
+
+    return true;
 }
