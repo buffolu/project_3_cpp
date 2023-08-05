@@ -39,23 +39,17 @@ void Controller::run(int argc, char **argv) {
  * doesn't do anything else
  */
 bool Controller::GetUserInput() {
-    std::cout<<"Time: "<<Model::Get().getTime()<<":Enter command: ";
+    std::cout << "Time: " << Model::Get().getTime() << ":Enter command: ";
     std::string input;
     std::getline(std::cin, input);
-    if (input.empty()) {
+    if (input == "") {
         Model::Get().badInput(input);
-        return false;
+        return 0;
     }
 
-    // transform the entire string to lowercase
-    //TODO: WHY? NAMES CAN BE WITH HIGHER CASE
-    /**
-    std::transform(input.begin(), input.end(), input.begin(),
-                   [](char c) { return std::tolower(c); });
-                   **/
     std::vector<std::string> &&words = utils::split(input, ' ');
 
-    std::string command = words[0];
+    std::string &command = words[0];
     if (command == "exit") {
         exitflag = true;
         return true;
@@ -73,7 +67,7 @@ bool Controller::GetUserInput() {
         return true;
     }
 
-    //related to model
+    // related to model
     else if (command == "status") {
         Model::Get().status();
         return true;
@@ -84,15 +78,16 @@ bool Controller::GetUserInput() {
         return create(words);
     }
 
-    // this commands will be given after the name.
-    // at this point words[0] is a name of an agent
-    std::string &name = command;
-    if (words.size() == 1) {
-        //TODO: CATCH IT???
-        throw std::invalid_argument("invalid input");
+    if (words.size() < 2) {
+        Model::Get().badInput("invalid input");
+        return false;
     }
 
-    std::string command2 = words[1];
+    // this commands will be given after the name.
+    // at this point words[0] is a name of an agent
+    const std::string name = words[0];
+
+    const std::string &command2 = words[1];
 
     if (command2 == "course") {
         return course(words);
@@ -113,33 +108,29 @@ bool Controller::GetUserInput() {
         Model::Get().attack(name, peasant);
         return true;
     }
-    //TODO : start_working command for peasant
+    if (command2 == "start_working" && words.size() == 4) {
+        return start_working(words);
+    }
 
     Model::Get().badInput("invalid input");
-
     return false;
 }
 
-Controller::Controller() = default;
+Controller::Controller() {}
 bool Controller::zoom(const std::vector<std::string> &words) {
-    //TODO: ZOOM SHOULD NOT ACCEPT STRING IN THE FORM OF "123KK"
+    if (words.size() != 2)
+        return false;
     double num;
     try {
+        // this filters words of kind "123KK"
         num = std::stod(words[1]);
-
     } catch (std::invalid_argument &) {
         Model::Get().badInput("Expected a double");
         return false;
     }
 
-    if (num > 0) {
-        Model::Get().setZoomView(num);
-        return true;
-    } else {
-        Model::Get().badInput("New map scale must be positive");
-        return false;
-    }
-    return false;
+    Model::Get().setZoomView(num);
+    return true;
 }
 
 bool Controller::size(const std::vector<std::string> &words) {
@@ -151,38 +142,37 @@ bool Controller::size(const std::vector<std::string> &words) {
         return false;
     }
 
-    if (num < 6) {
-        Model::Get().badInput("new size too small");
-        return false;
-    } else if (num >= 30) {
-        Model::Get().badInput("new size too big");
-        return false;
-    }
     Model::Get().setSizeView(num);
 
     return true;
 }
 
 bool Controller::pan(const std::vector<std::string> &words) {
-    double x = stoi(words[1]);
-    double y = stoi(words[2]);
+    double x, y;
+    try {
+        x = stoi(words[1]);
+        y = stoi(words[2]);
+    } catch (std::invalid_argument &e) {
+        Model::Get().badInput("expected integers");
+        return false;
+    }
     Model::Get().setPanView(x, y);
     return true;
 }
 
 bool Controller::create(const std::vector<std::string> &words) {
-
     std::string name = words[1];
+
+    std::string typeStr = words[2]; // knight , thug or peasant
+    double x, y;
+
     if (!utils::isStringOnlyLetters(name)) {
         Model::Get().badInput("name expected to be only characters");
         return false;
     }
-    name[0] = std::toupper(name[0]);
 
-    const std::string& typeStr = words[2]; // knight , thug or peasant
-
-    if (typeStr == "Knight" && words.size() == 4) {
-        const std::string& castle_name = words[3];
+    if (typeStr == "knight" && words.size() == 4) {
+        std::string castle_name = words[3];
         Model::Get().addKnight(name, castle_name);
         return true;
     }
@@ -190,22 +180,21 @@ bool Controller::create(const std::vector<std::string> &words) {
         Model::Get().badInput("invalid command");
         return false;
     }
-    double x, y;
     try {
         // cut off the leading '(' and trailing ','
         x = std::stod(words[3].substr(1, words[3].length() - 1));
         // cut off the trailing ')'
         y = std::stod(words[4].substr(0, words[4].length() - 1));
     } catch (std::invalid_argument &e) {
-        Model::Get().log("expected doubles");
+        Model::Get().badInput("expected doubles");
         return false;
     }
 
-    if (typeStr == "Peasant") {
+    if (typeStr == "peasant") {
         // add peasant
         Model::Get().addPeasant(name, {x, y});
         return true;
-    } else if (typeStr == "Thug") {
+    } else if (typeStr == "thug") {
         // add thug
         Model::Get().addThug(name, {x, y});
         return true;
@@ -216,33 +205,37 @@ bool Controller::create(const std::vector<std::string> &words) {
 }
 
 bool Controller::course(const std::vector<std::string> &words) {
+    if (words.size() != 3 && words.size() != 4) {
+        Model::Get().badInput("improper arguments");
+        return false;
+    }
+
     std::string name = words[0];
-    name[0] = std::toupper(name[0]);
     double theta = std::stod(words[2]);
+    int speed;
     // size is 3 when speed is not given,
     // so knight or peasant
     if (words.size() == 3) {
         Model::Get().course(name, theta);
         return true;
-    } else if (words.size() == 4) { // this is for thug
-        int speed = std::stoi(words[3]);
-        if (speed <= 0) {
-            Model::Get().badInput("speed must be positive");
-            return false;
-        } else if (speed > 30) {
-            Model::Get().badInput("speed cant be bigger than 30");
-            return false;
-        }
-        Model::Get().course(name, theta, speed);
-        return true;
+    } else if (!(words.size() == 4)) { // this is for thug
+        Model::Get().badInput("improper arguments");
+        return false;
     }
-    Model::Get().badInput("improper arguments");
-    return false;
+
+    try {
+        speed = std::stoi(words[3]);
+    } catch (std::invalid_argument &e) {
+        Model::Get().badInput("expected integer");
+        return false;
+    }
+
+    Model::Get().course(name, theta, speed);
+    return true;
 }
 
 bool Controller::position(const std::vector<std::string> &words) {
     std::string name = words[0];
-    name[0] = std::toupper(name[0]);
 
     double x, y;
     try {
@@ -251,7 +244,7 @@ bool Controller::position(const std::vector<std::string> &words) {
         // cut off the trailing ')'
         y = std::stod(words[3].substr(0, words[3].length() - 1));
     } catch (std::invalid_argument &e) {
-        Model::Get().log("expected doubles");
+        Model::Get().badInput("expected doubles");
         return false;
     }
 
@@ -270,23 +263,20 @@ bool Controller::position(const std::vector<std::string> &words) {
         Model::Get().position(name, {x, y}, speed);
         return true;
     }
+    Model::Get().badInput("bad input");
     return false;
-    /*
-    && (words.size() == 2 || words.size() == 3)) {
-        std::string word1 = words.front(); // should be in the form of (x,
-        word1 = word1.substr(1);
-        word1.pop_back();
-        double x = std::stoi(word1);
-        std::string word2 = words.front();
-        words.erase(words.begin());
-        double y = std::stoi(word2);
-        Point p(x, y);
-        int speed;
-        if (!words.empty()) { // its a thug
-            std::string word3 = words.back();
-            speed = stoi(word3);
-        }
-        Model::Get().position(name, p, speed);
+}
+
+bool Controller::start_working(const std::vector<std::string> &words) {
+    if (words.size() != 4) { // n s_w f c
+        Model::Get().badInput("invalid arguments");
+        return false;
     }
-    */
+    std::string peasant_name = words[0];
+    std::string farm_name = words[2];
+    std::string castle_name = words[3];
+
+    Model::Get().start_working(peasant_name, farm_name, castle_name);
+
+    return true;
 }

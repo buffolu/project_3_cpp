@@ -46,8 +46,7 @@ std::shared_ptr<Structure> Model::findStructure(const std::string &name) {
                       [&name](std::shared_ptr<Structure> &structure) {
                           return name == structure->getName();
                       });
-    if(it != Structure_list->end())
-    {
+    if (it != Structure_list->end()) {
         return *it;
     }
     return nullptr;
@@ -56,17 +55,25 @@ std::shared_ptr<Structure> Model::findStructure(const std::string &name) {
 void Model::status() {
     for (const auto &obj : *Sim_object_list) {
         obj->broadcast_current_state();
-        std::cout<<std::endl;
+        std::cout << std::endl;
     }
 }
 
-void Model::course(const std::string &basicString, double theta, int i) {
+void Model::course(const std::string &basicString, double theta, int speed) {
+
+    if (speed <= 0) {
+        badInput("speed must be positive");
+        return;
+    } else if (speed > 30) {
+        badInput("speed cant be bigger than 30");
+        return;
+    }
 
     auto agent = findAgent(basicString);
     std::shared_ptr<Thug> thug = std::dynamic_pointer_cast<Thug>(agent);
     if (thug) {
         thug->setCourse(theta);
-        thug->setSpeed(i);
+        thug->setSpeed(speed);
     } else {
         m_view->Log("No thug named " + basicString);
     }
@@ -113,13 +120,17 @@ void Model::destination(const std::string &basicString,
                         const std::string &castle) {
     auto agent = findAgent(basicString);
     auto castle_ = findStructure(castle);
-    if (castle_ && castle_ && !agent) // castle or agent does not exist
-    {
-        std::shared_ptr<Knight> knight =
-            std::dynamic_pointer_cast<Knight>(agent);
+    if (!castle_) {
+        badInput("No structure named " + castle);
+    }
+    if (!agent) {
+        badInput("No agent named " + basicString);
+    }
+    std::shared_ptr<Knight> knight = std::dynamic_pointer_cast<Knight>(agent);
+    if (knight) {
         knight->setOnPatrol(castle_, Structure_list);
     } else {
-        m_view->Log("No structure named " + basicString);
+        badInput(basicString + " not a knight");
     }
 }
 
@@ -128,30 +139,26 @@ void Model::attack(const std::string &thug, const std::string &peasant) {
     std::shared_ptr<Agent> thug_ = findAgent(thug);
     std::shared_ptr<Thug> thug1;
     if (thug_) {
-         thug1 = std::dynamic_pointer_cast<Thug>(thug_);
-        if (!thug1)
-        {
-            m_view->Log("No thug named " + thug);
+        thug1 = std::dynamic_pointer_cast<Thug>(thug_);
+        if (!thug1) {
+            m_view->Log(thug + " is not a thug");
             return;
         }
-    }
-    else
-    {
-        m_view->Log("No thug named " + thug);
+    } else {
+        m_view->Log("No agent named " + thug);
         return;
-
     }
 
     // find if peasant exists
     std::shared_ptr<Agent> peasant_ = findAgent(peasant);
     if (!peasant_) {
-        m_view->Log("No peasant named " + thug);
+        m_view->Log("No agent named " + peasant);
         return;
     }
-    std::shared_ptr<Peasant> peasant1 = std::dynamic_pointer_cast<Peasant>(peasant_);
-    if(!peasant1)
-    {
-        m_view->Log("No peasant named " + thug);
+    std::shared_ptr<Peasant> peasant1 =
+        std::dynamic_pointer_cast<Peasant>(peasant_);
+    if (!peasant1) {
+        m_view->Log(peasant + " is not a peasant");
         return;
     }
     thug1->attack(peasant1, Agent_list);
@@ -159,12 +166,11 @@ void Model::attack(const std::string &thug, const std::string &peasant) {
 
 std::shared_ptr<Agent> Model::findAgent(const std::string &a_name) {
     auto it = std::find_if(Agent_list->begin(), Agent_list->end(),
-                           [a_name](std::shared_ptr<Agent>& agent) {
+                           [a_name](std::shared_ptr<Agent> &agent) {
                                return agent->getName() == a_name;
                            });
-    if(it !=Agent_list->end())
-          return *it;
-    return nullptr;
+    // if it points to end() then it is nullptr
+    return *it;
 }
 
 void Model::badInput(const std::string &str) {
@@ -185,10 +191,11 @@ void Model::start_working(const std::string &peasant_name,
             std::dynamic_pointer_cast<Farm>(structure1);
         std::shared_ptr<Castle> castle =
             std::dynamic_pointer_cast<Castle>(structure1);
-        if(peasant && farm && castle){
-            peasant->start_working(farm, castle);}
+        if (peasant && farm && castle) {
+            peasant->start_working(farm, castle);
+        }
 
-        else{
+        else {
             m_view->Log("Invalid name");
         }
 
@@ -241,10 +248,10 @@ void Model::addFarm(const std::string &line) {
 
     int production = std::stoi(prod);
 
-    std::shared_ptr<Farm> farm = std::make_shared<Farm>(name, Point(x, y), nhay, production);
+    std::shared_ptr<Farm> farm =
+        std::make_shared<Farm>(name, Point(x, y), nhay, production);
     Structure_list->push_back(farm);
     Sim_object_list->push_back(farm);
-
 }
 
 void Model::addCastle(const std::string &line) {
@@ -262,7 +269,8 @@ void Model::addCastle(const std::string &line) {
 
     int nhay = std::stoi(hay);
 
-    std::shared_ptr<Castle> castle = std::make_shared<Castle>(name, Point(x, y), nhay);
+    std::shared_ptr<Castle> castle =
+        std::make_shared<Castle>(name, Point(x, y), nhay);
     Structure_list->push_back(castle);
     Sim_object_list->push_back(castle);
 }
@@ -286,6 +294,4 @@ Model::Model() : time(0) {
     m_view->addObjects(Sim_object_list);
 }
 
-const int &Model::getTime() {
-    return time;
-};
+const int &Model::getTime() { return time; };
