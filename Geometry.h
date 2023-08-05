@@ -13,6 +13,7 @@ typedef struct Point {
     Point();
     void print() const;
     bool operator==(const Point &rhs);
+    bool operator!=(const Point &rhs);
     static double distance(Point a, Point b);
     static double getAngle(Point a, Point b);
 
