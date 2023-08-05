@@ -170,7 +170,11 @@ std::shared_ptr<Agent> Model::findAgent(const std::string &a_name) {
                                return agent->getName() == a_name;
                            });
     // if it points to end() then it is nullptr
-    return *it;
+    if(it != Agent_list->end())
+    {
+        return *it;
+    }
+    return nullptr;
 }
 
 void Model::badInput(const std::string &str) {
